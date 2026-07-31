@@ -21,10 +21,10 @@ app.listen(8080, () => {
 });
 database();
 
-app.use(ErrorHandler);
-
 app.use("/api", userRoute);
-app.use("/api/customers",customerRoute);
+app.use("/api/customers", customerRoute);
 app.use("/api/tasks", taskRoute);
-app.use("/api/sales",saleRoute);
-app.use("/api/ai",aiRoute);
+app.use("/api/sales", saleRoute);
+app.use("/api/ai", aiRoute);
+
+app.use(ErrorHandler);
