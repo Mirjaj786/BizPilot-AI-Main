@@ -1,10 +1,10 @@
 const ErrorHandler = (err, req, res, next) => {
-  const statucCode = err.statucCode || 500;
+  const statusCode = err.statusCode || 500;
 
-  res.status(statucCode).json({
+  res.status(statusCode).json({
     success: false,
-    statucCode,
-    message: err.message || "Something went Worng!",
+    statusCode,
+    message: err.message || "Something went wrong!",
     errors: err.errors || [],
   });
 };
