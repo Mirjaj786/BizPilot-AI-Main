@@ -7,7 +7,7 @@ import database from "./config/database.js"
 import ErrorHandler from "./middlewares/errorHandler.js";
 import userRoute from "./routes/userRoute.js";
 import customerRoute from "./routes/customerRoute.js"
-
+import taskRoute from "./routes/taskRoute.js";
 
 const app = express();
 
@@ -23,3 +23,4 @@ app.use(ErrorHandler);
 
 app.use("/api", userRoute);
 app.use("/api/customers",customerRoute);
+app.use("/api/tasks", taskRoute);
