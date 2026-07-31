@@ -126,3 +126,12 @@ export const getMe = AsyncHandler(async (req, res) => {
     }),
   );
 });
+
+export const logout = AsyncHandler(async (req, res) => {
+  return res.status(httpStatus.OK).json(
+    new ApiResponse({
+      success: true,
+      message: "Logged out successfully.",
+    }),
+  );
+});
