@@ -15,6 +15,8 @@ import {
 } from "react-icons/io5";
 import { StoreContext } from "../../context/StoreContext.jsx";
 
+import logo from "../../assets/BizPilot_AI_Logo.png";
+
 const menuItems = [
   { path: "/dashboard", name: "Overview", icon: IoGridOutline },
   { path: "/dashboard/customers", name: "Customers", icon: IoPeopleOutline },
@@ -55,12 +57,12 @@ export default function Sidebar({
         {/* Brand Header */}
         <div className="h-20 flex items-center justify-between px-5 border-b border-slate-800/80">
           <NavLink to="/dashboard" className="flex items-center gap-3 overflow-hidden">
-            <div className="h-9 w-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-extrabold shadow-md shrink-0">
-              BF
+            <div className="h-9 w-9 rounded-xl bg-blue-600/30 flex items-center justify-center text-white font-extrabold shadow-md shrink-0 overflow-hidden border border-blue-500/30">
+              <img src={logo} alt="BizPilot AI Logo" className="h-full w-full object-cover" />
             </div>
             {!collapsed && (
-              <span className="font-extrabold text-white text-xl tracking-tight">
-                BizFlow
+              <span className="font-extrabold text-white text-lg tracking-tight">
+                BizPilot AI
               </span>
             )}
           </NavLink>
