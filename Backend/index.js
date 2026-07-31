@@ -9,6 +9,7 @@ import userRoute from "./routes/userRoute.js";
 import customerRoute from "./routes/customerRoute.js"
 import taskRoute from "./routes/taskRoute.js";
 import saleRoute from "./routes/saleRoute.js";
+import aiRoute from "./routes/aiRoute.js";
 
 const app = express();
 
@@ -26,3 +27,4 @@ app.use("/api", userRoute);
 app.use("/api/customers",customerRoute);
 app.use("/api/tasks", taskRoute);
 app.use("/api/sales",saleRoute);
+app.use("/api/ai",aiRoute);
