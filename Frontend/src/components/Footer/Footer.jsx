@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { IoRocketOutline, IoMailOutline, IoCallOutline, IoTimeOutline } from "react-icons/io5";
+import logo from "../../assets/BizPilot_AI_Logo.png";
 
 export default function Footer() {
   return (
@@ -10,11 +11,11 @@ export default function Footer() {
           {/* Col 1: Brand & Vision */}
           <div className="space-y-4">
             <Link to="/" className="flex items-center gap-2.5">
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 font-extrabold text-white text-sm shadow-xs">
-                BF
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 font-extrabold text-white text-sm shadow-xs overflow-hidden">
+                <img src={logo} alt="BizPilot AI Logo" className="h-full w-full object-cover" />
               </span>
               <span className="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-                BizFlow
+                BizPilot AI
               </span>
             </Link>
             <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-xs font-medium">
@@ -23,7 +24,7 @@ export default function Footer() {
             <div className="pt-1">
               <span className="inline-flex items-center gap-1.5 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-800 px-3 py-1 text-xs font-bold text-blue-700 dark:text-blue-300">
                 <IoRocketOutline className="text-blue-600" />
-                BizFlow Operating System v1.0
+                BizPilot AI Operating System v1.0
               </span>
             </div>
           </div>
