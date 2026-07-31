@@ -44,7 +44,7 @@ export default function Navbar() {
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 md:px-8">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 group">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 font-extrabold text-white text-sm shadow-xs group-hover:scale-105 transition-transform">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 font-extrabold text-white text-sm shadow-xs group-hover:scale-105 transition-transform">
               <img src={logo} alt="logo" />
             </span>
             <span className="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white">
