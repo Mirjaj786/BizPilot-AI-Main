@@ -8,6 +8,7 @@ import ErrorHandler from "./middlewares/errorHandler.js";
 import userRoute from "./routes/userRoute.js";
 import customerRoute from "./routes/customerRoute.js"
 import taskRoute from "./routes/taskRoute.js";
+import saleRoute from "./routes/saleRoute.js";
 
 const app = express();
 
@@ -24,3 +25,4 @@ app.use(ErrorHandler);
 app.use("/api", userRoute);
 app.use("/api/customers",customerRoute);
 app.use("/api/tasks", taskRoute);
+app.use("/api/sales",saleRoute);
