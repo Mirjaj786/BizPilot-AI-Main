@@ -1,45 +1,46 @@
 import { Link } from "react-router-dom";
 import { IoArrowBackOutline } from "react-icons/io5";
-import { HiOutlineBuildingStorefront, HiCheckCircle } from "react-icons/hi2";
+import { HiCheckCircle } from "react-icons/hi2";
+import logo from "../../assets/BizPilot_AI_Logo.png";
 
-export default function AuthLayout({ children, title = "Welcome to BizFlow", subtitle = "Manage your sales, CRM & inventory in one place." }) {
+export default function AuthLayout({ children, title = "Welcome to BizPilot AI", subtitle = "Manage your sales, CRM & inventory in one place." }) {
   return (
-    <div className="min-h-screen w-full bg-slate-50 flex items-center justify-center p-4 sm:p-6 lg:p-8 font-sans">
+    <div className="min-h-screen w-full bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-4 sm:p-6 lg:p-8 font-sans transition-colors">
       <Link
         to="/"
-        className="fixed left-6 top-6 flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-bold text-slate-700 shadow-2xs hover:bg-slate-100 transition-all z-20"
+        className="fixed left-6 top-6 flex items-center gap-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 shadow-2xs hover:bg-slate-100 dark:hover:bg-slate-800 transition-all z-20"
       >
         <IoArrowBackOutline size={16} />
         <span>Back to Home</span>
       </Link>
 
-      <div className="w-full max-w-5xl bg-white rounded-3xl border border-slate-200/80 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[600px] relative z-10">
+      <div className="w-full max-w-5xl bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 min-h-[600px] relative z-10">
         {/* Left Column: Form Content */}
         <div className="lg:col-span-6 p-8 sm:p-12 flex flex-col justify-between">
           <div>
             <Link to="/" className="inline-flex items-center gap-2.5 mb-6">
-              <div className="h-10 w-10 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold shadow-xs">
-                <HiOutlineBuildingStorefront className="text-2xl" />
+              <div className="h-10 w-10 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold shadow-xs overflow-hidden">
+                <img src={logo} alt="BizPilot AI Logo" className="h-full w-full object-cover" />
               </div>
-              <span className="text-xl font-bold tracking-tight text-slate-900">
-                BizFlow
+              <span className="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                BizPilot AI
               </span>
             </Link>
 
             <div className="mb-6">
-              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
                 {title}
               </h2>
               {subtitle && (
-                <p className="text-sm text-slate-500 mt-2 leading-relaxed">{subtitle}</p>
+                <p className="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">{subtitle}</p>
               )}
             </div>
 
             {children}
           </div>
 
-          <div className="mt-8 text-center sm:text-left text-xs text-slate-400">
-            © 2026 BizFlow SaaS Inc. All rights reserved. Built for modern merchants.
+          <div className="mt-8 text-center sm:text-left text-xs text-slate-400 dark:text-slate-500">
+            © {new Date().getFullYear()} BizPilot AI SaaS Inc. All rights reserved. Built for modern merchants.
           </div>
         </div>
 
