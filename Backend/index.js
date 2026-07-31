@@ -2,10 +2,12 @@ import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
 import cors from "cors";
+import database from "./config/database.js"
 
 import ErrorHandler from "./middlewares/errorHandler.js";
 import userRoute from "./routes/userRoute.js";
-import database from "./config/database.js"
+import customerRoute from "./routes/customerRoute.js"
+
 
 const app = express();
 
@@ -20,3 +22,4 @@ database();
 app.use(ErrorHandler);
 
 app.use("/api", userRoute);
+app.use("/api/customers",customerRoute);
