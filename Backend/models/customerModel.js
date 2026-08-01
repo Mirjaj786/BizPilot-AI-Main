@@ -20,8 +20,15 @@ const customerSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      match: [/^[6-9]\d{9}$/, "Invalid phone number"],
       index: true,
+      validate: {
+        validator: function (value) {
+          if (!value) return false;
+          const digits = value.replace(/[^\d]/g, "");
+          return digits.length >= 10 && digits.length <= 13;
+        },
+        message: "Please enter a valid phone number with at least 10 digits.",
+      },
     },
     email: {
       type: String,

@@ -3,6 +3,7 @@ const router = express.Router();
 import { authMiddleware } from "../middlewares/authMiddleware.js";
 
 import {
+  bulkImportCustomers,
   createCustomer,
   deleteCustomer,
   getAllCustomer,
@@ -14,6 +15,7 @@ import {
 } from "../controllers/customerController.js";
 
 router.route("/create").post(authMiddleware, createCustomer);
+router.route("/bulk-import").post(authMiddleware, bulkImportCustomers);
 router.route("/get-all").get(authMiddleware, getAllCustomer);
 router.route("/search").get(authMiddleware, searchCustomers);
 router.route("/get-customer/:id").get(authMiddleware, getCustomerById);

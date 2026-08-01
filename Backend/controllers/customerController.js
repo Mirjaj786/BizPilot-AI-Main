@@ -11,18 +11,19 @@ export const createCustomer = AsyncHandler(async (req, res) => {
 
   const userId = req.user._id;
 
-  if (!name || !phone || !email) {
+  if (!name || !phone) {
     throw new ApiError(
       httpStatus.BAD_REQUEST,
-      "Name, phone and email are required.",
+      "Name and phone number are required.",
     );
   }
 
   const normalizedPhone = phone.trim();
   const normalizedEmail = email?.trim().toLowerCase() || "";
 
-  if (!validator.isMobilePhone(normalizedPhone, "en-IN")) {
-    throw new ApiError(httpStatus.BAD_REQUEST, "Invalid phone number.");
+  const digitsOnly = normalizedPhone.replace(/[^\d]/g, "");
+  if (digitsOnly.length < 10 || digitsOnly.length > 13) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "Please enter a valid phone number with at least 10 digits.");
   }
 
   if (normalizedEmail && !validator.isEmail(normalizedEmail)) {
@@ -306,6 +307,113 @@ export const searchCustomers = AsyncHandler(async (req, res) => {
     new ApiResponse({
       message: "Customers fetched successfully.",
       data: customers,
+    }),
+  );
+});
+
+export const bulkImportCustomers = AsyncHandler(async (req, res) => {
+  const { customers, duplicateStrategy = "update" } = req.body;
+  const ownerId = req.user._id;
+
+  if (!customers || !Array.isArray(customers) || customers.length === 0) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "No customer records provided for bulk import.");
+  }
+
+  // Fetch existing active customer profiles for this owner
+  const existingCustomers = await Customer.find({ owner: ownerId, isActive: true });
+  const existingPhoneMap = new Map();
+  const existingEmailMap = new Map();
+
+  existingCustomers.forEach((c) => {
+    if (c.phone) existingPhoneMap.set(c.phone.trim(), c);
+    if (c.email) existingEmailMap.set(c.email.trim().toLowerCase(), c);
+  });
+
+  let importedCount = 0;
+  let updatedCount = 0;
+  let skippedCount = 0;
+
+  const bulkOps = [];
+
+  for (const item of customers) {
+    const rawName = (item.name || "").trim();
+    const rawPhone = (item.phone || "").trim();
+    const rawEmail = (item.email || "").trim().toLowerCase();
+    const notes = (item.notes || "Imported via Spreadsheet").trim();
+
+    if (!rawName && !rawPhone) {
+      skippedCount++;
+      continue;
+    }
+
+    const matchedByPhone = rawPhone ? existingPhoneMap.get(rawPhone) : null;
+    const matchedByEmail = rawEmail ? existingEmailMap.get(rawEmail) : null;
+    const existing = matchedByPhone || matchedByEmail;
+
+    if (existing) {
+      if (duplicateStrategy === "skip") {
+        skippedCount++;
+        continue;
+      } else if (duplicateStrategy === "update") {
+        bulkOps.push({
+          updateOne: {
+            filter: { _id: existing._id, owner: ownerId },
+            update: {
+              $set: {
+                notes: notes && existing.notes ? `${existing.notes} | ${notes}` : notes || existing.notes,
+                email: rawEmail || existing.email,
+              },
+            },
+          },
+        });
+        updatedCount++;
+      } else {
+        // Create new side-by-side entry
+        bulkOps.push({
+          insertOne: {
+            document: {
+              owner: ownerId,
+              name: `${rawName || 'Imported Client'} (Imported)`,
+              phone: rawPhone || `+91 9${Math.floor(100000000 + Math.random() * 900000000)}`,
+              email: rawEmail || "",
+              notes,
+              isActive: true,
+            },
+          },
+        });
+        importedCount++;
+      }
+    } else {
+      bulkOps.push({
+        insertOne: {
+          document: {
+            owner: ownerId,
+            name: rawName || "Imported Client",
+            phone: rawPhone || `+91 9${Math.floor(100000000 + Math.random() * 900000000)}`,
+            email: rawEmail || "",
+            notes,
+            isActive: true,
+          },
+        },
+      });
+      importedCount++;
+    }
+  }
+
+  if (bulkOps.length > 0) {
+    await Customer.bulkWrite(bulkOps);
+  }
+
+  return res.status(httpStatus.OK).json(
+    new ApiResponse({
+      success: true,
+      message: "Bulk customer import completed successfully.",
+      data: {
+        importedCount,
+        updatedCount,
+        skippedCount,
+        totalProcessed: customers.length,
+      },
     }),
   );
 });

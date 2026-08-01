@@ -40,9 +40,8 @@ export const createSale = AsyncHandler(async (req, res) => {
     );
   }
 
-  let customerId = customer;
+  let customerId = customer || req.body.customerName;
 
-  // Check customer existence or fallback to/create a Walk-in Customer
   if (customerId && mongoose.Types.ObjectId.isValid(customerId)) {
     const customerExists = await Customer.findOne({
       _id: customerId,
@@ -51,6 +50,20 @@ export const createSale = AsyncHandler(async (req, res) => {
     });
     if (!customerExists) {
       customerId = null;
+    }
+  } else if (typeof customerId === "string" && customerId.trim() !== "") {
+    const nameStr = customerId.trim();
+    let existingByName = await Customer.findOne({ owner: req.user._id, name: nameStr });
+    if (existingByName) {
+      customerId = existingByName._id;
+    } else {
+      const newCust = await Customer.create({
+        owner: req.user._id,
+        name: nameStr,
+        phone: `91${Math.floor(10000000 + Math.random() * 90000000)}`,
+        email: "",
+      });
+      customerId = newCust._id;
     }
   } else {
     customerId = null;
@@ -62,9 +75,8 @@ export const createSale = AsyncHandler(async (req, res) => {
       walkInCust = await Customer.create({
         owner: req.user._id,
         name: "Walk-in Customer",
-        phone: "+91 00000 00000",
+        phone: "9100000000",
         email: "walkin@bizflow.com",
-        status: "Active",
       });
     }
     customerId = walkInCust._id;
