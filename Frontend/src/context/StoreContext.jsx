@@ -342,30 +342,6 @@ export const StoreContextProvider = ({ children }) => {
     setAiChats((prev) => [...prev, userMsg]);
   };
 
-  const seedDemoData = () => {
-    const isConfirmed = window.confirm("Load sample demo data into your workspace?");
-    if (!isConfirmed) return;
-    saveCustomers([]);
-    saveSales([]);
-    saveTasks([]);
-  };
-
-  const resetDatabase = () => {
-    const isConfirmed = window.confirm("DANGER: Are you sure you want to reset all stored local data?");
-    if (!isConfirmed) return;
-    saveCustomers([]);
-    saveSales([]);
-    saveTasks([]);
-    saveSettings({
-      businessName: "My Business",
-      businessType: "Retail Shop",
-      phone: "",
-      email: "",
-      currency: "₹",
-      address: "",
-    });
-  };
-
   const contextValue = {
     theme,
     toggleTheme,
@@ -403,8 +379,6 @@ export const StoreContextProvider = ({ children }) => {
     loginUser,
     registerUser,
     logoutUser,
-    seedDemoData,
-    resetDatabase,
   };
 
   return (

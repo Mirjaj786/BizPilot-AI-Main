@@ -39,7 +39,6 @@ export default function Sidebar({
 
   return (
     <>
-      {/* Mobile Backdrop */}
       {mobileOpen && (
         <div
           onClick={() => setMobileOpen(false)}
@@ -52,7 +51,6 @@ export default function Sidebar({
           } ${mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
           }`}
       >
-        {/* Brand Header */}
         <div className="h-20 flex items-center justify-between px-5 border-b border-slate-800/80">
           <NavLink to="/dashboard" className="flex items-center gap-3 overflow-hidden">
             <div className="h-9 w-9 rounded-xl bg-blue-600/30 flex items-center justify-center text-white font-extrabold shadow-md shrink-0 overflow-hidden border border-blue-500/30">
@@ -82,7 +80,6 @@ export default function Sidebar({
           </button>
         </div>
 
-        {/* Navigation Items */}
         <div className="flex-1 overflow-y-auto px-3 py-6 space-y-1.5">
           {menuItems.map((item) => {
             const Icon = item.icon;
@@ -97,10 +94,10 @@ export default function Sidebar({
                 to={item.path}
                 onClick={() => setMobileOpen(false)}
                 className={`relative flex items-center gap-3.5 px-3.5 py-3 rounded-xl font-semibold text-sm transition-all duration-150 group cursor-pointer ${isActive
-                    ? "bg-blue-600 text-white shadow-sm font-bold"
-                    : item.highlight
-                      ? "text-purple-400 hover:bg-purple-950/40 hover:text-purple-300"
-                      : "text-slate-400 hover:bg-slate-800/60 hover:text-slate-100"
+                  ? "bg-blue-600 text-white shadow-sm font-bold"
+                  : item.highlight
+                    ? "text-purple-400 hover:bg-purple-950/40 hover:text-purple-300"
+                    : "text-slate-400 hover:bg-slate-800/60 hover:text-slate-100"
                   }`}
                 title={collapsed ? item.name : undefined}
               >
@@ -111,7 +108,6 @@ export default function Sidebar({
           })}
         </div>
 
-        {/* User Footer Card */}
         <div className="p-3 border-t border-slate-800/80 flex items-center justify-between">
           <NavLink
             to="/dashboard/settings"

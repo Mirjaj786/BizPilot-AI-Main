@@ -53,7 +53,6 @@ const CustomTooltip = ({ active, payload, label, currency = "₹" }) => {
   return null;
 };
 
-// 1. AREA CHART — Dynamic Revenue / Sales Trends
 export function RevenueAreaChart({ data, currency = "₹", height = 280 }) {
   const chartData = data && data.length > 0 ? data : YTD_DATA.map((d) => ({ name: d.month, revenue: d.revenue }));
 
@@ -240,10 +239,10 @@ export function MiniSparkline({ color = "#2563EB", type = "blue" }) {
     type === "green"
       ? GREEN_SPARKLINE
       : type === "red"
-      ? RED_SPARKLINE
-      : type === "grey"
-      ? GREY_SPARKLINE
-      : BLUE_SPARKLINE;
+        ? RED_SPARKLINE
+        : type === "grey"
+          ? GREY_SPARKLINE
+          : BLUE_SPARKLINE;
 
   return (
     <div className="w-24 h-10">

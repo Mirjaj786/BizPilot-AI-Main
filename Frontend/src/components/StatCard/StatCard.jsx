@@ -37,7 +37,6 @@ export default function StatCard({
 
   return (
     <div className="flex flex-col justify-between h-full bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xs hover:shadow-md transition-all duration-200 group">
-      {/* Top row: Title & Icon */}
       <div className="flex items-center justify-between gap-3">
         <span className="text-xs sm:text-sm font-semibold text-slate-500 dark:text-slate-400 tracking-wide uppercase">
           {title}
@@ -51,7 +50,6 @@ export default function StatCard({
         )}
       </div>
 
-      {/* Value */}
       <div className="my-3 flex items-baseline justify-between">
         <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-none">
           {value}
@@ -65,18 +63,16 @@ export default function StatCard({
         )}
       </div>
 
-      {/* Footer: Trend badge & Subtext/Timeframe */}
       {(displayTrendText || subtext || timeframe) && (
         <div className="flex items-center gap-2 pt-3 border-t border-slate-100 dark:border-slate-800 flex-wrap text-xs">
           {displayTrendText && (
             <span
-              className={`inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-bold whitespace-nowrap border ${
-                isUp
+              className={`inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-bold whitespace-nowrap border ${isUp
                   ? trendStyles.up
                   : trendType === "down"
-                  ? trendStyles.down
-                  : trendStyles.neutral
-              }`}
+                    ? trendStyles.down
+                    : trendStyles.neutral
+                }`}
             >
               {isUp ? (
                 <IoTrendingUpOutline size={14} />

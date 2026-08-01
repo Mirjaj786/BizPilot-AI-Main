@@ -15,7 +15,7 @@ import { toast } from "react-toastify";
 const CURRENCIES = ["₹", "$", "€", "£", "AED", "¥"];
 
 export default function Settings() {
-  const { settings, saveSettings, user, setUser, theme, setThemeMode, seedDemoData, resetDatabase } = useContext(StoreContext);
+  const { settings, saveSettings, user, setUser, theme, setThemeMode } = useContext(StoreContext);
 
   const [form, setForm] = useState({
     businessName: settings?.businessName || user?.businessName || "",
@@ -50,17 +50,8 @@ export default function Settings() {
     }, 300);
   };
 
-  const handleSeedDemo = () => {
-    seedDemoData();
-  };
-
-  const handleResetDB = () => {
-    resetDatabase();
-  };
-
   return (
     <div className="space-y-6 pb-8 font-sans max-w-4xl mx-auto">
-      {/* Business Details Form */}
       <Card className="!p-6 sm:!p-7">
         <SectionHeader title="Business & Profile Settings" subtitle="Configure shop ledger details, receipt header, and currency" />
         <form onSubmit={handleSave} className="space-y-4 mt-6">
@@ -112,24 +103,22 @@ export default function Settings() {
 
           <div className="pt-2">
             <Button type="submit" loading={loading} className="font-bold px-6">
-              <IoSaveOutline size={16} /> Save Settings
+              Save Settings
             </Button>
           </div>
         </form>
       </Card>
 
-      {/* Interface Theme Settings */}
       <Card className="!p-6 sm:!p-7">
         <SectionHeader title="Interface Display Theme" subtitle="Switch between Light and Dark workspace modes" />
         <div className="flex items-center gap-4 mt-4">
           <button
             type="button"
             onClick={() => setThemeMode("light")}
-            className={`flex-1 p-4 rounded-2xl border flex items-center justify-center gap-3 transition-all cursor-pointer ${
-              theme === "light"
-                ? "border-blue-600 bg-blue-50/50 text-blue-700 font-bold ring-2 ring-blue-600/20"
-                : "border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300"
-            }`}
+            className={`flex-1 p-4 rounded-2xl border flex items-center justify-center gap-3 transition-all cursor-pointer ${theme === "light"
+              ? "border-blue-600 bg-blue-50/50 text-blue-700 font-bold ring-2 ring-blue-600/20"
+              : "border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300"
+              }`}
           >
             <IoSunnyOutline size={20} className="text-amber-500" />
             <span>Light Mode</span>
@@ -137,11 +126,10 @@ export default function Settings() {
           <button
             type="button"
             onClick={() => setThemeMode("dark")}
-            className={`flex-1 p-4 rounded-2xl border flex items-center justify-center gap-3 transition-all cursor-pointer ${
-              theme === "dark"
-                ? "border-blue-600 bg-slate-800 text-white font-bold ring-2 ring-blue-600/40"
-                : "border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300"
-            }`}
+            className={`flex-1 p-4 rounded-2xl border flex items-center justify-center gap-3 transition-all cursor-pointer ${theme === "dark"
+              ? "border-blue-600 bg-slate-800 text-white font-bold ring-2 ring-blue-600/40"
+              : "border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300"
+              }`}
           >
             <IoMoonOutline size={20} className="text-indigo-400" />
             <span>Dark Mode</span>
@@ -150,7 +138,7 @@ export default function Settings() {
       </Card>
 
       {/* Database & Demo Management */}
-      <Card className="!p-6 sm:!p-7">
+      {/* <Card className="!p-6 sm:!p-7">
         <SectionHeader title="Database & Storage Operations" subtitle="Manage local store data persistence" />
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
           <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 space-y-3">
@@ -165,11 +153,11 @@ export default function Settings() {
             <h4 className="font-bold text-xs sm:text-sm text-red-700 dark:text-red-400">Reset Local Database</h4>
             <p className="text-xs text-slate-500 dark:text-slate-400">Wipe all local store records and restore to default empty state.</p>
             <Button onClick={handleResetDB} variant="danger" size="sm" className="w-full font-bold">
-              <IoTrashOutline size={16} /> Reset All Data
+              Reset All Data
             </Button>
           </div>
         </div>
-      </Card>
+      </Card> */}
     </div>
   );
 }

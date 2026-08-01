@@ -78,9 +78,8 @@ export default function CustomerDetailsModal({ customer, onClose }) {
           {/* Header Profile Card */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-gradient-to-r from-slate-50 to-blue-50/40 dark:from-slate-900 dark:to-slate-800/80 border border-slate-200/80 dark:border-slate-800">
             <div className="flex items-center gap-3.5">
-              <div className={`flex h-12 w-12 items-center justify-center rounded-2xl font-black text-white text-base shadow-xs ${
-                isActive ? "bg-blue-600" : "bg-slate-500"
-              }`}>
+              <div className={`flex h-12 w-12 items-center justify-center rounded-2xl font-black text-white text-base shadow-xs ${isActive ? "bg-blue-600" : "bg-slate-500"
+                }`}>
                 {customer.name?.[0]?.toUpperCase() || "C"}
               </div>
               <div>
@@ -123,21 +122,19 @@ export default function CustomerDetailsModal({ customer, onClose }) {
           <div className="flex gap-2 p-1 bg-slate-100 dark:bg-slate-800/80 rounded-xl border border-slate-200 dark:border-slate-700 w-fit">
             <button
               onClick={() => setActiveTab("overview")}
-              className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                activeTab === "overview"
-                  ? "bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-2xs"
-                  : "text-slate-500 hover:text-slate-800 dark:hover:text-slate-200"
-              }`}
+              className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${activeTab === "overview"
+                ? "bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-2xs"
+                : "text-slate-500 hover:text-slate-800 dark:hover:text-slate-200"
+                }`}
             >
               Contact & Overview
             </button>
             <button
               onClick={() => setActiveTab("sales")}
-              className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
-                activeTab === "sales"
-                  ? "bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-2xs"
-                  : "text-slate-500 hover:text-slate-800 dark:hover:text-slate-200"
-              }`}
+              className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${activeTab === "sales"
+                ? "bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-2xs"
+                : "text-slate-500 hover:text-slate-800 dark:hover:text-slate-200"
+                }`}
             >
               <IoReceiptOutline size={14} />
               Sales & Invoices ({customerSales.length})

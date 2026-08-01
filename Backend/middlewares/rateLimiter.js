@@ -1,7 +1,6 @@
 import ApiError from "../utils/apiError.js";
 import httpStatus from "http-status";
 
-// In-memory rate limiting store: key -> Array of timestamps
 const rateLimitMap = new Map();
 
 export const aiRateLimiter = (maxRequests = 10, windowMs = 60 * 1000) => {
