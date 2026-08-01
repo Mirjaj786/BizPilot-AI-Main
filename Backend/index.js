@@ -14,7 +14,28 @@ import aiRoute from "./routes/aiRoute.js";
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+
+// CORS Configuration for Production Netlify Frontend & Local Development
+const allowedOrigins = [
+  "https://bizpilotcrm.netlify.app",
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin) || origin.endsWith(".netlify.app") || origin.endsWith(".vercel.app")) {
+        callback(null, true);
+      } else {
+        callback(null, true);
+      }
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "token", "bf_token"],
+  })
+);
 
 app.get("/", (req, res) => {
   res.json({ message: "BizPilot AI Backend API is running live on Vercel! 🚀" });
