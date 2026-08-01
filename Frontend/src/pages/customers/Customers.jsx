@@ -214,7 +214,7 @@ export default function Customers() {
         {/* Search & Filter Controls */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 my-4">
           <div className="relative flex-1 max-w-md">
-            <IoSearchOutline className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 size-4" />
+            <IoSearchOutline className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 size-4" />
             <input
               type="text"
               placeholder="Search by name, phone, city, email or tags..."
@@ -233,11 +233,10 @@ export default function Customers() {
               <button
                 key={val}
                 onClick={() => setFilterStatus(val)}
-                className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                  filterStatus === val
-                    ? "bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-2xs"
-                    : "text-slate-500 hover:text-slate-800 dark:hover:text-slate-200"
-                }`}
+                className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${filterStatus === val
+                  ? "bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-2xs"
+                  : "text-slate-500 hover:text-slate-800 dark:hover:text-slate-200"
+                  }`}
               >
                 {label}
               </button>
@@ -273,17 +272,15 @@ export default function Customers() {
                   return (
                     <tr
                       key={cust._id || cust.id}
-                      className={`transition-colors ${
-                        isActive
-                          ? "hover:bg-slate-50 dark:hover:bg-slate-800/50"
-                          : "bg-slate-50/40 dark:bg-slate-900/40 opacity-75 hover:opacity-100"
-                      }`}
+                      className={`transition-colors ${isActive
+                        ? "hover:bg-slate-50 dark:hover:bg-slate-800/50"
+                        : "bg-slate-50/40 dark:bg-slate-900/40 opacity-75 hover:opacity-100"
+                        }`}
                     >
                       <td>
                         <div className="flex items-center gap-3">
-                          <div className={`flex h-9 w-9 items-center justify-center rounded-xl font-bold text-white text-xs shrink-0 ${
-                            isActive ? "bg-blue-600" : "bg-slate-400 dark:bg-slate-700"
-                          }`}>
+                          <div className={`flex h-9 w-9 items-center justify-center rounded-xl font-bold text-white text-xs shrink-0 ${isActive ? "bg-blue-600" : "bg-slate-400 dark:bg-slate-700"
+                            }`}>
                             {cust.name?.[0]?.toUpperCase() || "C"}
                           </div>
                           <div>
