@@ -9,6 +9,10 @@ import {
   IoAlertCircleOutline,
   IoBulbOutline,
   IoCartOutline,
+  IoMicOutline,
+  IoMicOffOutline,
+  IoVolumeHighOutline,
+  IoVolumeMuteOutline,
 } from "react-icons/io5";
 
 const SUGGESTIONS = [
@@ -29,27 +33,115 @@ export default function AI() {
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const [voiceSpeechEnabled, setVoiceSpeechEnabled] = useState(false);
   const scrollRef = useRef(null);
+  const recognitionRef = useRef(null);
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
 
+  const speakText = (text) => {
+    if (!voiceSpeechEnabled || !("speechSynthesis" in window)) return;
+    window.speechSynthesis.cancel();
+    const cleanText = text.replace(/[*#\-]/g, "").replace(/\n+/g, " ");
+    const utterance = new SpeechSynthesisUtterance(cleanText.slice(0, 300));
+    utterance.rate = 1.0;
+    utterance.pitch = 1.0;
+    window.speechSynthesis.speak(utterance);
+  };
+
+  const toggleListening = () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Voice recognition is not supported in this browser version. Please try Chrome or Edge.");
+      return;
+    }
+
+    if (isListening) {
+      recognitionRef.current?.stop();
+      setIsListening(false);
+      return;
+    }
+
+    try {
+      const recognition = new SpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.lang = "en-US";
+
+      recognition.onstart = () => {
+        setIsListening(true);
+      };
+
+      recognition.onresult = (e) => {
+        const transcript = e.results[0][0].transcript;
+        if (transcript) {
+          setInput(transcript);
+          handleSendMessage(transcript);
+        }
+      };
+
+      recognition.onerror = () => {
+        setIsListening(false);
+      };
+
+      recognition.onend = () => {
+        setIsListening(false);
+      };
+
+      recognitionRef.current = recognition;
+      recognition.start();
+    } catch {
+      setIsListening(false);
+    }
+  };
+
+  const simulateTypingEffect = (aiMsgId, fullText) => {
+    const lines = fullText.split("\n");
+    let currentLineIndex = 0;
+    let accumulatedText = "";
+
+    const timer = setInterval(() => {
+      if (currentLineIndex < lines.length) {
+        accumulatedText += (currentLineIndex === 0 ? "" : "\n") + lines[currentLineIndex];
+        currentLineIndex++;
+
+        setMessages((prev) =>
+          prev.map((m) => (m.id === aiMsgId ? { ...m, text: accumulatedText } : m))
+        );
+        scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+      } else {
+        clearInterval(timer);
+        setMessages((prev) =>
+          prev.map((m) => (m.id === aiMsgId ? { ...m, isTyping: false } : m))
+        );
+        speakText(fullText);
+      }
+    }, 40);
+  };
+
   const handleSendMessage = async (textToSend) => {
     const text = textToSend || input;
     if (!text.trim()) return;
 
-    setMessages((prev) => [...prev, { id: `u_${prev.length + 1}`, sender: "user", text }]);
+    const userMsgId = `u_${Date.now()}`;
+    const aiMsgId = `ai_${Date.now()}`;
+
+    setMessages((prev) => [...prev, { id: userMsgId, sender: "user", text }]);
     setInput("");
     setLoading(true);
 
     try {
       const aiReplyText = await aiService.askAI(text);
-      setMessages((prev) => [...prev, { id: `ai_${prev.length + 1}`, sender: "ai", text: aiReplyText }]);
-    } catch {
-      setMessages((prev) => [...prev, { id: `err_${prev.length + 1}`, sender: "ai", text: "Sorry, I encountered an error. Please try again." }]);
-    } finally {
       setLoading(false);
+      setMessages((prev) => [...prev, { id: aiMsgId, sender: "ai", text: "", isTyping: true }]);
+      simulateTypingEffect(aiMsgId, aiReplyText);
+    } catch {
+      setLoading(false);
+      const errText = "Sorry, I encountered an error retrieving data. Please try again.";
+      setMessages((prev) => [...prev, { id: `err_${Date.now()}`, sender: "ai", text: errText }]);
     }
   };
 
@@ -108,6 +200,21 @@ export default function AI() {
             </p>
           </div>
         </div>
+
+        {/* Voice Readout Toggle */}
+        <button
+          type="button"
+          onClick={() => setVoiceSpeechEnabled(!voiceSpeechEnabled)}
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
+            voiceSpeechEnabled
+              ? "bg-purple-600 text-white border-purple-600 ring-2 ring-purple-600/30"
+              : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700"
+          }`}
+          title="Toggle AI Voice Audio Answers"
+        >
+          {voiceSpeechEnabled ? <IoVolumeHighOutline size={16} /> : <IoVolumeMuteOutline size={16} />}
+          <span className="hidden sm:inline">{voiceSpeechEnabled ? "Voice On" : "Voice Off"}</span>
+        </button>
       </div>
 
       {/* Suggestion Chips */}
@@ -171,13 +278,27 @@ export default function AI() {
       {/* Input Bar */}
       <form
         onSubmit={(e) => { e.preventDefault(); handleSendMessage(); }}
-        className="p-3 sm:p-4 bg-white dark:bg-slate-900 rounded-b-2xl border border-slate-200/80 dark:border-slate-800 flex items-center gap-3 shadow-2xs"
+        className="p-3 sm:p-4 bg-white dark:bg-slate-900 rounded-b-2xl border border-slate-200/80 dark:border-slate-800 flex items-center gap-2 sm:gap-3 shadow-2xs"
       >
+        {/* Microphone Button */}
+        <button
+          type="button"
+          onClick={toggleListening}
+          className={`flex h-10 w-10 items-center justify-center rounded-xl border transition-all cursor-pointer shrink-0 ${
+            isListening
+              ? "bg-red-600 text-white border-red-600 animate-pulse ring-4 ring-red-600/30"
+              : "bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400 border-purple-200 dark:border-purple-800 hover:bg-purple-100"
+          }`}
+          title={isListening ? "Listening... Speak your command now" : "Click to Speak (Voice Command)"}
+        >
+          {isListening ? <IoMicOffOutline size={18} /> : <IoMicOutline size={18} />}
+        </button>
+
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Ask AI about sales, customers, pending dues, or tips..."
+          placeholder={isListening ? "Listening to your voice..." : "Ask AI or speak via mic..."}
           className="bf-input flex-1"
         />
         <button
