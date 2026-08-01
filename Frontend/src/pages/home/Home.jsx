@@ -55,7 +55,6 @@ export default function Home() {
                 onClick={() => navigate("/dashboard")}
               >
                 Launch Workspace
-                <IoArrowForwardOutline className="ml-1" />
               </Button>
               <Button
                 variant="outline"

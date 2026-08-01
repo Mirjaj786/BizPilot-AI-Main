@@ -16,27 +16,15 @@ export const getAllSales = AsyncHandler(async (req, res) => {
     throw new ApiError(httpStatus.BAD_REQUEST, "Invalid owner ID!");
   }
 
-  // Check if user has sales. If empty, check and assign seeded sales if available
-  let sales = await Sale.find({ owner: ownerId })
+  const sales = await Sale.find({ owner: ownerId })
     .populate("customer", "name phone email business")
     .sort({ createdAt: -1 });
-
-  if (!sales || sales.length === 0) {
-    const dummyOwnerId = new mongoose.Types.ObjectId("6a6cdd20fc7b7abd2a29f251");
-    const seededCount = await Sale.countDocuments({ owner: dummyOwnerId });
-    if (seededCount > 0) {
-      await Sale.updateMany({ owner: dummyOwnerId }, { owner: ownerId });
-      sales = await Sale.find({ owner: ownerId })
-        .populate("customer", "name phone email business")
-        .sort({ createdAt: -1 });
-    }
-  }
 
   return res.status(httpStatus.OK).json(
     new ApiResponse({
       success: true,
       message: "All sales fetched successfully.",
-      data: sales,
+      data: sales || [],
     }),
   );
 });
@@ -143,18 +131,9 @@ export const getSaleById = AsyncHandler(async (req, res) => {
 export const getSalesStats = AsyncHandler(async (req, res) => {
   const ownerId = req.user._id;
 
-  let sales = await Sale.find({ owner: ownerId });
+  const sales = await Sale.find({ owner: ownerId });
 
   if (!sales || sales.length === 0) {
-    const dummyOwnerId = new mongoose.Types.ObjectId("6a6cdd20fc7b7abd2a29f251");
-    const seededCount = await Sale.countDocuments({ owner: dummyOwnerId });
-    if (seededCount > 0) {
-      await Sale.updateMany({ owner: dummyOwnerId }, { owner: ownerId });
-      sales = await Sale.find({ owner: ownerId });
-    }
-  }
-
-  if (!sales.length) {
     return res.status(httpStatus.OK).json(
       new ApiResponse({
         success: true,

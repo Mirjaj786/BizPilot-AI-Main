@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { IoMailOutline, IoLockClosedOutline, IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
+import { GoogleLogin } from "@react-oauth/google";
 import Button from "../../components/Button/Button.jsx";
 import { StoreContext } from "../../context/StoreContext.jsx";
 import { authService } from "../../services/authService.js";
@@ -16,6 +17,23 @@ export default function Login() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    if (!credentialResponse?.credential) return;
+    setLoading(true);
+    try {
+      const response = await authService.googleLogin(credentialResponse.credential);
+      if (response && response.user) {
+        loginUser(response.user);
+        toast.success("Welcome back! Google Sign-in successful.");
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      toast.error(error?.message || "Google Sign-In failed.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -110,6 +128,21 @@ export default function Login() {
       >
         Sign In to Workspace
       </Button>
+
+      <div className="relative my-3 flex items-center justify-center">
+        <div className="border-t border-slate-200 dark:border-slate-700 w-full"></div>
+        <span className="bg-white dark:bg-slate-900 px-3 text-xs text-slate-400 font-medium absolute">OR</span>
+      </div>
+
+      <div className="flex justify-center w-full">
+        <GoogleLogin
+          onSuccess={handleGoogleSuccess}
+          onError={() => toast.error("Google Sign-In Failed")}
+          useOneTap
+          shape="pill"
+          theme="filled_blue"
+        />
+      </div>
 
       <div className="pt-4 text-center">
         <p className="text-xs text-slate-500 dark:text-slate-400">

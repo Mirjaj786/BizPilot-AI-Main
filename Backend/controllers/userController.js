@@ -7,6 +7,9 @@ import bcrypt from "bcrypt";
 import validator from "validator";
 import httpStatus from "http-status";
 import { genarateToken } from "../utils/createToken.js";
+import { OAuth2Client } from "google-auth-library";
+
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 export const register = AsyncHandler(async (req, res) => {
   const { fullName, email, password, businessName, businessType } = req.body;
@@ -132,6 +135,61 @@ export const logout = AsyncHandler(async (req, res) => {
     new ApiResponse({
       success: true,
       message: "Logged out successfully.",
+    }),
+  );
+});
+
+export const googleLogin = AsyncHandler(async (req, res) => {
+  const { credential, token: inputToken } = req.body;
+  const targetToken = credential || inputToken;
+
+  if (!targetToken) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "Google credential token is required");
+  }
+
+  let payload;
+  try {
+    const ticket = await googleClient.verifyIdToken({
+      idToken: targetToken,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    payload = ticket.getPayload();
+  } catch (error) {
+    console.error("Google token verification error:", error.message);
+    throw new ApiError(httpStatus.UNAUTHORIZED, "Invalid or expired Google token");
+  }
+
+  const { email, name, sub: googleId } = payload;
+  const normalizedEmail = email.trim().toLowerCase();
+
+  let user = await User.findOne({ email: normalizedEmail });
+
+  if (!user) {
+    const dummyPassword = await bcrypt.hash(googleId + (process.env.JWT_SECRET || "google_secret"), 10);
+    user = await User.create({
+      fullName: name?.trim() || "Google Merchant",
+      email: normalizedEmail,
+      password: dummyPassword,
+      businessName: `${(name?.split(' ')[0]) || 'My'}'s Retail Store`,
+      businessType: "Retail",
+    });
+  }
+
+  const token = genarateToken(user._id);
+
+  return res.status(httpStatus.OK).json(
+    new ApiResponse({
+      message: "Google login successful",
+      data: {
+        token,
+        user: {
+          id: user._id,
+          fullName: user.fullName,
+          email: user.email,
+          businessName: user.businessName,
+          businessType: user.businessType,
+        },
+      },
     }),
   );
 });

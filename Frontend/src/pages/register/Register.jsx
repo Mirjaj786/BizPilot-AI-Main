@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { GoogleLogin } from "@react-oauth/google";
 import Button from "../../components/Button/Button.jsx";
 import { StoreContext } from "../../context/StoreContext.jsx";
 import { authService } from "../../services/authService.js";
@@ -25,6 +26,23 @@ export default function Register() {
     password: "",
   });
   const [loading, setLoading] = useState(false);
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    if (!credentialResponse?.credential) return;
+    setLoading(true);
+    try {
+      const response = await authService.googleLogin(credentialResponse.credential);
+      if (response && response.user) {
+        registerUser(response.user);
+        toast.success("Account created via Google! Welcome to BizPilot AI.");
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      toast.error(error?.message || "Google Sign-In failed.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -140,6 +158,21 @@ export default function Register() {
       >
         Register Free Account
       </Button>
+
+      <div className="relative my-3 flex items-center justify-center">
+        <div className="border-t border-slate-200 dark:border-slate-700 w-full"></div>
+        <span className="bg-white dark:bg-slate-900 px-3 text-xs text-slate-400 font-medium absolute">OR</span>
+      </div>
+
+      <div className="flex justify-center w-full">
+        <GoogleLogin
+          onSuccess={handleGoogleSuccess}
+          onError={() => toast.error("Google Sign-In Failed")}
+          useOneTap
+          shape="pill"
+          theme="filled_blue"
+        />
+      </div>
 
       <div className="pt-4 text-center">
         <p className="text-xs text-slate-500 dark:text-slate-400">
