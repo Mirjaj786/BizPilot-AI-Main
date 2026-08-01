@@ -16,9 +16,21 @@ export const getAllSales = AsyncHandler(async (req, res) => {
     throw new ApiError(httpStatus.BAD_REQUEST, "Invalid owner ID!");
   }
 
-  const sales = await Sale.find({ owner: ownerId })
-    .populate("customer", "name phone email")
+  // Check if user has sales. If empty, check and assign seeded sales if available
+  let sales = await Sale.find({ owner: ownerId })
+    .populate("customer", "name phone email business")
     .sort({ createdAt: -1 });
+
+  if (!sales || sales.length === 0) {
+    const dummyOwnerId = new mongoose.Types.ObjectId("6a6cdd20fc7b7abd2a29f251");
+    const seededCount = await Sale.countDocuments({ owner: dummyOwnerId });
+    if (seededCount > 0) {
+      await Sale.updateMany({ owner: dummyOwnerId }, { owner: ownerId });
+      sales = await Sale.find({ owner: ownerId })
+        .populate("customer", "name phone email business")
+        .sort({ createdAt: -1 });
+    }
+  }
 
   return res.status(httpStatus.OK).json(
     new ApiResponse({
@@ -33,27 +45,46 @@ export const createSale = AsyncHandler(async (req, res) => {
   const { customer, items, paymentMethod, status, saleDate, notes } = req.body;
 
   // Validation
-  if (!customer || !items || items.length === 0) {
+  if (!items || items.length === 0) {
     throw new ApiError(
       httpStatus.BAD_REQUEST,
-      "Customer and items are required.",
+      "Items are required for a sale.",
     );
   }
 
-  // Check customer
-  const customerExists = await Customer.findOne({
-    _id: customer,
-    owner: req.user._id,
-    isActive: true,
-  });
+  let customerId = customer;
 
-  if (!customerExists) {
-    throw new ApiError(httpStatus.NOT_FOUND, "Customer not found.");
+  // Check customer existence or fallback to/create a Walk-in Customer
+  if (customerId && mongoose.Types.ObjectId.isValid(customerId)) {
+    const customerExists = await Customer.findOne({
+      _id: customerId,
+      owner: req.user._id,
+      isActive: true,
+    });
+    if (!customerExists) {
+      customerId = null;
+    }
+  } else {
+    customerId = null;
+  }
+
+  if (!customerId) {
+    let walkInCust = await Customer.findOne({ owner: req.user._id, name: "Walk-in Customer" });
+    if (!walkInCust) {
+      walkInCust = await Customer.create({
+        owner: req.user._id,
+        name: "Walk-in Customer",
+        phone: "+91 00000 00000",
+        email: "walkin@bizflow.com",
+        status: "Active",
+      });
+    }
+    customerId = walkInCust._id;
   }
 
   // Calculate Total
   const total = items.reduce(
-    (sum, item) => sum + item.price * item.quantity,
+    (sum, item) => sum + (Number(item.price) || 0) * (Number(item.quantity) || 1),
     0,
   );
 
@@ -63,21 +94,23 @@ export const createSale = AsyncHandler(async (req, res) => {
   // Create Sale
   const sale = await Sale.create({
     owner: req.user._id,
-    customer,
+    customer: customerId,
     invoiceNo,
     items,
     total,
-    paymentMethod,
-    status,
-    saleDate,
-    notes,
+    paymentMethod: paymentMethod || "Cash",
+    status: status || "Paid",
+    saleDate: saleDate || new Date(),
+    notes: notes || "",
   });
+
+  const populatedSale = await Sale.findById(sale._id).populate("customer", "name phone email business");
 
   return res.status(httpStatus.CREATED).json(
     new ApiResponse({
       success: true,
       message: "Sale created successfully.",
-      data: sale,
+      data: populatedSale,
     }),
   );
 });
@@ -92,7 +125,7 @@ export const getSaleById = AsyncHandler(async (req, res) => {
   const sale = await Sale.findOne({
     _id: id,
     owner: req.user._id,
-  }).populate("customer", "name phone email");
+  }).populate("customer", "name phone email business");
 
   if (!sale) {
     throw new ApiError(httpStatus.NOT_FOUND, "Sale not found!");
@@ -110,7 +143,16 @@ export const getSaleById = AsyncHandler(async (req, res) => {
 export const getSalesStats = AsyncHandler(async (req, res) => {
   const ownerId = req.user._id;
 
-  const sales = await Sale.find({ owner: ownerId });
+  let sales = await Sale.find({ owner: ownerId });
+
+  if (!sales || sales.length === 0) {
+    const dummyOwnerId = new mongoose.Types.ObjectId("6a6cdd20fc7b7abd2a29f251");
+    const seededCount = await Sale.countDocuments({ owner: dummyOwnerId });
+    if (seededCount > 0) {
+      await Sale.updateMany({ owner: dummyOwnerId }, { owner: ownerId });
+      sales = await Sale.find({ owner: ownerId });
+    }
+  }
 
   if (!sales.length) {
     return res.status(httpStatus.OK).json(
@@ -129,7 +171,7 @@ export const getSalesStats = AsyncHandler(async (req, res) => {
     );
   }
 
-  const totalRevenue = sales.reduce((sum, sale) => sum + sale.total, 0);
+  const totalRevenue = sales.reduce((sum, sale) => sum + (sale.status === "Paid" ? sale.total : 0), 0);
 
   const paidSales = sales.filter((sale) => sale.status === "Paid").length;
 
@@ -148,8 +190,8 @@ export const getSalesStats = AsyncHandler(async (req, res) => {
   const todayRevenue = sales
     .filter(
       (sale) =>
-        sale.saleDate >= today &&
-        sale.saleDate < tomorrow &&
+        new Date(sale.saleDate) >= today &&
+        new Date(sale.saleDate) < tomorrow &&
         sale.status === "Paid",
     )
     .reduce((sum, sale) => sum + sale.total, 0);
@@ -169,3 +211,4 @@ export const getSalesStats = AsyncHandler(async (req, res) => {
     }),
   );
 });
+
