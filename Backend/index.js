@@ -16,7 +16,6 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Root health check endpoint for Vercel deployment
 app.get("/", (req, res) => {
   res.json({ message: "BizPilot AI Backend API is running live on Vercel! 🚀" });
 });
