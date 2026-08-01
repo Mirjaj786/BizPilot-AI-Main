@@ -21,6 +21,7 @@ import {
   IoLocationOutline,
   IoPricetagOutline,
   IoEyeOutline,
+  IoChatbubbleEllipsesOutline,
 } from "react-icons/io5";
 import { toast } from "react-toastify";
 
@@ -65,6 +66,21 @@ export default function Customers() {
   useEffect(() => {
     loadBackendCustomers();
   }, []);
+
+  const handleSendWhatsAppReminder = (cust) => {
+    const phone = cust.phone ? cust.phone.replace(/[^0-9]/g, "") : "";
+    const duesAmount = Number(cust.outstandingBalance || 0);
+    const businessName = settings?.businessName || "BizPilot AI Store";
+    const currency = settings?.currency || "₹";
+
+    const textMessage = `*Dear ${cust.name},*\n\nGreetings from *${businessName}*! 👋\n\nThis is a friendly statement reminder regarding your account:\n-------------------------------------------\n💰 *Outstanding Balance*: ${currency}${duesAmount.toLocaleString()}\n📌 *Account Status*: ${cust.status || "Active"}\n-------------------------------------------\n\nKindly settle the pending balance via UPI / Bank Transfer at your earliest convenience.\n\nThank you for your business! 🙏\n\n*${businessName}*`;
+
+    const whatsappUrl = phone
+      ? `https://wa.me/${phone}?text=${encodeURIComponent(textMessage)}`
+      : `https://wa.me/?text=${encodeURIComponent(textMessage)}`;
+
+    window.open(whatsappUrl, "_blank");
+  };
 
   const handleOpenAdd = () => {
     setEditingCust(null);
@@ -331,6 +347,15 @@ export default function Customers() {
                       </td>
                       <td className="text-right">
                         <div className="flex items-center justify-end gap-1">
+                          {/* Send WhatsApp Payment Reminder */}
+                          <button
+                            onClick={() => handleSendWhatsAppReminder(cust)}
+                            className="p-2 rounded-lg text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 transition-colors cursor-pointer"
+                            title="Send WhatsApp Statement / Payment Reminder"
+                          >
+                            <IoChatbubbleEllipsesOutline size={17} />
+                          </button>
+
                           {/* View Customer Details & Sales History */}
                           <button
                             onClick={() => setViewingCust(cust)}

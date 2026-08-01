@@ -8,11 +8,13 @@ import Card from "../../components/ui/Card.jsx";
 import SectionHeader from "../../components/ui/SectionHeader.jsx";
 import EmptyState from "../../components/ui/EmptyState.jsx";
 import Badge from "../../components/ui/Badge.jsx";
+import Modal from "../../components/ui/Modal.jsx";
 import InvoiceModal from "../../components/ui/InvoiceModal.jsx";
 import {
   IoCashOutline, IoPeopleOutline, IoCheckboxOutline, IoAlertCircleOutline,
   IoArrowForwardOutline, IoPrintOutline, IoReceiptOutline, IoPersonAddOutline,
   IoAddCircleOutline, IoSparklesOutline, IoCartOutline, IoCheckmarkCircleOutline,
+  IoPulseOutline, IoShieldCheckmarkOutline,
 } from "react-icons/io5";
 
 const QUICK_ACTIONS = [
@@ -28,6 +30,7 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const { user, customers, sales, tasks, settings, saveTasks } = useContext(StoreContext);
   const [selectedInvoice, setSelectedInvoice] = useState(null);
+  const [showHealthModal, setShowHealthModal] = useState(false);
 
   const totalRevenue = sales.reduce((a, s) => a + (s.status === "Paid" ? Number(s.total || s.amount || 0) : 0), 0);
   const totalDues = sales.filter((s) => s.status === "Unpaid" || s.status === "Pending").reduce((a, s) => a + Number(s.total || s.amount || 0), 0);
@@ -108,7 +111,10 @@ export default function Dashboard() {
           </div>
 
           {/* Action Buttons */}
-          <Button size="lg" className="px-5 py-3 font-bold rounded-xl shadow-xs shrink-0 whitespace-nowrap flex items-center gap-2 cursor-pointer" onClick={() => navigate("/dashboard/sales")}>
+          <Button size="lg" className="px-5 py-3 font-bold rounded-xl shadow-xs shrink-0 whitespace-nowrap flex items-center gap-2 cursor-pointer bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white" onClick={() => setShowHealthModal(true)}>
+            <IoPulseOutline size={20} className="animate-pulse" /> Run AI Health Scan
+          </Button>
+          <Button size="lg" variant="outline" className="px-5 py-3 font-bold rounded-xl shrink-0 whitespace-nowrap flex items-center gap-2 cursor-pointer" onClick={() => navigate("/dashboard/sales")}>
             <IoCartOutline size={20} /> New Transaction
           </Button>
           <Button size="lg" variant="outline" className="px-5 py-3 font-bold rounded-xl shrink-0 whitespace-nowrap flex items-center gap-2 cursor-pointer" onClick={() => navigate("/dashboard/ai")}>
@@ -261,6 +267,101 @@ export default function Dashboard() {
       {/* Invoice Print Modal */}
       {selectedInvoice && (
         <InvoiceModal invoice={selectedInvoice} settings={settings} onClose={() => setSelectedInvoice(null)} />
+      )}
+
+      {/* ── AI STORE HEALTH & RISK DIAGNOSTIC MODAL ── */}
+      {showHealthModal && (
+        <Modal title="AI Store Health & Risk Diagnostics" maxWidth="max-w-lg" top="top-10" onClose={() => setShowHealthModal(false)}>
+          <div className="space-y-6 font-sans">
+            {/* Health Score Header Card */}
+            <div className="p-5 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white shadow-md flex items-center justify-between">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-wider text-blue-200">Overall Business Health Score</p>
+                <div className="flex items-baseline gap-2 mt-1">
+                  <span className="text-4xl font-black">{totalDues === 0 ? "96" : totalDues < 2000 ? "91" : "82"}</span>
+                  <span className="text-sm font-bold text-blue-200">/ 100</span>
+                </div>
+                <p className="text-xs text-blue-100 mt-1 font-medium">
+                  {totalDues === 0 ? "Optimal Store Health • Low Financial Exposure" : "Strong Revenue • Moderate Pending Credit Exposure"}
+                </p>
+              </div>
+              <div className="h-16 w-16 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center font-bold text-2xl shrink-0">
+                <IoPulseOutline className="animate-pulse text-amber-300" size={32} />
+              </div>
+            </div>
+
+            {/* Indicator Progress Bars */}
+            <div className="space-y-3.5">
+              <h4 className="text-xs font-extrabold uppercase text-slate-400 dark:text-slate-500 tracking-wider">Key Store Performance Indicators</h4>
+
+              <div className="space-y-1.5">
+                <div className="flex justify-between text-xs font-bold">
+                  <span className="text-slate-700 dark:text-slate-300">Cash Settlement Ratio</span>
+                  <span className="text-emerald-600 dark:text-emerald-400 font-mono">{sales.length > 0 ? ((sales.filter(s => s.status === 'Paid').length / sales.length) * 100).toFixed(0) : 100}% Paid</span>
+                </div>
+                <div className="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                  <div className="h-full bg-emerald-500 rounded-full" style={{ width: `${sales.length > 0 ? (sales.filter(s => s.status === 'Paid').length / sales.length) * 100 : 100}%` }} />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <div className="flex justify-between text-xs font-bold">
+                  <span className="text-slate-700 dark:text-slate-300">Credit Risk Exposure</span>
+                  <span className="text-blue-600 dark:text-blue-400 font-mono">{totalRevenue > 0 ? ((totalDues / (totalRevenue + totalDues)) * 100).toFixed(1) : 0}% Dues</span>
+                </div>
+                <div className="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                  <div className="h-full bg-blue-500 rounded-full" style={{ width: `${totalRevenue > 0 ? Math.min(100, (totalDues / (totalRevenue + totalDues)) * 100) : 0}%` }} />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <div className="flex justify-between text-xs font-bold">
+                  <span className="text-slate-700 dark:text-slate-300">Store Tasks Completion</span>
+                  <span className="text-purple-600 dark:text-purple-400 font-mono">{tasks.length > 0 ? (((tasks.length - pendingTasks) / tasks.length) * 100).toFixed(0) : 100}% Done</span>
+                </div>
+                <div className="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                  <div className="h-full bg-purple-500 rounded-full" style={{ width: `${tasks.length > 0 ? ((tasks.length - pendingTasks) / tasks.length) * 100 : 100}%` }} />
+                </div>
+              </div>
+            </div>
+
+            {/* 3 Strategic Advice Cards */}
+            <div className="space-y-3 pt-2">
+              <h4 className="text-xs font-extrabold uppercase text-slate-400 dark:text-slate-500 tracking-wider">AI Executive Action Advice</h4>
+
+              <div className="p-3.5 rounded-xl border border-amber-200/80 dark:border-amber-900/60 bg-amber-50/50 dark:bg-amber-950/30 flex items-start gap-3">
+                <IoAlertCircleOutline size={20} className="text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+                <div className="text-xs">
+                  <p className="font-bold text-slate-900 dark:text-white">Recover Outstanding Dues ({currency}{totalDues.toLocaleString()})</p>
+                  <p className="text-slate-600 dark:text-slate-400 mt-0.5">Send 1-click WhatsApp payment reminders to accounts with open balances to increase working capital.</p>
+                </div>
+              </div>
+
+              <div className="p-3.5 rounded-xl border border-blue-200/80 dark:border-blue-900/60 bg-blue-50/50 dark:bg-blue-950/30 flex items-start gap-3">
+                <IoSparklesOutline size={20} className="text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
+                <div className="text-xs">
+                  <p className="font-bold text-slate-900 dark:text-white">Consult BizPilot AI Voice Copilot</p>
+                  <p className="text-slate-600 dark:text-slate-400 mt-0.5">Ask questions about top grossing clients and peak revenue days to optimize store inventory.</p>
+                </div>
+              </div>
+
+              <div className="p-3.5 rounded-xl border border-emerald-200/80 dark:border-emerald-900/60 bg-emerald-50/50 dark:bg-emerald-950/30 flex items-start gap-3">
+                <IoShieldCheckmarkOutline size={20} className="text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
+                <div className="text-xs">
+                  <p className="font-bold text-slate-900 dark:text-white">Generate Executive PDF Reports</p>
+                  <p className="text-slate-600 dark:text-slate-400 mt-0.5">Export corporate financial report summaries from the Analytics page for accounting and GST review.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Sticky Bottom Modal Actions */}
+            <div className="sticky -bottom-1 bg-white dark:bg-slate-900 pt-3 pb-1 border-t border-slate-100 dark:border-slate-800 flex justify-end">
+              <Button onClick={() => setShowHealthModal(false)} className="w-full font-bold py-2.5">
+                Close Health Diagnostics
+              </Button>
+            </div>
+          </div>
+        </Modal>
       )}
     </div>
   );

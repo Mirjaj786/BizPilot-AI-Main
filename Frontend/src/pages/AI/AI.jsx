@@ -44,12 +44,45 @@ export default function AI() {
 
   const speakText = (text) => {
     if (!voiceSpeechEnabled || !("speechSynthesis" in window)) return;
+
     window.speechSynthesis.cancel();
-    const cleanText = text.replace(/[*#\-]/g, "").replace(/\n+/g, " ");
-    const utterance = new SpeechSynthesisUtterance(cleanText.slice(0, 300));
-    utterance.rate = 1.0;
-    utterance.pitch = 1.0;
-    window.speechSynthesis.speak(utterance);
+
+    // Clean markdown characters and split into clean sentences
+    const cleanText = text.replace(/[*#`_\-]/g, " ").replace(/\s+/g, " ").trim();
+    if (!cleanText) return;
+
+    // Split text by sentence punctuation (. ! ?)
+    const sentences = cleanText.match(/[^.!?]+[.!?]+/g) || [cleanText];
+    let sentenceIndex = 0;
+
+    const speakNextSentence = () => {
+      if (sentenceIndex >= sentences.length) return;
+
+      const chunk = sentences[sentenceIndex].trim();
+      if (!chunk) {
+        sentenceIndex++;
+        speakNextSentence();
+        return;
+      }
+
+      const utterance = new SpeechSynthesisUtterance(chunk);
+      utterance.rate = 1.0;
+      utterance.pitch = 1.0;
+
+      utterance.onend = () => {
+        sentenceIndex++;
+        speakNextSentence();
+      };
+
+      utterance.onerror = () => {
+        sentenceIndex++;
+        speakNextSentence();
+      };
+
+      window.speechSynthesis.speak(utterance);
+    };
+
+    speakNextSentence();
   };
 
   const toggleListening = () => {

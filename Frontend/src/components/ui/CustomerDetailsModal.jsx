@@ -50,6 +50,20 @@ export default function CustomerDetailsModal({ customer, onClose }) {
     .filter((s) => s.status === "Pending" || s.status === "Unpaid")
     .reduce((sum, s) => sum + Number(s.total || s.amount || 0), 0);
 
+  const handleSendWhatsApp = () => {
+    const phone = customer.phone ? customer.phone.replace(/[^0-9]/g, "") : "";
+    const duesAmount = pendingDues > 0 ? pendingDues : Number(customer.outstandingBalance || 0);
+    const businessName = settings?.businessName || "BizPilot AI Store";
+
+    const textMessage = `*Dear ${customer.name},*\n\nGreetings from *${businessName}*! 👋\n\nThis is a friendly statement reminder regarding your account:\n-------------------------------------------\n💰 *Outstanding Dues*: ${currency}${duesAmount.toLocaleString()}\n📌 *Total Orders*: ${ordersCount} checkouts\n-------------------------------------------\n\nKindly settle your pending balance via UPI / Bank Transfer at your earliest convenience.\n\nThank you for your business! 🙏\n\n*${businessName}*`;
+
+    const whatsappUrl = phone
+      ? `https://wa.me/${phone}?text=${encodeURIComponent(textMessage)}`
+      : `https://wa.me/?text=${encodeURIComponent(textMessage)}`;
+
+    window.open(whatsappUrl, "_blank");
+  };
+
   const formatAddress = (addr) => {
     if (!addr) return "No address provided";
     if (typeof addr === "string") return addr;
@@ -84,8 +98,16 @@ export default function CustomerDetailsModal({ customer, onClose }) {
               </div>
             </div>
 
-            {/* Quick Metrics */}
-            <div className="flex items-center gap-3 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-200 dark:border-slate-800">
+            {/* Quick Metrics & WhatsApp Button */}
+            <div className="flex flex-wrap items-center gap-2.5 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-200 dark:border-slate-800">
+              <button
+                onClick={handleSendWhatsApp}
+                className="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition-colors flex items-center gap-1.5 shadow-xs cursor-pointer"
+                title="Send WhatsApp Statement & Reminder"
+              >
+                <span>💬</span> WhatsApp Statement
+              </button>
+
               <div className="px-3 py-1.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-right">
                 <p className="text-[10px] uppercase font-bold text-slate-400">Total Spent</p>
                 <p className="text-xs font-black text-slate-900 dark:text-white">{currency}{totalSpent.toLocaleString()}</p>

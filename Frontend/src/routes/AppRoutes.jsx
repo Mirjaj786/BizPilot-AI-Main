@@ -11,6 +11,7 @@ import Analytics from "../pages/Analytics/Analytics.jsx";
 import AI from "../pages/AI/AI.jsx";
 import Settings from "../pages/settings/Settings.jsx";
 import ProtectedRoute from "./ProtectedRoute.jsx";
+import PublicAuthRoute from "./PublicAuthRoute.jsx";
 import AuthLayout from "../layouts/AuthLayout/AuthLayout.jsx";
 
 export default function AppRoutes() {
@@ -19,25 +20,29 @@ export default function AppRoutes() {
       {/* Public Landing Page */}
       <Route path="/" element={<Home />} />
 
-      {/* Auth Routes */}
+      {/* Public Auth Routes (Redirect to /dashboard if logged in) */}
       <Route
         path="/login"
         element={
-          <AuthLayout title="Welcome back to BizFlow" subtitle="Sign in to manage your sales, CRM & inventory.">
-            <Login />
-          </AuthLayout>
+          <PublicAuthRoute>
+            <AuthLayout title="Welcome back to BizPilot AI" subtitle="Sign in to manage your sales, CRM & inventory.">
+              <Login />
+            </AuthLayout>
+          </PublicAuthRoute>
         }
       />
       <Route
         path="/register"
         element={
-          <AuthLayout title="Start your free account" subtitle="Setup your merchant hub in 2 minutes.">
-            <Register />
-          </AuthLayout>
+          <PublicAuthRoute>
+            <AuthLayout title="Start your free merchant account" subtitle="Setup your business hub in 2 minutes.">
+              <Register />
+            </AuthLayout>
+          </PublicAuthRoute>
         }
       />
 
-      {/* Nested Protected Dashboard Routes */}
+      {/* Strict Protected Dashboard Routes (Redirect to /login if unauthenticated) */}
       <Route
         path="/dashboard"
         element={
@@ -63,7 +68,7 @@ export default function AppRoutes() {
       <Route path="/ai" element={<Navigate to="/dashboard/ai" replace />} />
       <Route path="/settings" element={<Navigate to="/dashboard/settings" replace />} />
 
-      {/* Catch-all Redirect */}
+      {/* Catch-all Fallback */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

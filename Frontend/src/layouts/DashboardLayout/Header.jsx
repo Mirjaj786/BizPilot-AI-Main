@@ -228,6 +228,11 @@ export default function Header({ setMobileOpen }) {
           {theme === "dark" ? <HiOutlineSun className="text-xl text-amber-400" /> : <HiOutlineMoon className="text-xl text-slate-600" />}
         </button>
 
+        <Link
+          to={"/home"}
+          className="rounded-xl px-4 py-2 text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/60 transition-all shadow-2xs"
+        >Home</Link>
+
         {/* Quick AI button */}
         <Link
           to="/dashboard/ai"

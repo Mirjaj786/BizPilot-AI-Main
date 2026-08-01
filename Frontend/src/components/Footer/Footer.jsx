@@ -106,7 +106,7 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="border-t border-slate-100 dark:border-slate-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium text-slate-400">
-          <p>&copy; {new Date().getFullYear()} BizFlow Inc. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} BizFlow Inc. All rights reserved. &hearts; By Mirjaj</p>
           <div className="flex items-center gap-6">
             <a href="#" className="hover:text-slate-600 dark:hover:text-slate-200 transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-slate-600 dark:hover:text-slate-200 transition-colors">Terms of Service</a>
