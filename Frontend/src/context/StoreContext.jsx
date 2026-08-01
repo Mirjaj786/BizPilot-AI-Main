@@ -4,6 +4,7 @@ import { authService } from "../services/authService.js";
 import { taskService } from "../services/taskService.js";
 import { salesService } from "../services/salesService.js";
 import { customerService } from "../services/customerService.js";
+import { toast } from "react-toastify";
 
 export { StoreContext };
 
@@ -204,6 +205,7 @@ export const StoreContextProvider = ({ children }) => {
     localStorage.removeItem("bf_sales");
     localStorage.removeItem("bf_customers");
     localStorage.removeItem("bf_tasks");
+    toast.info("Logged out successfully!");
   };
 
   const saveCustomers = (newCustomers) => {
