@@ -27,6 +27,12 @@ export default function InvoiceModal({ invoice, settings, onClose }) {
     window.print();
   };
 
+  const handleShareWhatsApp = () => {
+    const textMessage = `*Official Receipt - ${settings?.businessName || "BizPilot AI Store"}*\nInvoice: ${invoiceNo}\nDate: ${invoiceDate}\nCustomer: ${customerName}\nTotal Amount: ${currency}${totalAmount.toLocaleString()}\nPayment Status: ${status}\n\nThank you for your business!`;
+    const url = `https://wa.me/?text=${encodeURIComponent(textMessage)}`;
+    window.open(url, "_blank");
+  };
+
   return (
     <Modal title="Official Invoice Receipt" onClose={onClose}>
       <div className="space-y-5 font-sans print:space-y-4">
@@ -111,11 +117,16 @@ export default function InvoiceModal({ invoice, settings, onClose }) {
         </div>
 
         {/* Actions (Hidden in Print) */}
-        <div className="flex gap-3 pt-2 print:hidden">
+        <div className="flex flex-col sm:flex-row gap-2.5 pt-2 print:hidden">
           <Button onClick={handlePrint} className="flex-1 font-bold">
             <IoPrintOutline size={16} /> Print Receipt
           </Button>
-          <Button onClick={onClose} variant="secondary" className="flex-1 font-bold">
+
+          <Button onClick={handleShareWhatsApp} className="flex-1 font-bold bg-emerald-600 hover:bg-emerald-700 text-white">
+            <span>💬</span> Share via WhatsApp
+          </Button>
+
+          <Button onClick={onClose} variant="secondary" className="sm:w-auto font-bold px-5">
             Close
           </Button>
         </div>
