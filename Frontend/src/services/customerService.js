@@ -25,6 +25,18 @@ export const customerService = {
     }
   },
 
+  bulkImportCustomers: async (customers, duplicateStrategy = "update") => {
+    try {
+      const res = await apiFetch("/customers/bulk-import", {
+        method: "POST",
+        body: JSON.stringify({ customers, duplicateStrategy }),
+      });
+      return res?.data;
+    } catch (err) {
+      throw err;
+    }
+  },
+
   updateCustomer: async (id, updatedFields) => {
     try {
       const res = await apiFetch(`/customers/update-customer/${id}`, {

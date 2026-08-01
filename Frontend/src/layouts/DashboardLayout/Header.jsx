@@ -284,10 +284,8 @@ export default function Header({ setMobileOpen }) {
               <div className="pt-1 border-t border-slate-100 dark:border-slate-800">
                 <button
                   onClick={() => {
-                    if (window.confirm("Are you sure you want to sign out?")) {
-                      setProfileOpen(false);
-                      if (logoutUser) logoutUser();
-                    }
+                    setProfileOpen(false);
+                    if (logoutUser) logoutUser();
                   }}
                   className="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-red-600 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-lg transition-colors cursor-pointer"
                 >

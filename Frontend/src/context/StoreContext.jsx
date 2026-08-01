@@ -121,6 +121,12 @@ export const StoreContextProvider = ({ children }) => {
   const loginUser = (userData) => {
     setUserState(userData);
     localStorage.setItem("bf_user", JSON.stringify(userData));
+    localStorage.removeItem("bf_sales");
+    localStorage.removeItem("bf_customers");
+    localStorage.removeItem("bf_tasks");
+    setSalesState([]);
+    setCustomersState([]);
+    setTasksState([]);
     const updatedSettings = {
       ...settings,
       businessName: userData.businessName || settings.businessName,
@@ -128,11 +134,22 @@ export const StoreContextProvider = ({ children }) => {
     };
     setSettingsState(updatedSettings);
     localStorage.setItem("bf_settings", JSON.stringify(updatedSettings));
+
+    // Fetch user's data from backend
+    salesService.getSales().then((s) => Array.isArray(s) && setSalesState(s));
+    customerService.getCustomers().then((c) => Array.isArray(c) && setCustomersState(c));
+    taskService.getTasks().then((t) => Array.isArray(t) && setTasksState(t));
   };
 
   const registerUser = (userData) => {
     setUserState(userData);
     localStorage.setItem("bf_user", JSON.stringify(userData));
+    localStorage.removeItem("bf_sales");
+    localStorage.removeItem("bf_customers");
+    localStorage.removeItem("bf_tasks");
+    setSalesState([]);
+    setCustomersState([]);
+    setTasksState([]);
     const updatedSettings = {
       ...settings,
       businessName: userData.businessName,
@@ -155,19 +172,19 @@ export const StoreContextProvider = ({ children }) => {
       }
 
       salesService.getSales().then((fetchedSales) => {
-        if (fetchedSales && Array.isArray(fetchedSales) && fetchedSales.length > 0) {
+        if (fetchedSales && Array.isArray(fetchedSales)) {
           setSalesState(fetchedSales);
         }
       });
 
       customerService.getCustomers().then((fetchedCusts) => {
-        if (fetchedCusts && Array.isArray(fetchedCusts) && fetchedCusts.length > 0) {
+        if (fetchedCusts && Array.isArray(fetchedCusts)) {
           setCustomersState(fetchedCusts);
         }
       });
 
       taskService.getTasks().then((fetchedTasks) => {
-        if (fetchedTasks && Array.isArray(fetchedTasks) && fetchedTasks.length > 0) {
+        if (fetchedTasks && Array.isArray(fetchedTasks)) {
           setTasksState(fetchedTasks);
         }
       });
@@ -175,12 +192,18 @@ export const StoreContextProvider = ({ children }) => {
   }, []);
 
   const logoutUser = () => {
-    const isConfirmed = window.confirm("Are you sure you want to logout?");
+    const isConfirmed = window.confirm("Are you sure you want to log out?");
     if (!isConfirmed) return;
 
     setUserState(null);
+    setSalesState([]);
+    setCustomersState([]);
+    setTasksState([]);
     localStorage.removeItem("bf_user");
     localStorage.removeItem("bf_token");
+    localStorage.removeItem("bf_sales");
+    localStorage.removeItem("bf_customers");
+    localStorage.removeItem("bf_tasks");
   };
 
   const saveCustomers = (newCustomers) => {

@@ -7,6 +7,7 @@ import SectionHeader from "../../components/ui/SectionHeader.jsx";
 import EmptyState from "../../components/ui/EmptyState.jsx";
 import Badge from "../../components/ui/Badge.jsx";
 import InvoiceModal from "../../components/ui/InvoiceModal.jsx";
+import DataImportModal from "../../components/ui/DataImportModal.jsx";
 import {
   IoCartOutline,
   IoTrashOutline,
@@ -14,6 +15,7 @@ import {
   IoPrintOutline,
   IoSearchOutline,
   IoReceiptOutline,
+  IoCloudUploadOutline,
 } from "react-icons/io5";
 import { toast } from "react-toastify";
 
@@ -36,6 +38,7 @@ export default function Sales() {
   const [paymentMethod, setPaymentMethod] = useState("UPI");
   const [searchHistory, setSearchHistory] = useState("");
   const [selectedInvoice, setSelectedInvoice] = useState(null);
+  const [isImportModalOpen, setIsImportModalOpen] = useState(false);
 
   const currency = settings?.currency || "₹";
   const selectedCust = customers.find((c) => (c._id || c.id) === customerId) || { name: "Walk-in Customer", phone: "" };
@@ -100,21 +103,31 @@ export default function Sales() {
 
   return (
     <div className="space-y-6 pb-8 font-sans">
-      {/* Navigation Tabs */}
-      <div className="flex gap-2 p-1 bg-slate-100 dark:bg-slate-800 rounded-2xl w-fit border border-slate-200 dark:border-slate-700">
-        {TABS.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-              activeTab === tab.id
+      {/* Navigation Tabs & Import Action */}
+      <div className="flex items-center justify-between gap-4 flex-wrap">
+        <div className="flex gap-2 p-1 bg-slate-100 dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700">
+          {TABS.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeTab === tab.id
                 ? "bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-2xs"
                 : "text-slate-500 hover:text-slate-800 dark:hover:text-white"
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
+                }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        <Button
+          variant="outline"
+          onClick={() => setIsImportModalOpen(true)}
+          size="md"
+          className="font-bold rounded-xl text-xs px-4 py-2 shrink-0 whitespace-nowrap flex items-center gap-1.5 cursor-pointer text-emerald-600 border-emerald-500/40 hover:bg-emerald-50 dark:hover:bg-emerald-950/40"
+        >
+          <IoCloudUploadOutline size={18} /> Import Excel / CSV
+        </Button>
       </div>
 
       {activeTab === "billing" ? (
@@ -148,6 +161,7 @@ export default function Sales() {
                     value={itemName}
                     onChange={(e) => setItemName(e.target.value)}
                     className="bf-input"
+                    required
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
@@ -160,6 +174,7 @@ export default function Sales() {
                       value={itemPrice}
                       onChange={(e) => setItemPrice(e.target.value)}
                       className="bf-input"
+                      required
                     />
                   </div>
                   <div>
@@ -170,11 +185,12 @@ export default function Sales() {
                       value={itemQty}
                       onChange={(e) => setItemQty(e.target.value)}
                       className="bf-input"
+                      required
                     />
                   </div>
                 </div>
                 <Button type="submit" size="md" className="w-full font-bold">
-                  <IoAddOutline size={18} /> Add Item to Cart
+                  Add Item to Cart
                 </Button>
               </form>
             </Card>
@@ -247,11 +263,10 @@ export default function Sales() {
                           key={m}
                           type="button"
                           onClick={() => setPaymentMethod(m)}
-                          className={`py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
-                            paymentMethod === m
-                              ? "bg-blue-600 text-white border-blue-600 shadow-2xs"
-                              : "border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
-                          }`}
+                          className={`py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer ${paymentMethod === m
+                            ? "bg-blue-600 text-white border-blue-600 shadow-2xs"
+                            : "border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                            }`}
                         >
                           {m}
                         </button>
@@ -272,7 +287,7 @@ export default function Sales() {
         <Card className="!p-6 sm:!p-7">
           <SectionHeader title="Sales History & Invoices" subtitle="Complete billing archive" />
           <div className="relative max-w-md my-4">
-            <IoSearchOutline className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 size-4" />
+            <IoSearchOutline className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 size-4" />
             <input
               type="text"
               placeholder="Search invoice number or customer name..."
@@ -330,6 +345,16 @@ export default function Sales() {
       {selectedInvoice && (
         <InvoiceModal invoice={selectedInvoice} settings={settings} onClose={() => setSelectedInvoice(null)} />
       )}
+
+      <DataImportModal
+        isOpen={isImportModalOpen}
+        onClose={() => setIsImportModalOpen(false)}
+        onImportSuccess={() => {
+          if (typeof salesService?.getSales === "function") {
+            salesService.getSales().then((s) => s && saveSales(s));
+          }
+        }}
+      />
     </div>
   );
 }

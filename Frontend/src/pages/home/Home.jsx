@@ -23,16 +23,12 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans selection:bg-blue-600 selection:text-white transition-colors">
-      {/* Global Brand Navbar */}
       <Navbar />
 
-      {/* ── HERO SECTION ── */}
       <section className="relative pt-12 pb-20 sm:pt-20 sm:pb-32 overflow-hidden">
-        {/* Background Gradients */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-gradient-to-tr from-blue-600/20 via-purple-600/15 to-transparent blur-[120px] rounded-full pointer-events-none" />
 
         <div className="max-w-[1280px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
-          {/* Left Column: Hero Copy */}
           <div className="lg:col-span-7 space-y-8 text-center lg:text-left animate-slide-up">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200/80 dark:border-blue-800 text-blue-700 dark:text-blue-300 text-xs sm:text-sm font-bold shadow-2xs">
               <IoSparklesOutline className="text-blue-600 dark:text-blue-400 text-base" />
@@ -73,7 +69,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Right Column: Hero Visual Graphic */}
           <div className="lg:col-span-5 relative flex items-center justify-center animate-fade-in">
             <div className="relative rounded-3xl border border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 p-4 shadow-2xl backdrop-blur-md overflow-hidden floating">
               <img
@@ -123,78 +118,80 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── PRICING SECTION ── */}
-      <section id="pricing" className="py-20 max-w-[1280px] mx-auto px-6 space-y-12">
-        <div className="text-center max-w-2xl mx-auto space-y-4">
+      {/* ── EVERYTHING YOUR STORE NEEDS SECTION ── */}
+      <section id="why-us" className="py-20 max-w-[1280px] mx-auto px-6 space-y-12">
+        <div className="text-center max-w-3xl mx-auto space-y-4">
+          <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 text-blue-600 dark:text-blue-400 text-xs font-extrabold uppercase tracking-wider">
+            Why BizPilot AI?
+          </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-            Simple, transparent pricing
+            Everything Your Store Needs To Scale
           </h2>
           <p className="text-base text-slate-600 dark:text-slate-400 font-medium">
-            Start for free and upgrade as your business expands.
+            Designed from the ground up for modern retail merchants. Built for speed, clarity, and profit growth.
           </p>
-
-          <div className="inline-flex items-center p-1 bg-slate-200 dark:bg-slate-800 rounded-2xl border border-slate-300 dark:border-slate-700 mt-4">
-            <button
-              onClick={() => setBillingCycle("monthly")}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${billingCycle === "monthly" ? "bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-2xs" : "text-slate-500"
-                }`}
-            >
-              Monthly Billing
-            </button>
-            <button
-              onClick={() => setBillingCycle("yearly")}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${billingCycle === "yearly" ? "bg-blue-600 text-white shadow-2xs" : "text-slate-500"
-                }`}
-            >
-              Yearly (Save 20%)
-            </button>
-          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {[
-            { name: "Starter", price: "₹0", period: "forever free", desc: "For single-counter merchants starting digital store tracking.", features: ["Up to 100 sales/mo", "Basic Customer CRM", "Local & Cloud Data Sync", "Standard Thermal Receipt Print"] },
-            { name: "Pro Merchant", price: billingCycle === "yearly" ? "₹799" : "₹999", period: "per month", popular: true, desc: "For growing stores needing AI analytics, voice copilot & WhatsApp billing.", features: ["Unlimited Sales & Invoices", "Full AI Voice Copilot", "WhatsApp Bill Delivery", "Executive PDF Reports", "Priority Task Board"] },
-            { name: "Multi-Store Enterprise", price: billingCycle === "yearly" ? "₹1,999" : "₹2,499", period: "per month", desc: "For multi-branch retail chains needing advanced role access.", features: ["Multi-Branch Inventory", "Staff Permission Roles", "Dedicated CRM Manager", "Custom Tax & GST Audits"] },
-          ].map((plan, idx) => (
+            { icon: "🛒", title: "Smart POS Billing", desc: "Create thermal invoices & digital receipts in seconds. Fast checkout with walk-in client support." },
+            { icon: "👥", title: "Customer CRM & Credit", desc: "Keep clear track of customer ledgers, unpaid dues, and send 1-click WhatsApp payment reminders." },
+            { icon: "🤖", title: "AI Business Consultant", desc: "Get real-time diagnostic advice on stock movement, peak sales days, and dues collection." },
+            { icon: "🎤", title: "Voice AI Speech Assistant", desc: "Talk naturally to your AI store manager using Web Speech. Hands-free operational insights." },
+            { icon: "📊", title: "Live Store Analytics", desc: "Visualize weekly sales trends, best-selling inventory items, and payment channel breakdowns." },
+            { icon: "📄", title: "Executive PDF Reports", desc: "Generate professional corporate-grade PDF financial summaries for accounting and bank loans." },
+          ].map((item, idx) => (
             <div
               key={idx}
-              className={`p-8 rounded-3xl border flex flex-col justify-between transition-all duration-300 ${plan.popular
-                ? "bg-gradient-to-b from-blue-600 to-indigo-700 text-white border-blue-500 shadow-xl scale-105 relative"
-                : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white shadow-2xs"
-                }`}
+              className="p-8 rounded-3xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xs hover:shadow-md transition-all duration-300 group"
             >
-              {plan.popular && (
-                <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-amber-400 text-slate-950 font-extrabold text-[11px] uppercase tracking-wider px-3.5 py-1 rounded-full shadow-xs">
-                  Most Popular
-                </span>
-              )}
-              <div>
-                <h3 className="text-xl font-extrabold mb-1">{plan.name}</h3>
-                <p className={`text-xs mb-6 font-medium ${plan.popular ? "text-blue-100" : "text-slate-500 dark:text-slate-400"}`}>{plan.desc}</p>
-                <div className="flex items-baseline gap-1 mb-6">
-                  <span className="text-4xl font-extrabold">{plan.price}</span>
-                  <span className={`text-xs font-semibold ${plan.popular ? "text-blue-200" : "text-slate-400"}`}>/{plan.period}</span>
-                </div>
-                <ul className="space-y-3 text-xs sm:text-sm font-medium mb-8">
-                  {plan.features.map((f, i) => (
-                    <li key={i} className="flex items-center gap-2.5">
-                      <IoShieldCheckmarkOutline className={`text-base shrink-0 ${plan.popular ? "text-amber-300" : "text-blue-600"}`} />
-                      <span>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <Button
-                variant={plan.popular ? "secondary" : "primary"}
-                size="lg"
-                className={`w-full font-extrabold rounded-2xl py-3 ${plan.popular ? "!bg-white !text-slate-900 hover:!bg-slate-100" : ""}`}
-                onClick={() => navigate("/dashboard")}
-              >
-                Choose {plan.name}
-              </Button>
+              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-200">{item.icon}</div>
+              <h3 className="text-xl font-extrabold text-slate-900 dark:text-white mb-2">{item.title}</h3>
+              <p className="text-sm text-slate-600 dark:text-slate-400 font-medium leading-relaxed">{item.desc}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* ── COMING SOON ROADMAP ── */}
+      <section className="py-20 bg-slate-900 text-white border-t border-slate-800 transition-colors">
+        <div className="max-w-[1280px] mx-auto px-6 space-y-12">
+          <div className="text-center max-w-2xl mx-auto space-y-4">
+            <span className="px-4 py-1.5 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30 text-xs font-extrabold uppercase tracking-wider">
+              🚀 Product Roadmap
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight">
+              Coming Soon to BizPilot AI
+            </h2>
+            <p className="text-slate-400 font-medium text-base">
+              We are continuously expanding BizPilot AI to empower retail merchants everywhere.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+            {[
+              { title: "AI Data Migration Assistant", tag: "LIVE NOW ✨" },
+              { title: "Google OAuth Login", tag: "LIVE NOW ✨" },
+              { title: "Mobile Commerce & Payment Ecosystem", tag: "Q4 2026" },
+              { title: "BizPilot Mobile App", tag: "Q4 2026" },
+              { title: "Multi-Store Management", tag: "Q3 2026" },
+              { title: "Barcode & SKU Scanner", tag: "Q3 2026" },
+              { title: "Advanced Stock Tracking", tag: "Q3 2026" },
+              { title: "WhatsApp Business API", tag: "Q4 2026" },
+              { title: "Automated GST Filing", tag: "Q4 2026" },
+              { title: "Offline Multi-Counter Sync", tag: "Q4 2026" },
+            ].map((road, idx) => (
+              <div
+                key={idx}
+                className="p-6 rounded-2xl bg-slate-800/80 border border-slate-700/70 hover:border-blue-500/50 transition-all flex flex-col justify-between space-y-3"
+              >
+                <span className="text-[11px] font-extrabold uppercase tracking-wider text-blue-400 bg-blue-950/80 border border-blue-800/50 px-2.5 py-1 rounded-lg w-fit">
+                  {road.tag}
+                </span>
+                <h4 className="text-sm sm:text-base font-bold text-slate-100">{road.title}</h4>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
       <Footer />

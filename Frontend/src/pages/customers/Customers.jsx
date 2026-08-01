@@ -8,6 +8,7 @@ import EmptyState from "../../components/ui/EmptyState.jsx";
 import Badge from "../../components/ui/Badge.jsx";
 import Modal from "../../components/ui/Modal.jsx";
 import CustomerDetailsModal from "../../components/ui/CustomerDetailsModal.jsx";
+import DataImportModal from "../../components/ui/DataImportModal.jsx";
 import {
   IoPeopleOutline,
   IoPersonAddOutline,
@@ -22,6 +23,7 @@ import {
   IoPricetagOutline,
   IoEyeOutline,
   IoChatbubbleEllipsesOutline,
+  IoCloudUploadOutline,
 } from "react-icons/io5";
 import { toast } from "react-toastify";
 
@@ -48,6 +50,7 @@ export default function Customers() {
   const [form, setForm] = useState(INITIAL_FORM);
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(false);
+  const [isImportModalOpen, setIsImportModalOpen] = useState(false);
 
   const loadBackendCustomers = async () => {
     setFetching(true);
@@ -147,8 +150,14 @@ export default function Customers() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.name.trim() || !form.phone.trim() || !form.email.trim()) {
-      toast.error("Name, phone (10 digits), and email are required.");
+    if (!form.name.trim() || !form.phone.trim()) {
+      toast.error("Name and phone number are required.");
+      return;
+    }
+
+    const phoneDigits = form.phone.replace(/[^\d]/g, "");
+    if (phoneDigits.length < 10) {
+      toast.error("Please enter a valid phone number with at least 10 digits.");
       return;
     }
 
@@ -222,9 +231,19 @@ export default function Customers() {
           title="Customer CRM Directory"
           subtitle="Manage client contact profiles, address details, notes, and tags"
         >
-          <Button onClick={handleOpenAdd} size="md" className="font-bold rounded-xl text-xs px-4 py-2.5 shrink-0 whitespace-nowrap flex items-center gap-1.5 cursor-pointer">
-            <IoPersonAddOutline size={18} /> Add Customer
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              onClick={() => setIsImportModalOpen(true)}
+              size="md"
+              className="font-bold rounded-xl text-xs px-4 py-2.5 shrink-0 whitespace-nowrap flex items-center gap-1.5 cursor-pointer text-emerald-600 border-emerald-500/40 hover:bg-emerald-50 dark:hover:bg-emerald-950/40"
+            >
+              <IoCloudUploadOutline size={18} /> Import Excel / CSV
+            </Button>
+            <Button onClick={handleOpenAdd} size="md" className="font-bold rounded-xl text-xs px-4 py-2.5 shrink-0 whitespace-nowrap flex items-center gap-1.5 cursor-pointer">
+              <IoPersonAddOutline size={18} /> Add Customer
+            </Button>
+          </div>
         </SectionHeader>
 
         {/* Search & Filter Controls */}
@@ -572,6 +591,12 @@ export default function Customers() {
           onClose={() => setViewingCust(null)}
         />
       )}
+
+      <DataImportModal
+        isOpen={isImportModalOpen}
+        onClose={() => setIsImportModalOpen(false)}
+        onImportSuccess={loadBackendCustomers}
+      />
     </div>
   );
 }

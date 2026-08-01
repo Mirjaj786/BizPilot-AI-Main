@@ -51,17 +51,11 @@ export default function Settings() {
   };
 
   const handleSeedDemo = () => {
-    if (confirm("Load demo data (customers, sales, and tasks)?")) {
-      seedDemoData();
-      toast.success("Demo dataset seeded!");
-    }
+    seedDemoData();
   };
 
   const handleResetDB = () => {
-    if (confirm("ARE YOU SURE? This will wipe all local data.")) {
-      resetDatabase();
-      toast.warning("Database reset to clean state.");
-    }
+    resetDatabase();
   };
 
   return (

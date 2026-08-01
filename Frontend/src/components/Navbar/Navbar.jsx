@@ -7,6 +7,8 @@ import {
   IoSettingsOutline,
   IoLogOutOutline,
   IoSparklesOutline,
+  IoSunnyOutline,
+  IoMoonOutline,
 } from "react-icons/io5";
 import Button from "../Button/Button.jsx";
 import logo from "../../assets/BizPilot_AI_Logo.png";
@@ -14,9 +16,9 @@ import { StoreContext } from "../../context/StoreContext.jsx";
 
 const navLinks = [
   { name: "Features", href: "#features" },
-  { name: "POS Billing", to: "/dashboard/sales" },
-  { name: "AI Assistant", to: "/dashboard/ai" },
-  { name: "Pricing", href: "#pricing" },
+  { name: "POS Billing", to: "/sales" },
+  { name: "AI Assistant", to: "/ai" },
+  { name: "Why Us", href: "#why-us" },
 ];
 
 
@@ -77,29 +79,18 @@ export default function Navbar() {
 
           {/* Right Side Controls */}
           <div className="hidden lg:flex items-center gap-3">
-            {/* Theme Selector */}
-            <div className="flex items-center p-1 bg-slate-100 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
-              <button
-                onClick={() => setThemeMode("light")}
-                className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${theme === "light"
-                  ? "bg-white text-slate-900 shadow-xs ring-1 ring-slate-300"
-                  : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-                  }`}
-                title="White Mode"
-              >
-                ☀️ <span className="hidden sm:inline">White</span>
-              </button>
-              <button
-                onClick={() => setThemeMode("dark")}
-                className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${theme === "dark"
-                  ? "bg-blue-600 text-white shadow-xs"
-                  : "text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-                  }`}
-                title="Dark Mode"
-              >
-                🌙 <span className="hidden sm:inline">Dark</span>
-              </button>
-            </div>
+            {/* Theme Toggle Button (Matches Dashboard Header) */}
+            <button
+              onClick={() => setThemeMode(theme === "dark" ? "light" : "dark")}
+              className="p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer"
+              title={`Switch to ${theme === "dark" ? "Light" : "Dark"} Mode`}
+            >
+              {theme === "dark" ? (
+                <IoSunnyOutline className="text-xl text-amber-400" />
+              ) : (
+                <IoMoonOutline className="text-xl text-slate-600" />
+              )}
+            </button>
 
             {user ? (
               <div className="relative">
@@ -239,6 +230,13 @@ export default function Navbar() {
         </div>
 
         <div className="p-6 border-t border-slate-100 dark:border-slate-800 space-y-3">
+          <button
+            onClick={() => setThemeMode(theme === "dark" ? "light" : "dark")}
+            className="w-full flex items-center justify-center gap-2 p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold transition-colors cursor-pointer"
+          >
+            {theme === "dark" ? <IoSunnyOutline className="text-amber-400 text-base" /> : <IoMoonOutline className="text-slate-600 text-base" />}
+            <span>{theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}</span>
+          </button>
           <Link to="/dashboard" onClick={() => setOpen(false)}>
             <Button size="lg" className="w-full font-bold rounded-xl">
               Dashboard
