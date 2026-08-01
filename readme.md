@@ -8,21 +8,24 @@ BizPilot AI helps shop owners manage customers, sales, invoices, daily tasks, an
 
 ## ✨ Features
 
-- 🔐 Secure Authentication
-- 👥 Customer CRM
-- 💰 Point of Sale (POS)
-- 🧾 Invoice Generation
+- 🔐 Secure JWT & Google OAuth 2.0 Single Sign-On
+- 📥 1-Click Excel (.xlsx) & CSV (.csv) Data Migration Engine
+- 🔄 Smart Duplicate Resolution Selector (Update, Skip, or Create Side-by-Side)
+- 👥 Customer CRM with 10-Digit Phone Validation
+- 💰 Point of Sale (POS) Billing Terminal
+- 🧾 Thermal & Digital Invoice Generation
 - 📤 WhatsApp Invoice Sharing
 - 💬 WhatsApp Payment Reminders
-- 🤖 AI Business Consultant
-- 🎙️ Voice Input (Speech-to-Text)
-- 🔊 Voice Response (Text-to-Speech)
+- 🤖 AI Business Consultant (Groq LLM)
+- 🎙️ Voice Input Speech-to-Text Copilot
+- 🔊 Voice Response Text-to-Speech Assistant
 - 📊 AI Store Health Scanner
-- 📈 Business Analytics Dashboard
-- 📄 PDF Report Export
-- ✅ Task Management
-- 🌙 Dark Mode Support
-- 📱 Responsive Design
+- 🛡️ AI Rate Limiting API Protection (10 req/min)
+- 📈 Real-time Business Analytics Dashboard
+- 📄 Executive PDF Financial Report Export
+- ✅ Task Management Board
+- 🌙 Seamless Dark / Light Mode Support
+- 📱 Fully Responsive Cross-Platform Design
 
 ---
 

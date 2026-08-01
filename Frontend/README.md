@@ -8,20 +8,20 @@ Designed with a clean and responsive user interface, the application focuses on 
 
 # ✨ Features
 
-- 🔐 User Authentication
-- 📊 Business Dashboard
-- 👥 Customer Management
-- 💰 Sales & Billing (POS)
-- 🧾 Invoice Generation
+- 🔐 User Authentication (JWT & Google OAuth 2.0)
+- 📥 1-Click Excel (.xlsx) & CSV (.csv) Data Migration Hub (`DataImportModal.jsx`)
+- 🔄 3-Strategy Duplicate Resolution Selector (Update, Skip, or Create Side-by-Side)
+- 📊 Business Dashboard with Real-time Metrics
+- 👥 Customer Management with 10-Digit Phone Validation
+- 💰 Sales & Billing (POS) Terminal
+- 🧾 Invoice Generation & Thermal Receipt Print
 - 📤 WhatsApp Invoice Sharing
 - 💬 WhatsApp Payment Reminders
-- 🤖 AI Business Consultant
-- 🎙️ Voice Input (Speech-to-Text)
-- 🔊 Voice Response (Text-to-Speech)
-- 📈 Analytics Dashboard
-- 📄 PDF Report Export
-- ✅ Task Management
-- 🌙 Dark Mode Support
+- 🤖 AI Business Consultant (Groq LLM)
+- 🎙️ Voice Input (Speech-to-Text) & Voice Response
+- 📈 Business Analytics & Executive PDF Export
+- ✅ Task Management Board
+- 🌙 Dark / Light Mode Support (Synced Across Landing & Dashboard)
 - 📱 Fully Responsive Design
 
 ---

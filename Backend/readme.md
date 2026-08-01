@@ -8,17 +8,19 @@ The backend follows a clean MVC architecture with reusable services, middleware,
 
 # ✨ Features
 
-- 🔐 JWT Authentication
-- 👤 User Registration & Login
-- 👥 Customer Management
+- 🔐 JWT & Google OAuth 2.0 Single Sign-On (`/api/user/google-login`)
+- 📥 High-Performance Bulk Customer Import API (`POST /api/customers/bulk-import` with Mongoose `bulkWrite`)
+- 🔄 3-Strategy Duplicate Resolution Engine (Update, Skip, or Create Side-by-Side)
+- 👥 Customer Management with Normalized 10-Digit Phone Validation
 - 💰 Sales & Invoice Management
 - ✅ Task Management
-- 🤖 AI Business Consultant (Groq AI)
-- 📊 Business Analytics & Insights
+- 🤖 AI Business Consultant (Groq AI LLM)
+- 🛡️ Sliding Window Token Rate Limiter (`rateLimiter.js` capped at 10 req/min for AI endpoints)
+- 📊 Business Analytics & Diagnostic Aggregation
 - 📄 Automatic Invoice Number Generation
-- 🛡️ Protected API Routes
+- 🛡️ Auth Protected API Routes
 - ⚠️ Global Error Handling
-- 📦 MongoDB Data Storage
+- 📦 Production-ready MongoDB Owner Scoping
 
 ---
 
