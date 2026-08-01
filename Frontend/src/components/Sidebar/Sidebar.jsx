@@ -23,7 +23,7 @@ const menuItems = [
   { path: "/dashboard/sales", name: "Sales & POS", icon: IoReceiptOutline },
   { path: "/dashboard/tasks", name: "Task Board", icon: IoListOutline },
   { path: "/dashboard/analytics", name: "Analytics", icon: IoBarChartOutline },
-  { path: "/dashboard/ai", name: "BizFlow AI", icon: IoSparklesOutline, highlight: true },
+  { path: "/dashboard/ai", name: "BizPilot AI", icon: IoSparklesOutline, highlight: true },
   { path: "/dashboard/settings", name: "Settings", icon: IoSettingsOutline },
 ];
 
@@ -48,11 +48,9 @@ export default function Sidebar({
       )}
 
       <aside
-        className={`fixed top-0 bottom-0 left-0 z-40 flex flex-col bg-[#0F172A] text-white border-r border-slate-800 transition-all duration-300 ease-in-out ${
-          collapsed ? "w-20" : "w-64"
-        } ${
-          mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
-        }`}
+        className={`fixed top-0 bottom-0 left-0 z-40 flex flex-col bg-[#0F172A] text-white border-r border-slate-800 transition-all duration-300 ease-in-out ${collapsed ? "w-20" : "w-64"
+          } ${mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+          }`}
       >
         {/* Brand Header */}
         <div className="h-20 flex items-center justify-between px-5 border-b border-slate-800/80">
@@ -98,13 +96,12 @@ export default function Sidebar({
                 key={item.path}
                 to={item.path}
                 onClick={() => setMobileOpen(false)}
-                className={`relative flex items-center gap-3.5 px-3.5 py-3 rounded-xl font-semibold text-sm transition-all duration-150 group cursor-pointer ${
-                  isActive
+                className={`relative flex items-center gap-3.5 px-3.5 py-3 rounded-xl font-semibold text-sm transition-all duration-150 group cursor-pointer ${isActive
                     ? "bg-blue-600 text-white shadow-sm font-bold"
                     : item.highlight
-                    ? "text-purple-400 hover:bg-purple-950/40 hover:text-purple-300"
-                    : "text-slate-400 hover:bg-slate-800/60 hover:text-slate-100"
-                }`}
+                      ? "text-purple-400 hover:bg-purple-950/40 hover:text-purple-300"
+                      : "text-slate-400 hover:bg-slate-800/60 hover:text-slate-100"
+                  }`}
                 title={collapsed ? item.name : undefined}
               >
                 <Icon className={`text-lg shrink-0 ${isActive ? "text-white" : item.highlight ? "text-purple-400" : "text-slate-400 group-hover:text-slate-200"}`} />

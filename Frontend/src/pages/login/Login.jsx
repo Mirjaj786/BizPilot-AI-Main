@@ -9,7 +9,7 @@ import { authService } from "../../services/authService.js";
 export default function Login() {
   const navigate = useNavigate();
   const { loginUser } = useContext(StoreContext);
-  const [form, setForm] = useState({ email: "owner@bizflow.com", password: "password123" });
+  const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 

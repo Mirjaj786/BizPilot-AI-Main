@@ -95,11 +95,13 @@ export function RevenueAreaChart({ data, currency = "₹", height = 280 }) {
   );
 }
 
-export function RevenueOverviewYTDChart({ height = 280 }) {
+export function RevenueOverviewYTDChart({ data, currency = "₹", height = 280 }) {
+  const chartData = data && data.length > 0 ? data : YTD_DATA;
+
   return (
     <div style={{ width: "100%", height }}>
       <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={YTD_DATA} margin={{ top: 10, right: 10, left: -15, bottom: 0 }}>
+        <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -15, bottom: 0 }}>
           <defs>
             <linearGradient id="blueGrad" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#2563EB" stopOpacity={0.35} />
@@ -116,15 +118,15 @@ export function RevenueOverviewYTDChart({ height = 280 }) {
             axisLine={false}
             tickLine={false}
             tick={{ fill: "#64748B", fontSize: 11 }}
-            tickFormatter={(val) => `₹${val / 1000}k`}
+            tickFormatter={(val) => `${currency}${val}`}
           />
           <Tooltip
             content={({ active, payload }) => {
               if (active && payload && payload.length) {
                 return (
                   <div className="bg-slate-900 text-white text-xs p-2.5 rounded-lg shadow-lg border border-slate-700 font-sans">
-                    <p className="text-[10px] text-slate-400 font-medium">{payload[0].name}</p>
-                    <p className="font-bold text-sm text-white">₹{payload[0].value?.toLocaleString()}</p>
+                    <p className="text-[10px] text-slate-400 font-medium">{payload[0].payload?.month || payload[0].name}</p>
+                    <p className="font-bold text-sm text-white">{currency}{payload[0].value?.toLocaleString()}</p>
                   </div>
                 );
               }
@@ -134,21 +136,11 @@ export function RevenueOverviewYTDChart({ height = 280 }) {
           <Area
             type="monotone"
             dataKey="revenue"
-            name="Gross Revenue"
+            name="Revenue"
             stroke="#2563EB"
             strokeWidth={2.5}
             fillOpacity={1}
             fill="url(#blueGrad)"
-          />
-          <Area
-            type="monotone"
-            dataKey="expenses"
-            name="Expenses"
-            stroke="#94A3B8"
-            strokeWidth={1.5}
-            strokeDasharray="4 4"
-            fillOpacity={1}
-            fill="url(#expensesGrad)"
           />
         </AreaChart>
       </ResponsiveContainer>
@@ -188,22 +180,23 @@ export function TopItemsBarChart({ data = [], dataKey = "amount", currency = "�
   );
 }
 
-export function BudgetVsSpendBarChart({ height = 250 }) {
+export function BudgetVsSpendBarChart({ data, currency = "₹", height = 250 }) {
+  const chartData = data && data.length > 0 ? data : SPEND_DATA;
+
   return (
     <div style={{ width: "100%", height }}>
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={SPEND_DATA} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+        <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#334155" opacity={0.3} />
-          <XAxis dataKey="dept" axisLine={false} tickLine={false} tick={{ fill: "#64748B", fontSize: 11 }} />
+          <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: "#64748B", fontSize: 11 }} />
           <YAxis
             axisLine={false}
             tickLine={false}
             tick={{ fill: "#64748B", fontSize: 11 }}
-            tickFormatter={(val) => `₹${val}k`}
+            tickFormatter={(val) => `${currency}${val}`}
           />
-          <Tooltip />
-          <Bar dataKey="budget" name="Budget" fill="#0F172A" radius={[4, 4, 0, 0]} barSize={16} />
-          <Bar dataKey="actual" name="Actual" fill="#2563EB" radius={[4, 4, 0, 0]} barSize={16} />
+          <Tooltip content={<CustomTooltip currency={currency} />} />
+          <Bar dataKey="value" name="Sales Volume" fill="#2563EB" radius={[4, 4, 0, 0]} barSize={24} />
         </BarChart>
       </ResponsiveContainer>
     </div>

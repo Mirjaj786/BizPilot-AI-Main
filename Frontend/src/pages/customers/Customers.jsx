@@ -7,6 +7,7 @@ import SectionHeader from "../../components/ui/SectionHeader.jsx";
 import EmptyState from "../../components/ui/EmptyState.jsx";
 import Badge from "../../components/ui/Badge.jsx";
 import Modal from "../../components/ui/Modal.jsx";
+import CustomerDetailsModal from "../../components/ui/CustomerDetailsModal.jsx";
 import {
   IoPeopleOutline,
   IoPersonAddOutline,
@@ -19,6 +20,7 @@ import {
   IoTrashBinOutline,
   IoLocationOutline,
   IoPricetagOutline,
+  IoEyeOutline,
 } from "react-icons/io5";
 import { toast } from "react-toastify";
 
@@ -41,6 +43,7 @@ export default function Customers() {
   const [filterStatus, setFilterStatus] = useState("all"); // "all", "active", "inactive"
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editingCust, setEditingCust] = useState(null);
+  const [viewingCust, setViewingCust] = useState(null);
   const [form, setForm] = useState(INITIAL_FORM);
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(false);
@@ -331,6 +334,15 @@ export default function Customers() {
                       </td>
                       <td className="text-right">
                         <div className="flex items-center justify-end gap-1">
+                          {/* View Customer Details & Sales History */}
+                          <button
+                            onClick={() => setViewingCust(cust)}
+                            className="p-2 rounded-lg text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+                            title="View Customer Profile & Sales Invoices"
+                          >
+                            <IoEyeOutline size={17} />
+                          </button>
+
                           {/* Edit Button */}
                           {isActive && (
                             <button
@@ -530,6 +542,13 @@ export default function Customers() {
             </div>
           </form>
         </Modal>
+      )}
+
+      {viewingCust && (
+        <CustomerDetailsModal
+          customer={viewingCust}
+          onClose={() => setViewingCust(null)}
+        />
       )}
     </div>
   );

@@ -24,7 +24,7 @@ export default function AI() {
     {
       id: "m_welcome",
       sender: "ai",
-      text: `### 👋 Hello! I am **BizFlow AI**, your business copilot.\n\nI analyze your CRM accounts, POS tickets, and action items in real-time to give you actionable insights.\n\n**Try asking me:**\n- *"How much did I sell?"*\n- *"Who is my top customer?"*\n- *"Show my pending tasks"*\n- *"Give me tips to grow my business"*`,
+      text: `### 👋 Hello! I am **BizPilot AI**, your business copilot.\n\nI analyze your CRM accounts, POS tickets, and action items in real-time to give you actionable insights.\n\n**Try asking me:**\n- *"How much did I sell?"*\n- *"Who is my top customer?"*\n- *"Show my pending tasks"*\n- *"Give me tips to grow my business"*`,
     },
   ]);
   const [input, setInput] = useState("");
@@ -67,27 +67,27 @@ export default function AI() {
     const lines = text.split("\n");
     return lines.map((line, idx) => {
       if (line.startsWith("### "))
-        return <h4 key={idx} className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-white mt-3 mb-1 first:mt-0">{line.replace("### ", "")}</h4>;
+        return <h4 key={idx} className="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white mt-3.5 mb-1.5 first:mt-0">{line.replace("### ", "")}</h4>;
       if (line.startsWith("## ") || line.startsWith("# "))
-        return <h3 key={idx} className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white mt-3 mb-1.5 first:mt-0">{line.replace(/^##? /, "")}</h3>;
+        return <h3 key={idx} className="text-lg sm:text-xl font-black text-slate-900 dark:text-white mt-4 mb-2 first:mt-0">{line.replace(/^##? /, "")}</h3>;
       if (line.startsWith("- ") || line.startsWith("* "))
         return (
-          <div key={idx} className="flex gap-2 text-xs text-slate-600 dark:text-slate-300 mt-1">
-            <span className="text-purple-500">•</span>
+          <div key={idx} className="flex gap-2.5 text-sm sm:text-base text-slate-700 dark:text-slate-200 mt-1.5 leading-relaxed">
+            <span className="text-purple-500 font-bold">•</span>
             <span>{parseInlineBold(line.substring(2))}</span>
           </div>
         );
       if (/^\d+\.\s/.test(line)) {
         const num = line.match(/^\d+/)[0];
         return (
-          <div key={idx} className="flex gap-2 text-xs text-slate-600 dark:text-slate-300 mt-1">
-            <span className="text-purple-600 font-bold">{num}.</span>
+          <div key={idx} className="flex gap-2.5 text-sm sm:text-base text-slate-700 dark:text-slate-200 mt-1.5 leading-relaxed">
+            <span className="text-purple-600 font-extrabold">{num}.</span>
             <span>{parseInlineBold(line.replace(/^\d+\.\s/, ""))}</span>
           </div>
         );
       }
-      if (!line.trim()) return <div key={idx} className="h-1.5" />;
-      return <p key={idx} className="text-xs sm:text-sm leading-relaxed">{parseInlineBold(line)}</p>;
+      if (!line.trim()) return <div key={idx} className="h-2" />;
+      return <p key={idx} className="text-sm sm:text-base leading-relaxed mt-1 font-normal">{parseInlineBold(line)}</p>;
     });
   };
 
@@ -101,10 +101,10 @@ export default function AI() {
           </div>
           <div>
             <h2 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white">
-              BizFlow AI Copilot
+              BizPilot AI Copilot
             </h2>
             <p className="text-[11px] text-slate-400">
-              Active Context: <span className="font-semibold text-slate-700 dark:text-slate-300">{settings?.businessName || "My Business"}</span> ({sales.length} sales, {customers.length} clients)
+              Active Dashboard Context: <span className="font-semibold text-slate-700 dark:text-slate-300">{settings?.businessName || "My Business"}</span> ({sales.length} sales • {settings?.currency || "₹"}{sales.reduce((a, s) => a + (s.status === "Paid" ? Number(s.total || s.amount || 0) : 0), 0).toLocaleString()} revenue • {customers.length} clients)
             </p>
           </div>
         </div>
@@ -132,26 +132,23 @@ export default function AI() {
         {messages.map((msg) => (
           <div
             key={msg.id}
-            className={`flex items-start gap-3 max-w-3xl ${
-              msg.sender === "user" ? "ml-auto flex-row-reverse" : ""
-            }`}
+            className={`flex items-start gap-3 max-w-3xl ${msg.sender === "user" ? "ml-auto flex-row-reverse" : ""
+              }`}
           >
             <div
-              className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-xl font-bold text-xs shadow-2xs ${
-                msg.sender === "user"
+              className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl font-bold text-xs shadow-2xs ${msg.sender === "user"
                   ? "bg-blue-600 text-white"
                   : "bg-purple-600 text-white"
-              }`}
+                }`}
             >
-              {msg.sender === "user" ? <IoPersonOutline size={16} /> : <IoSparklesOutline size={16} />}
+              {msg.sender === "user" ? <IoPersonOutline size={18} /> : <IoSparklesOutline size={18} />}
             </div>
 
             <div
-              className={`p-4 rounded-2xl text-xs sm:text-sm border shadow-2xs ${
-                msg.sender === "user"
+              className={`p-4 sm:p-5 rounded-2xl text-sm sm:text-base border shadow-2xs ${msg.sender === "user"
                   ? "bg-blue-600 text-white border-blue-600"
                   : "bg-white dark:bg-slate-900 border-slate-200/80 dark:border-slate-800 text-slate-800 dark:text-slate-200"
-              }`}
+                }`}
             >
               {msg.sender === "user" ? msg.text : formatMessageText(msg.text)}
             </div>
@@ -164,7 +161,7 @@ export default function AI() {
               <IoSparklesOutline size={16} className="animate-spin" />
             </div>
             <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3 rounded-2xl text-xs text-slate-400 font-medium">
-              BizFlow AI is analyzing your local shop database...
+              BizPilot AI is analyzing your local shop database...
             </div>
           </div>
         )}

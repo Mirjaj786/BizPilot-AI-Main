@@ -108,12 +108,12 @@ export default function Dashboard() {
           </div>
 
           {/* Action Buttons */}
-            <Button size="lg" className="px-5 py-3 font-bold rounded-xl shadow-xs shrink-0 whitespace-nowrap flex items-center gap-2 cursor-pointer" onClick={() => navigate("/dashboard/sales")}>
-              <IoCartOutline size={20} /> New Transaction
-            </Button>
-            <Button size="lg" variant="outline" className="px-5 py-3 font-bold rounded-xl shrink-0 whitespace-nowrap flex items-center gap-2 cursor-pointer" onClick={() => navigate("/dashboard/ai")}>
-              <IoSparklesOutline size={20} className="text-purple-500" /> Ask BizPilot AI
-            </Button>
+          <Button size="lg" className="px-5 py-3 font-bold rounded-xl shadow-xs shrink-0 whitespace-nowrap flex items-center gap-2 cursor-pointer" onClick={() => navigate("/dashboard/sales")}>
+            <IoCartOutline size={20} /> New Transaction
+          </Button>
+          <Button size="lg" variant="outline" className="px-5 py-3 font-bold rounded-xl shrink-0 whitespace-nowrap flex items-center gap-2 cursor-pointer" onClick={() => navigate("/dashboard/ai")}>
+            <IoSparklesOutline size={20} className="text-purple-500" /> Ask BizPilot AI
+          </Button>
         </div>
       </Card>
 
@@ -146,11 +146,10 @@ export default function Dashboard() {
                 <Link
                   key={to}
                   to={to}
-                  className={`flex flex-col items-center justify-center gap-2.5 rounded-2xl border p-4 text-center transition-all duration-200 shadow-2xs hover:shadow-xs active:scale-[0.98] ${
-                    accent
-                      ? "border-purple-200 dark:border-purple-800 bg-purple-50/50 dark:bg-purple-950/30 hover:bg-purple-50 text-purple-700 dark:text-purple-300"
-                      : "border-slate-200/80 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 hover:bg-white dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200"
-                  }`}
+                  className={`flex flex-col items-center justify-center gap-2.5 rounded-2xl border p-4 text-center transition-all duration-200 shadow-2xs hover:shadow-xs active:scale-[0.98] ${accent
+                    ? "border-purple-200 dark:border-purple-800 bg-purple-50/50 dark:bg-purple-950/30 hover:bg-purple-50 text-purple-700 dark:text-purple-300"
+                    : "border-slate-200/80 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 hover:bg-white dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200"
+                    }`}
                 >
                   <Icon size={22} className={accent ? "text-purple-600 dark:text-purple-400" : "text-blue-600 dark:text-blue-400"} />
                   <span className="text-xs font-bold">{label}</span>
