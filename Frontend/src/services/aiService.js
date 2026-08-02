@@ -15,7 +15,6 @@ export const aiService = {
       console.warn("Backend AI endpoint unavailable or error, using local business engine fallback:", err);
     }
 
-    // Local Copilot Fallback Engine operating on real fetched datasets
     const salesData = localStorage.getItem("bf_sales");
     const customersData = localStorage.getItem("bf_customers");
     const tasksData = localStorage.getItem("bf_tasks");
@@ -33,32 +32,32 @@ export const aiService = {
     if (q.includes("sale") || q.includes("revenue") || q.includes("earn") || q.includes("money") || q.includes("income") || q.includes("sold") || q.includes("transaction")) {
       const totalRevenue = sales.reduce((acc, curr) => acc + (curr.status === "Paid" ? Number(curr.total || curr.amount || 0) : 0), 0);
       const unpaidRevenue = sales.filter(s => s.status === "Pending" || s.status === "Unpaid").reduce((acc, curr) => acc + Number(curr.total || curr.amount || 0), 0);
-      
+
       const upiSales = sales.filter(s => s.paymentMethod === "UPI").reduce((acc, curr) => acc + Number(curr.total || curr.amount || 0), 0);
       const cashSales = sales.filter(s => s.paymentMethod === "Cash").reduce((acc, curr) => acc + Number(curr.total || curr.amount || 0), 0);
       const cardSales = sales.filter(s => s.paymentMethod === "Card" || s.paymentMethod === "Bank Transfer").reduce((acc, curr) => acc + Number(curr.total || curr.amount || 0), 0);
 
       return `### 📊 Live Sales & Revenue Diagnostics for **${settings.businessName}**
 
-I have analyzed your **${sales.length} backend sales records**:
+      I have analyzed your **${sales.length} backend sales records**:
 
-- 💰 **Gross Paid Revenue:** **${currency}${totalRevenue.toLocaleString()}**
-- ⚠️ **Pending / Unpaid Invoices:** **${currency}${unpaidRevenue.toLocaleString()}**
+      - 💰 **Gross Paid Revenue:** **${currency}${totalRevenue.toLocaleString()}**
+      - ⚠️ **Pending / Unpaid Invoices:** **${currency}${unpaidRevenue.toLocaleString()}**
 
-**Payment Channel Breakdown:**
-- 📱 **UPI / Digital:** ${currency}${upiSales.toLocaleString()}
-- 💵 **Cash Sales:** ${currency}${cashSales.toLocaleString()}
-- 💳 **Card & Bank Transfers:** ${currency}${cardSales.toLocaleString()}
+      **Payment Channel Breakdown:**
+      - 📱 **UPI / Digital:** ${currency}${upiSales.toLocaleString()}
+      - 💵 **Cash Sales:** ${currency}${cashSales.toLocaleString()}
+      - 💳 **Card & Bank Transfers:** ${currency}${cardSales.toLocaleString()}
 
-**BizPilot Copilot Action:** 
-*You have **${currency}${unpaidRevenue.toLocaleString()}** in pending sales. Go to **Customers** or **Tasks** page to issue WhatsApp reminders to your accounts.*`;
+      **BizPilot Copilot Action:** 
+      *You have **${currency}${unpaidRevenue.toLocaleString()}** in pending sales. Go to **Customers** or **Tasks** page to issue WhatsApp reminders to your accounts.*`;
     }
 
     // 2. CUSTOMERS CRM ANALYSIS
     if (q.includes("customer") || q.includes("client") || q.includes("crm") || q.includes("buyer") || q.includes("best") || q.includes("spent")) {
       if (customers.length === 0 && sales.length === 0) {
         return `### 👥 Customer Insights
-You currently have no customer entries registered. Go to the **Customers** page or record sales to view top accounts!`;
+        You currently have no customer entries registered. Go to the **Customers** page or record sales to view top accounts!`;
       }
 
       const customerSpending = {};
@@ -72,13 +71,13 @@ You currently have no customer entries registered. Go to the **Customers** page 
 
       return `### 👥 Client Account Copilot Analysis
 
-You have **${customers.length} registered clients** and **${sales.length} checkout records**.
+      You have **${customers.length} registered clients** and **${sales.length} checkout records**.
 
-🌟 **Top Spending Client Account:**
-- **${topSpender[0]}** has spent **${currency}${topSpender[1].toLocaleString()}** across checkouts.
+      🌟 **Top Spending Client Account:**
+      - **${topSpender[0]}** has spent **${currency}${topSpender[1].toLocaleString()}** across checkouts.
 
-**BizPilot Copilot Action:**
-*Reward **${topSpender[0]}** with a VIP discount or priority order fulfillment.*`;
+      **BizPilot Copilot Action:**
+      *Reward **${topSpender[0]}** with a VIP discount or priority order fulfillment.*`;
     }
 
     // 3. TASKS & OPERATIONS
@@ -88,26 +87,26 @@ You have **${customers.length} registered clients** and **${sales.length} checko
 
       return `### 📋 Operations & Action Checklist
 
-You have **${pendingTasks.length} pending tasks** on your board.
+      You have **${pendingTasks.length} pending tasks** on your board.
 
-🚨 **High Priority Pending Items:**
-${highPriority.length > 0 ? highPriority.map(t => `- **${t.title}** (Due: ${t.dueDate || "N/A"})`).join("\n") : "- No urgent high priority items pending! 🎉"}
+      🚨 **High Priority Pending Items:**
+      ${highPriority.length > 0 ? highPriority.map(t => `- **${t.title}** (Due: ${t.dueDate || "N/A"})`).join("\n") : "- No urgent high priority items pending! 🎉"}
 
-**BizPilot Copilot Action:**
-*Complete urgent inventory and payment collection tasks first on the **Tasks** page.*`;
+      **BizPilot Copilot Action:**
+      *Complete urgent inventory and payment collection tasks first on the **Tasks** page.*`;
     }
 
     // DEFAULT SUMMARY
     const totalRev = sales.reduce((acc, curr) => acc + (curr.status === "Paid" ? Number(curr.total || curr.amount || 0) : 0), 0);
     return `### 👋 Hello! I am **BizPilot AI Copilot**
 
-I am analyzing your live shop dashboard data:
+      I am analyzing your live shop dashboard data:
 
-- 💰 **Total Revenue**: ${currency}${totalRev.toLocaleString()} (${sales.length} transactions fetched)
-- 👥 **CRM Clients**: ${customers.length} registered accounts
-- 📋 **Active Tasks**: ${tasks.filter(t => t.status === "Pending").length} pending items
+      - 💰 **Total Revenue**: ${currency}${totalRev.toLocaleString()} (${sales.length} transactions fetched)
+      - 👥 **CRM Clients**: ${customers.length} registered accounts
+      - 📋 **Active Tasks**: ${tasks.filter(t => t.status === "Pending").length} pending items
 
-How can I assist your business operations today?`;
+      How can I assist your business operations today?`;
   },
 };
 
