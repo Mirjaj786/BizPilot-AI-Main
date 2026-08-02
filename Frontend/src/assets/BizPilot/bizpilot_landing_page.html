@@ -1,680 +1,875 @@
 <!DOCTYPE html>
 
-<html class="scroll-smooth" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>BizPilot AI – Smart Business Operating System</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "on-error-container": "#93000a",
-                    "secondary-container": "#dae2fd",
-                    "secondary-fixed-dim": "#bec6e0",
-                    "primary": "#2563eb",
-                    "inverse-primary": "#b4c5ff",
-                    "surface-dim": "#ccdbf3",
-                    "primary-fixed-dim": "#b4c5ff",
-                    "on-primary-fixed-variant": "#003ea8",
-                    "on-secondary-fixed-variant": "#3f465c",
-                    "on-tertiary-container": "#eaf1fa",
-                    "on-surface": "#0d1c2e",
-                    "surface-container-lowest": "#ffffff",
-                    "on-primary-container": "#eeefff",
-                    "secondary": "#565e74",
-                    "surface-container-high": "#dce9ff",
-                    "primary-fixed": "#dbe1ff",
-                    "on-tertiary": "#ffffff",
-                    "on-tertiary-fixed": "#151c23",
-                    "error": "#ba1a1a",
-                    "on-surface-variant": "#434655",
-                    "outline-variant": "#c3c6d7",
-                    "background": "#f8f9ff",
-                    "inverse-on-surface": "#eaf1ff",
-                    "primary-container": "#2563eb",
-                    "on-secondary-fixed": "#131b2e",
-                    "surface-container-highest": "#d5e3fc",
-                    "on-primary-fixed": "#00174b",
-                    "outline": "#737686",
-                    "surface-bright": "#f8f9ff",
-                    "tertiary-fixed": "#dce3ec",
-                    "surface-container": "#e6eeff",
-                    "on-secondary": "#ffffff",
-                    "secondary-fixed": "#dae2fd",
-                    "surface-variant": "#d5e3fc",
-                    "on-primary": "#ffffff",
-                    "surface-container-low": "#eff4ff",
-                    "on-secondary-container": "#5c647a",
-                    "tertiary": "#4e565d",
-                    "surface-tint": "#0053db",
-                    "tertiary-container": "#676e76",
-                    "on-background": "#0d1c2e",
-                    "on-tertiary-fixed-variant": "#40484f",
-                    "surface": "#f8f9ff",
-                    "inverse-surface": "#233144",
-                    "error-container": "#ffdad6",
-                    "on-error": "#ffffff",
-                    "tertiary-fixed-dim": "#c0c7d0"
+<html class="scroll-smooth" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>BizPilot AI - Your AI Business Partner for Retail Merchants</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#dae2fd",
+                        "secondary-fixed-dim": "#bec6e0",
+                        "primary": "#2563eb",
+                        "inverse-primary": "#b4c5ff",
+                        "surface-dim": "#ccdbf3",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-secondary-fixed-variant": "#3f465c",
+                        "on-tertiary-container": "#eaf1fa",
+                        "on-surface": "#0d1c2e",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#eeefff",
+                        "secondary": "#565e74",
+                        "surface-container-high": "#dce9ff",
+                        "primary-fixed": "#dbe1ff",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#151c23",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#434655",
+                        "outline-variant": "#c3c6d7",
+                        "background": "#f8f9ff",
+                        "inverse-on-surface": "#eaf1ff",
+                        "primary-container": "#2563eb",
+                        "on-secondary-fixed": "#131b2e",
+                        "surface-container-highest": "#d5e3fc",
+                        "on-primary-fixed": "#00174b",
+                        "outline": "#737686",
+                        "surface-bright": "#f8f9ff",
+                        "tertiary-fixed": "#dce3ec",
+                        "surface-container": "#e6eeff",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed": "#dae2fd",
+                        "surface-variant": "#d5e3fc",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#eff4ff",
+                        "on-secondary-container": "#5c647a",
+                        "tertiary": "#4e565d",
+                        "surface-tint": "#0053db",
+                        "tertiary-container": "#676e76",
+                        "on-background": "#0d1c2e",
+                        "on-tertiary-fixed-variant": "#40484f",
+                        "surface": "#f8f9ff",
+                        "inverse-surface": "#233144",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed-dim": "#c0c7d0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "xxl": "1rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xxl": "48px",
+                        "xs": "4px",
+                        "base": "8px",
+                        "container-max": "1280px",
+                        "xl": "32px",
+                        "md": "16px",
+                        "gutter": "24px",
+                        "sm": "8px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "body-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "display": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-sm": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "display": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }]
+                    }
+                },
             },
-            "borderRadius": {
-                    "DEFAULT": "0.25rem",
-                    "lg": "0.5rem",
-                    "xl": "0.75rem",
-                    "xxl": "1rem",
-                    "full": "9999px"
-            },
-            "spacing": {
-                    "xxl": "48px",
-                    "xs": "4px",
-                    "base": "8px",
-                    "container-max": "1280px",
-                    "xl": "32px",
-                    "md": "16px",
-                    "gutter": "24px",
-                    "sm": "8px",
-                    "lg": "24px"
-            },
-            "fontFamily": {
-                    "body-sm": ["Inter"],
-                    "body-lg": ["Inter"],
-                    "label-md": ["Inter"],
-                    "body-md": ["Inter"],
-                    "headline-sm": ["Inter"],
-                    "label-sm": ["Inter"],
-                    "display": ["Inter"],
-                    "headline-md": ["Inter"],
-                    "headline-lg-mobile": ["Inter"],
-                    "headline-lg": ["Inter"]
-            },
-            "fontSize": {
-                    "body-sm": ["14px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400"}],
-                    "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "400"}],
-                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
-                    "body-md": ["16px", {"lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400"}],
-                    "headline-sm": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
-                    "display": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}]
-            }
-          },
-        },
-      }
+        }
     </script>
-<style>
+    <style>
         .glass-card {
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(226, 232, 240, 0.8);
             box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
         }
+
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
             display: inline-block;
             vertical-align: middle;
         }
+
         .floating {
             animation: floating 6s ease-in-out infinite;
         }
+
         @keyframes floating {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
         }
     </style>
 </head>
+
 <body class="bg-background text-on-surface font-body-md overflow-x-hidden">
-<!-- Sticky Navigation -->
-<nav class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 shadow-sm transition-all duration-200">
-<div class="max-w-container-max mx-auto px-lg flex justify-between items-center h-20">
-<div class="flex items-center gap-base">
-<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">insights</span>
-<span class="text-headline-md font-headline-md font-bold text-primary">BizPilot AI</span>
-</div>
-<div class="hidden md:flex items-center gap-xl">
-<a class="text-secondary hover:text-primary font-body-md font-medium transition-colors" href="#features">Features</a>
-<a class="text-secondary hover:text-primary font-body-md font-medium transition-colors" href="#solutions">Solutions</a>
-<a class="text-secondary hover:text-primary font-body-md font-medium transition-colors" href="#pricing">Pricing</a>
-<a class="text-secondary hover:text-primary font-body-md font-medium transition-colors" href="#resources">Resources</a>
-</div>
-<div class="flex items-center gap-md">
-<button class="hidden sm:block text-secondary hover:text-primary font-body-md font-medium px-md py-sm transition-all active:scale-95">Log In</button>
-<button class="bg-primary hover:opacity-90 text-on-primary font-body-md font-medium px-lg py-sm rounded-xl shadow-sm transition-all active:scale-95">Get Started</button>
-</div>
-</div>
-</nav>
-<main class="pt-20">
-<!-- Hero Section -->
-<section class="relative py-xxl overflow-hidden">
-<div class="max-w-container-max mx-auto px-lg grid lg:grid-cols-2 gap-xxl items-center">
-<div class="space-y-xl z-10">
-<div class="inline-flex items-center gap-sm bg-primary/10 text-primary px-md py-xs rounded-full font-label-sm">
-<span class="material-symbols-outlined text-[16px]">stars</span>
-<span>Now with AI-Powered Insights</span>
-</div>
-<h1 class="font-display text-display tracking-tight text-on-surface">
-                        Run Your Business. <br/>
-<span class="text-primary">Without the Complexity.</span>
-</h1>
-<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
-                        The all-in-one operating system designed for modern retail and service businesses. Manage POS, CRM, and analytics in one unified dashboard.
+    <!-- Sticky Navigation -->
+    <nav
+        class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 shadow-sm transition-all duration-200">
+        <div class="max-w-container-max mx-auto px-lg flex justify-between items-center h-20">
+            <div class="flex items-center gap-base">
+                <span class="material-symbols-outlined text-primary text-3xl"
+                    style="font-variation-settings: 'FILL' 1;">insights</span>
+                <span class="text-headline-md font-headline-md font-bold text-primary">BizPilot AI</span>
+            </div>
+            <div class="hidden md:flex items-center gap-xl">
+                <a class="text-secondary hover:text-primary font-body-md font-medium transition-colors"
+                    href="#features">Features</a>
+                <a class="text-secondary hover:text-primary font-body-md font-medium transition-colors"
+                    href="#solutions">Solutions</a>
+                <a class="text-secondary hover:text-primary font-body-md font-medium transition-colors"
+                    href="#pricing">Pricing</a>
+                <a class="text-secondary hover:text-primary font-body-md font-medium transition-colors"
+                    href="#resources">Resources</a>
+            </div>
+            <div class="flex items-center gap-md">
+                <button
+                    class="hidden sm:block text-secondary hover:text-primary font-body-md font-medium px-md py-sm transition-all active:scale-95">Log
+                    In</button>
+                <button
+                    class="bg-primary hover:opacity-90 text-on-primary font-body-md font-medium px-lg py-sm rounded-xl shadow-sm transition-all active:scale-95">Get
+                    Started</button>
+            </div>
+        </div>
+    </nav>
+    <main class="pt-20">
+        <!-- Hero Section -->
+        <section class="relative py-xxl overflow-hidden">
+            <div class="max-w-container-max mx-auto px-lg grid lg:grid-cols-2 gap-xxl items-center">
+                <div class="space-y-xl z-10">
+                    <div
+                        class="inline-flex items-center gap-sm bg-primary/10 text-primary px-md py-xs rounded-full font-label-sm">
+                        <span class="material-symbols-outlined text-[16px]">stars</span>
+                        <span>Now with AI-Powered Insights</span>
+                    </div>
+                    <h1 class="font-display text-display tracking-tight text-on-surface">
+                        Run Your Business. <br />
+                        <span class="text-primary">Without the Complexity.</span>
+                    </h1>
+                    <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+                        The all-in-one operating system designed for modern retail and service businesses. Manage POS,
+                        CRM, and analytics in one unified dashboard.
                     </p>
-<div class="flex flex-col sm:flex-row gap-md">
-<button class="bg-primary text-on-primary font-headline-sm px-xxl py-md rounded-xl shadow-lg hover:opacity-90 transition-all active:scale-95">Start Free Trial</button>
-<button class="bg-white border border-outline-variant text-on-surface font-headline-sm px-xxl py-md rounded-xl shadow-sm hover:bg-surface transition-all active:scale-95">Explore Demo</button>
-</div>
-<div class="flex flex-wrap gap-lg text-on-surface-variant font-label-md pt-base">
-<div class="flex items-center gap-xs">
-<span class="material-symbols-outlined text-primary">check_circle</span> No credit card
+                    <div class="flex flex-col sm:flex-row gap-md">
+                        <button
+                            class="bg-primary text-on-primary font-headline-sm px-xxl py-md rounded-xl shadow-lg hover:opacity-90 transition-all active:scale-95">Start
+                            Free Trial</button>
+                        <button
+                            class="bg-white border border-outline-variant text-on-surface font-headline-sm px-xxl py-md rounded-xl shadow-sm hover:bg-surface transition-all active:scale-95">Explore
+                            Demo</button>
+                    </div>
+                    <div class="flex flex-wrap gap-lg text-on-surface-variant font-label-md pt-base">
+                        <div class="flex items-center gap-xs">
+                            <span class="material-symbols-outlined text-primary">check_circle</span> No credit card
                         </div>
-<div class="flex items-center gap-xs">
-<span class="material-symbols-outlined text-primary">bolt</span> Instant setup
+                        <div class="flex items-center gap-xs">
+                            <span class="material-symbols-outlined text-primary">bolt</span> Instant setup
                         </div>
-<div class="flex items-center gap-xs">
-<span class="material-symbols-outlined text-primary">cancel</span> Cancel anytime
+                        <div class="flex items-center gap-xs">
+                            <span class="material-symbols-outlined text-primary">cancel</span> Cancel anytime
                         </div>
-</div>
-</div>
-<div class="relative lg:h-[600px] flex items-center justify-center lg:justify-end">
-<div class="floating z-10 w-full">
-<img class="w-full max-w-[700px] drop-shadow-2xl rounded-xxl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2vYCjItLyplvd7mK_IBl-ecXNn9TBUlMaXcLTKkoDKXGfscpytyL1Xwjue1srC3f7cMlhjHMw2UBj_fs3aOPx8rgwt5KAOsrgr1xyCWzXZ8HaUW7a4GVCP4pP7VF431iqaSoedVkJ-qFmhNmNopOZXn0HytpZwlqHqyjuj05whZBZHvx4kcaB1x7SNc-IXZyczePvdYhfN4mg2KiprOmKV76iSmG2g1jGTZ89zxqG2tHmvqmd0ccB"/>
-</div>
-<!-- Decorative elements -->
-<div class="absolute -top-10 -right-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
-<div class="absolute -bottom-10 -left-10 w-64 h-64 bg-secondary-container/20 rounded-full blur-3xl"></div>
-</div>
-</div>
-</section>
-<!-- Trusted Brands -->
-<section class="py-xl bg-surface-container-lowest border-y border-outline-variant/30">
-<div class="max-w-container-max mx-auto px-lg text-center">
-<p class="font-label-md text-on-surface-variant mb-lg uppercase tracking-widest">Trusted by 10,000+ businesses worldwide</p>
-<div class="flex flex-wrap justify-center items-center gap-xxl opacity-50 grayscale">
-<img class="h-8" data-alt="A minimalist vector logo for a high-end coffee shop brand named 'Urban Brew', designed in a clean, modern aesthetic with a primary focus on geometric shapes. The logo uses a monochromatic slate palette against a light mode UI background to ensure it blends seamlessly into a professional corporate environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuApkFmYS3ndjoZM11hqnCNl1p3EUnvYb0Vn6-6R5gqbZQ6eDRdbmJOC2MrZK3dv11gQIfmOH_D5F8FHjx7jKhjupSOcCZymZZ8vNWqXu4fa-L6yIFxv1Q9T85_lEPy_0SOtf9eRHz2Fjiv-IzKvrrXS2UQ1Y4rhIEwpYYDQHMOA6PFyPTiArwCLJEKFGqRGOKeM5UsoRfGol3mYont3X1cU0U04YPHp6BhwOZ55PzmhKqyCC96Yad62"/>
-<img class="h-8" data-alt="A sophisticated minimalist logo for a boutique fashion retailer called 'Luxe Lane'. The design features elegant serif typography and an abstract icon representing a stylized hanger or thread, rendered in a soft charcoal grey to fit a premium business operating system landing page." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-GeIBoEBuauAZgPvQl_fpgfJ-Hu2fbaYrlmbu8NGSGraxL7eTN6yVxDchCabu_YeJSr1N_qm3yWIYrYT6CQW_Hv3L3WNuDnYW5J6eL88PCdripnk-AkF23PIjt5hETltAeKLRrib46zzeztNFpwM5IRMLOsEqhU3HEt5NdHv_fngeTc8iaxAkciQnKlGYvFpH5JV7QF9fW-8VGf1S_SeKM_Xih7ge1dUzTiZ3ZVIghhfuUp1wBzW0"/>
-<img class="h-8" data-alt="A modern, clean logo for a technology-driven logistics company named 'SwiftLink'. The logo uses a bold sans-serif font with a subtle arrow graphic integrated into the letter forms, styled in a professional dark slate tone suitable for high-performance enterprise software." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDipGCZXqbNJQjHZFowe93rUXyzFjuzeVvRu3J-wZSCMuo5BYN0wFyqB868M35TfNPpNPt62E-OQAWV2-SkxI3EqT2q3aUjCtYnXhoHx5XQEHRNqaqfLSTb5U5kP_f3BNK5E_r5yeQwMq4TIsyV3BkhqRTHU6io1bDdc2pS1Ul_In6aFqUWd3T_JnaJlT678R-0RR9RiHPJpSLmlDeDYfr4LpEtzQpMy8W9ykSRMmamUsZ3UvilO6oA"/>
-<img class="h-8" data-alt="A minimalist logo for a health and wellness studio named 'Zenith Fitness'. The design incorporates a simple mountain peak icon with clean, balanced lines in a muted dark blue hue, reflecting stability and professional rigor for a business OS platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYRteo6wFkfLp18f6nezRD_thIj1ZG3UPxu16jtEFEaeXZYtBCoqwJPE1bEz7iq4yikDH-2nw1lqnw_e5F7g0ADBoet_GM1m8OL6pdCsd44IA267JAUaZPjyoBcX0fq7EjJBqgDcSRALlAv8O1knKcoJrMvUx8htQvO1h1fgQ7t1Ft_dpV8A7ZrDeEX-FxbAj5vvKZ2yZvI2B6K3wRlUCu7PZbxJcK2hU4r3emjzJSPrjVfEfjLVNV"/>
-<img class="h-8" data-alt="A minimalist corporate logo for 'Artisan Goods', a handcrafted furniture studio. The design is purely typographic with a thin, modern sans-serif font in deep charcoal, emphasizing quality and craftsmanship within a minimalist business dashboard environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhpRsePK0zgdxdK2bTUSZ0NzTHdYzJRKvjj2hGKPJQgxjIKHtkRGEe9Snvg7N_hG3r5nFtT1snaQ0SbsbiEpBZfDQVkBwtn7DSKrpp2V-mt3iBBZkDKcv1bDmM8rPwb2SP3lIp4iLIJwO0prmP7Qb162nOkPTyUwVmTPPtmErBMPGRCzKn4D9jrDPhiDpvTVF5julzSm3iXtnxE-IjNWZFFTA-ENYhjFKCv4i90J8r3XHkOm5MwQWZ"/>
-</div>
-</div>
-</section>
-<!-- Features Bento Grid -->
-<section class="py-xxl max-w-container-max mx-auto px-lg" id="features">
-<div class="text-center mb-xxl">
-<h2 class="font-headline-lg text-headline-lg text-on-surface mb-md">Everything you need to scale</h2>
-<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">Powerful tools built for speed and clarity. No bloat, just performance.</p>
-</div>
-<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-lg">
-<!-- Feature 1 -->
-<div class="glass-card p-xl rounded-xxl hover:shadow-lg transition-all border border-outline-variant/20">
-<div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-lg">
-<span class="material-symbols-outlined text-3xl">point_of_sale</span>
-</div>
-<h3 class="font-headline-sm text-headline-sm mb-sm">POS Billing</h3>
-<p class="text-on-surface-variant mb-lg">Fast, reliable checkout with integrated payments and inventory syncing.</p>
-<div class="h-32 bg-surface-container-low rounded-lg p-md overflow-hidden relative border border-outline-variant/10">
-<div class="flex justify-between text-[10px] text-primary font-bold mb-xs"><span>NEW TRANSACTION</span> <span>#4421</span></div>
-<div class="space-y-1">
-<div class="h-2 w-full bg-outline-variant/30 rounded"></div>
-<div class="h-2 w-3/4 bg-outline-variant/20 rounded"></div>
-<div class="h-6 w-1/2 bg-primary/20 rounded mt-md flex items-center px-xs font-bold text-[10px] text-primary">$42.00</div>
-</div>
-</div>
-</div>
-<!-- Feature 2 -->
-<div class="glass-card p-xl rounded-xxl hover:shadow-lg transition-all border border-outline-variant/20">
-<div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-lg">
-<span class="material-symbols-outlined text-3xl">groups</span>
-</div>
-<h3 class="font-headline-sm text-headline-sm mb-sm">Customer CRM</h3>
-<p class="text-on-surface-variant mb-lg">Turn visitors into regulars with automated loyalty and behavior tracking.</p>
-<div class="flex gap-sm h-32 overflow-hidden">
-<div class="w-10 h-10 rounded-full bg-surface-container-highest flex-shrink-0"></div>
-<div class="space-y-sm w-full">
-<div class="h-3 w-1/3 bg-on-surface rounded"></div>
-<div class="h-2 w-full bg-outline-variant/20 rounded"></div>
-<div class="h-2 w-2/3 bg-outline-variant/20 rounded"></div>
-</div>
-</div>
-</div>
-<!-- Feature 3 -->
-<div class="glass-card p-xl rounded-xxl hover:shadow-lg transition-all border border-outline-variant/20">
-<div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-lg">
-<span class="material-symbols-outlined text-3xl">query_stats</span>
-</div>
-<h3 class="font-headline-sm text-headline-sm mb-sm">Business Analytics</h3>
-<p class="text-on-surface-variant mb-lg">Real-time dashboards that tell you exactly what’s working and what’s not.</p>
-<div class="h-32 flex items-end gap-sm pt-lg">
-<div class="w-full bg-primary h-[40%] rounded-t-sm"></div>
-<div class="w-full bg-primary h-[60%] rounded-t-sm"></div>
-<div class="w-full bg-primary h-[90%] rounded-t-sm"></div>
-<div class="w-full bg-primary h-[75%] rounded-t-sm"></div>
-</div>
-</div>
-<!-- Feature 4 -->
-<div class="glass-card p-xl rounded-xxl hover:shadow-lg transition-all border border-outline-variant/20">
-<div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-lg">
-<span class="material-symbols-outlined text-3xl">smart_toy</span>
-</div>
-<h3 class="font-headline-sm text-headline-sm mb-sm">AI Assistant</h3>
-<p class="text-on-surface-variant mb-lg">Your business co-pilot. Just ask questions and get instant, data-backed answers.</p>
-<div class="bg-surface-container-high rounded-lg p-md h-32 flex flex-col justify-end gap-sm">
-<div class="bg-primary text-on-primary text-[10px] p-xs rounded-lg self-end max-w-[80%]">How's my growth?</div>
-<div class="bg-white text-on-surface text-[10px] p-xs rounded-lg self-start max-w-[80%] shadow-sm">Up 12% since last week!</div>
-</div>
-</div>
-<!-- Feature 5 -->
-<div class="glass-card p-xl rounded-xxl hover:shadow-lg transition-all border border-outline-variant/20">
-<div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-lg">
-<span class="material-symbols-outlined text-3xl">task_alt</span>
-</div>
-<h3 class="font-headline-sm text-headline-sm mb-sm">Task Management</h3>
-<p class="text-on-surface-variant mb-lg">Keep your team aligned with smart task assignments and reminders.</p>
-<div class="space-y-sm pt-sm">
-<div class="flex items-center gap-sm bg-white p-xs rounded border border-outline-variant/10 shadow-sm">
-<div class="w-4 h-4 border-2 border-primary rounded-sm"></div>
-<div class="h-2 w-24 bg-on-surface-variant/20 rounded"></div>
-</div>
-<div class="flex items-center gap-sm bg-white p-xs rounded border border-outline-variant/10 shadow-sm">
-<div class="w-4 h-4 bg-primary rounded-sm"></div>
-<div class="h-2 w-32 bg-on-surface-variant/20 rounded"></div>
-</div>
-</div>
-</div>
-<!-- Feature 6 -->
-<div class="glass-card p-xl rounded-xxl hover:shadow-lg transition-all border border-outline-variant/20">
-<div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-lg">
-<span class="material-symbols-outlined text-3xl">description</span>
-</div>
-<h3 class="font-headline-sm text-headline-sm mb-sm">Business Reports</h3>
-<p class="text-on-surface-variant mb-lg">Automated P&amp;L, sales reports, and tax readiness exports.</p>
-<div class="h-32 flex flex-col justify-center items-center">
-<div class="w-20 h-24 bg-white border border-outline-variant rounded shadow-sm p-sm">
-<div class="h-1 w-full bg-outline-variant/30 rounded mb-xs"></div>
-<div class="h-1 w-full bg-outline-variant/30 rounded mb-xs"></div>
-<div class="h-1 w-2/3 bg-outline-variant/30 rounded mb-xs"></div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Large Dashboard Showcase -->
-<section class="py-xxl bg-surface-container-low/50 relative overflow-hidden">
-<div class="max-w-container-max mx-auto px-lg">
-<div class="relative rounded-xxl overflow-hidden border border-outline-variant shadow-2xl bg-white p-gutter md:p-xxl">
-<div class="flex flex-col md:flex-row gap-xl items-center mb-xl">
-<div class="md:w-1/2">
-<h2 class="font-headline-lg text-headline-lg text-on-surface mb-md">Visualize success in real-time</h2>
-<p class="text-body-lg text-on-surface-variant">Switch between thousands of data points with ease. Our interface is designed to keep you focused on what matters: growing your revenue.</p>
-</div>
-<div class="md:w-1/2 flex justify-end gap-md">
-<div class="p-md bg-primary/5 rounded-xl border border-primary/20 flex flex-col gap-xs">
-<span class="text-label-sm text-primary uppercase">Revenue Goal</span>
-<span class="font-headline-sm text-on-surface">$1.2M / $1.5M</span>
-<div class="w-full h-2 bg-primary/20 rounded-full overflow-hidden">
-<div class="w-[80%] h-full bg-primary"></div>
-</div>
-</div>
-</div>
-</div>
-<div class="relative">
-<img class="w-full rounded-xl shadow-inner border border-outline-variant/50" data-alt="A clean, high-fidelity UI screenshot of a modern SaaS dashboard displaying complex financial data visualizations. The interface features light mode aesthetics with pristine whites, subtle slate borders, and vibrant primary blue accents. Floating UI elements like popover charts, invoice cards, and user growth badges are artistically arranged to showcase depth and interactivity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2XBe4UDhVlSmeGZrplpWQ3GgzWT8N5LqQfCWsboG7yQa5tu02nKI-SuJEtyHUIBdsx8_cCl8Cbj6XKN4ubrDUApXxXaBUGg_npt4DahXRi1wTkAOJCe8RVvbecoKuLDfiKGBfb3hB6j2OD-tnWlQxqolh2Vbp1VeuZHtmeDWnEYe285sv6grxQO4DPT67IMOmVrh9KTq2X7sYW_tmj5QBAAeDBfaAykyQO2vNqbYuAGe8bGAXcHsG"/>
-<!-- Floating overlap UI -->
-<div class="absolute -bottom-10 -right-10 hidden lg:block w-72 glass-card p-lg rounded-xxl shadow-2xl animate-bounce duration-[3000ms]">
-<div class="flex justify-between items-center mb-md">
-<span class="font-label-md font-bold">New Invoice</span>
-<span class="material-symbols-outlined text-primary">more_horiz</span>
-</div>
-<div class="space-y-sm">
-<div class="flex justify-between text-body-sm"><span>Client</span> <span class="font-bold">Apple Inc.</span></div>
-<div class="flex justify-between text-body-sm"><span>Amount</span> <span class="font-bold text-primary">$12,450.00</span></div>
-<button class="w-full py-sm bg-primary text-on-primary rounded-lg text-label-md mt-sm">Send Invoice</button>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- AI Assistant Section -->
-<section class="py-xxl">
-<div class="max-w-3xl mx-auto px-lg">
-<div class="text-center mb-xl">
-<div class="inline-block p-md bg-primary-fixed text-primary rounded-full mb-md">
-<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
-</div>
-<h2 class="font-headline-lg text-headline-lg text-on-surface mb-sm">Ask your business anything</h2>
-<p class="text-body-lg text-on-surface-variant">Stop digging through spreadsheets. BizPilot AI speaks your data fluently.</p>
-</div>
-<div class="glass-card rounded-xxl shadow-xl overflow-hidden border border-outline-variant/40">
-<div class="bg-surface-container-high px-lg py-md border-b border-outline-variant/30 flex items-center justify-between">
-<div class="flex items-center gap-sm">
-<div class="w-3 h-3 rounded-full bg-error"></div>
-<div class="w-3 h-3 rounded-full bg-yellow-400"></div>
-<div class="w-3 h-3 rounded-full bg-green-500"></div>
-</div>
-<span class="text-label-sm font-bold text-on-surface-variant">BizPilot AI Copilot</span>
-<div class="w-8"></div>
-</div>
-<div class="p-gutter space-y-lg bg-white/50 min-h-[400px]">
-<div class="flex flex-col items-end gap-sm">
-<div class="bg-primary text-on-primary px-lg py-md rounded-xxl rounded-tr-xs max-w-[80%] font-body-md shadow-md">
+                    </div>
+                </div>
+                <div class="relative lg:h-[600px] flex items-center justify-center lg:justify-end">
+                    <div class="floating z-10 w-full">
+                        <img class="w-full max-w-[700px] drop-shadow-2xl rounded-xxl"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2vYCjItLyplvd7mK_IBl-ecXNn9TBUlMaXcLTKkoDKXGfscpytyL1Xwjue1srC3f7cMlhjHMw2UBj_fs3aOPx8rgwt5KAOsrgr1xyCWzXZ8HaUW7a4GVCP4pP7VF431iqaSoedVkJ-qFmhNmNopOZXn0HytpZwlqHqyjuj05whZBZHvx4kcaB1x7SNc-IXZyczePvdYhfN4mg2KiprOmKV76iSmG2g1jGTZ89zxqG2tHmvqmd0ccB" />
+                    </div>
+                    <!-- Decorative elements -->
+                    <div class="absolute -top-10 -right-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
+                    <div class="absolute -bottom-10 -left-10 w-64 h-64 bg-secondary-container/20 rounded-full blur-3xl">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Trusted Brands -->
+        <section class="py-xl bg-surface-container-lowest border-y border-outline-variant/30">
+            <div class="max-w-container-max mx-auto px-lg text-center">
+                <p class="font-label-md text-on-surface-variant mb-lg uppercase tracking-widest">Trusted by 10,000+
+                    businesses worldwide</p>
+                <div class="flex flex-wrap justify-center items-center gap-xxl opacity-50 grayscale">
+                    <img class="h-8"
+                        data-alt="A minimalist vector logo for a high-end coffee shop brand named 'Urban Brew', designed in a clean, modern aesthetic with a primary focus on geometric shapes. The logo uses a monochromatic slate palette against a light mode UI background to ensure it blends seamlessly into a professional corporate environment."
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuApkFmYS3ndjoZM11hqnCNl1p3EUnvYb0Vn6-6R5gqbZQ6eDRdbmJOC2MrZK3dv11gQIfmOH_D5F8FHjx7jKhjupSOcCZymZZ8vNWqXu4fa-L6yIFxv1Q9T85_lEPy_0SOtf9eRHz2Fjiv-IzKvrrXS2UQ1Y4rhIEwpYYDQHMOA6PFyPTiArwCLJEKFGqRGOKeM5UsoRfGol3mYont3X1cU0U04YPHp6BhwOZ55PzmhKqyCC96Yad62" />
+                    <img class="h-8"
+                        data-alt="A sophisticated minimalist logo for a boutique fashion retailer called 'Luxe Lane'. The design features elegant serif typography and an abstract icon representing a stylized hanger or thread, rendered in a soft charcoal grey to fit a premium business operating system landing page."
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-GeIBoEBuauAZgPvQl_fpgfJ-Hu2fbaYrlmbu8NGSGraxL7eTN6yVxDchCabu_YeJSr1N_qm3yWIYrYT6CQW_Hv3L3WNuDnYW5J6eL88PCdripnk-AkF23PIjt5hETltAeKLRrib46zzeztNFpwM5IRMLOsEqhU3HEt5NdHv_fngeTc8iaxAkciQnKlGYvFpH5JV7QF9fW-8VGf1S_SeKM_Xih7ge1dUzTiZ3ZVIghhfuUp1wBzW0" />
+                    <img class="h-8"
+                        data-alt="A modern, clean logo for a technology-driven logistics company named 'SwiftLink'. The logo uses a bold sans-serif font with a subtle arrow graphic integrated into the letter forms, styled in a professional dark slate tone suitable for high-performance enterprise software."
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDipGCZXqbNJQjHZFowe93rUXyzFjuzeVvRu3J-wZSCMuo5BYN0wFyqB868M35TfNPpNPt62E-OQAWV2-SkxI3EqT2q3aUjCtYnXhoHx5XQEHRNqaqfLSTb5U5kP_f3BNK5E_r5yeQwMq4TIsyV3BkhqRTHU6io1bDdc2pS1Ul_In6aFqUWd3T_JnaJlT678R-0RR9RiHPJpSLmlDeDYfr4LpEtzQpMy8W9ykSRMmamUsZ3UvilO6oA" />
+                    <img class="h-8"
+                        data-alt="A minimalist logo for a health and wellness studio named 'Zenith Fitness'. The design incorporates a simple mountain peak icon with clean, balanced lines in a muted dark blue hue, reflecting stability and professional rigor for a business OS platform."
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYRteo6wFkfLp18f6nezRD_thIj1ZG3UPxu16jtEFEaeXZYtBCoqwJPE1bEz7iq4yikDH-2nw1lqnw_e5F7g0ADBoet_GM1m8OL6pdCsd44IA267JAUaZPjyoBcX0fq7EjJBqgDcSRALlAv8O1knKcoJrMvUx8htQvO1h1fgQ7t1Ft_dpV8A7ZrDeEX-FxbAj5vvKZ2yZvI2B6K3wRlUCu7PZbxJcK2hU4r3emjzJSPrjVfEfjLVNV" />
+                    <img class="h-8"
+                        data-alt="A minimalist corporate logo for 'Artisan Goods', a handcrafted furniture studio. The design is purely typographic with a thin, modern sans-serif font in deep charcoal, emphasizing quality and craftsmanship within a minimalist business dashboard environment."
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhpRsePK0zgdxdK2bTUSZ0NzTHdYzJRKvjj2hGKPJQgxjIKHtkRGEe9Snvg7N_hG3r5nFtT1snaQ0SbsbiEpBZfDQVkBwtn7DSKrpp2V-mt3iBBZkDKcv1bDmM8rPwb2SP3lIp4iLIJwO0prmP7Qb162nOkPTyUwVmTPPtmErBMPGRCzKn4D9jrDPhiDpvTVF5julzSm3iXtnxE-IjNWZFFTA-ENYhjFKCv4i90J8r3XHkOm5MwQWZ" />
+                </div>
+            </div>
+        </section>
+        <!-- Features Bento Grid -->
+        <section class="py-xxl max-w-container-max mx-auto px-lg" id="features">
+            <div class="text-center mb-xxl">
+                <h2 class="font-headline-lg text-headline-lg text-on-surface mb-md">Everything you need to scale</h2>
+                <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">Powerful tools built for
+                    speed and clarity. No bloat, just performance.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-lg">
+                <!-- Feature 1 -->
+                <div
+                    class="glass-card p-xl rounded-xxl hover:shadow-lg transition-all border border-outline-variant/20">
+                    <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-lg">
+                        <span class="material-symbols-outlined text-3xl">point_of_sale</span>
+                    </div>
+                    <h3 class="font-headline-sm text-headline-sm mb-sm">POS Billing</h3>
+                    <p class="text-on-surface-variant mb-lg">Fast, reliable checkout with integrated payments and
+                        inventory syncing.</p>
+                    <div
+                        class="h-32 bg-surface-container-low rounded-lg p-md overflow-hidden relative border border-outline-variant/10">
+                        <div class="flex justify-between text-[10px] text-primary font-bold mb-xs"><span>NEW
+                                TRANSACTION</span> <span>#4421</span></div>
+                        <div class="space-y-1">
+                            <div class="h-2 w-full bg-outline-variant/30 rounded"></div>
+                            <div class="h-2 w-3/4 bg-outline-variant/20 rounded"></div>
+                            <div
+                                class="h-6 w-1/2 bg-primary/20 rounded mt-md flex items-center px-xs font-bold text-[10px] text-primary">
+                                $42.00</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Feature 2 -->
+                <div
+                    class="glass-card p-xl rounded-xxl hover:shadow-lg transition-all border border-outline-variant/20">
+                    <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-lg">
+                        <span class="material-symbols-outlined text-3xl">groups</span>
+                    </div>
+                    <h3 class="font-headline-sm text-headline-sm mb-sm">Customer CRM</h3>
+                    <p class="text-on-surface-variant mb-lg">Turn visitors into regulars with automated loyalty and
+                        behavior tracking.</p>
+                    <div class="flex gap-sm h-32 overflow-hidden">
+                        <div class="w-10 h-10 rounded-full bg-surface-container-highest flex-shrink-0"></div>
+                        <div class="space-y-sm w-full">
+                            <div class="h-3 w-1/3 bg-on-surface rounded"></div>
+                            <div class="h-2 w-full bg-outline-variant/20 rounded"></div>
+                            <div class="h-2 w-2/3 bg-outline-variant/20 rounded"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Feature 3 -->
+                <div
+                    class="glass-card p-xl rounded-xxl hover:shadow-lg transition-all border border-outline-variant/20">
+                    <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-lg">
+                        <span class="material-symbols-outlined text-3xl">query_stats</span>
+                    </div>
+                    <h3 class="font-headline-sm text-headline-sm mb-sm">Business Analytics</h3>
+                    <p class="text-on-surface-variant mb-lg">Real-time dashboards that tell you exactly what’s working
+                        and what’s not.</p>
+                    <div class="h-32 flex items-end gap-sm pt-lg">
+                        <div class="w-full bg-primary h-[40%] rounded-t-sm"></div>
+                        <div class="w-full bg-primary h-[60%] rounded-t-sm"></div>
+                        <div class="w-full bg-primary h-[90%] rounded-t-sm"></div>
+                        <div class="w-full bg-primary h-[75%] rounded-t-sm"></div>
+                    </div>
+                </div>
+                <!-- Feature 4 -->
+                <div
+                    class="glass-card p-xl rounded-xxl hover:shadow-lg transition-all border border-outline-variant/20">
+                    <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-lg">
+                        <span class="material-symbols-outlined text-3xl">smart_toy</span>
+                    </div>
+                    <h3 class="font-headline-sm text-headline-sm mb-sm">AI Assistant</h3>
+                    <p class="text-on-surface-variant mb-lg">Your business co-pilot. Just ask questions and get instant,
+                        data-backed answers.</p>
+                    <div class="bg-surface-container-high rounded-lg p-md h-32 flex flex-col justify-end gap-sm">
+                        <div class="bg-primary text-on-primary text-[10px] p-xs rounded-lg self-end max-w-[80%]">How's
+                            my growth?</div>
+                        <div
+                            class="bg-white text-on-surface text-[10px] p-xs rounded-lg self-start max-w-[80%] shadow-sm">
+                            Up 12% since last week!</div>
+                    </div>
+                </div>
+                <!-- Feature 5 -->
+                <div
+                    class="glass-card p-xl rounded-xxl hover:shadow-lg transition-all border border-outline-variant/20">
+                    <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-lg">
+                        <span class="material-symbols-outlined text-3xl">task_alt</span>
+                    </div>
+                    <h3 class="font-headline-sm text-headline-sm mb-sm">Task Management</h3>
+                    <p class="text-on-surface-variant mb-lg">Keep your team aligned with smart task assignments and
+                        reminders.</p>
+                    <div class="space-y-sm pt-sm">
+                        <div
+                            class="flex items-center gap-sm bg-white p-xs rounded border border-outline-variant/10 shadow-sm">
+                            <div class="w-4 h-4 border-2 border-primary rounded-sm"></div>
+                            <div class="h-2 w-24 bg-on-surface-variant/20 rounded"></div>
+                        </div>
+                        <div
+                            class="flex items-center gap-sm bg-white p-xs rounded border border-outline-variant/10 shadow-sm">
+                            <div class="w-4 h-4 bg-primary rounded-sm"></div>
+                            <div class="h-2 w-32 bg-on-surface-variant/20 rounded"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Feature 6 -->
+                <div
+                    class="glass-card p-xl rounded-xxl hover:shadow-lg transition-all border border-outline-variant/20">
+                    <div class="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-lg">
+                        <span class="material-symbols-outlined text-3xl">description</span>
+                    </div>
+                    <h3 class="font-headline-sm text-headline-sm mb-sm">Business Reports</h3>
+                    <p class="text-on-surface-variant mb-lg">Automated P&amp;L, sales reports, and tax readiness
+                        exports.</p>
+                    <div class="h-32 flex flex-col justify-center items-center">
+                        <div class="w-20 h-24 bg-white border border-outline-variant rounded shadow-sm p-sm">
+                            <div class="h-1 w-full bg-outline-variant/30 rounded mb-xs"></div>
+                            <div class="h-1 w-full bg-outline-variant/30 rounded mb-xs"></div>
+                            <div class="h-1 w-2/3 bg-outline-variant/30 rounded mb-xs"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Large Dashboard Showcase -->
+        <section class="py-xxl bg-surface-container-low/50 relative overflow-hidden">
+            <div class="max-w-container-max mx-auto px-lg">
+                <div
+                    class="relative rounded-xxl overflow-hidden border border-outline-variant shadow-2xl bg-white p-gutter md:p-xxl">
+                    <div class="flex flex-col md:flex-row gap-xl items-center mb-xl">
+                        <div class="md:w-1/2">
+                            <h2 class="font-headline-lg text-headline-lg text-on-surface mb-md">Visualize success in
+                                real-time</h2>
+                            <p class="text-body-lg text-on-surface-variant">Switch between thousands of data points with
+                                ease. Our interface is designed to keep you focused on what matters: growing your
+                                revenue.</p>
+                        </div>
+                        <div class="md:w-1/2 flex justify-end gap-md">
+                            <div class="p-md bg-primary/5 rounded-xl border border-primary/20 flex flex-col gap-xs">
+                                <span class="text-label-sm text-primary uppercase">Revenue Goal</span>
+                                <span class="font-headline-sm text-on-surface">$1.2M / $1.5M</span>
+                                <div class="w-full h-2 bg-primary/20 rounded-full overflow-hidden">
+                                    <div class="w-[80%] h-full bg-primary"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <img class="w-full rounded-xl shadow-inner border border-outline-variant/50"
+                            data-alt="A clean, high-fidelity UI screenshot of a modern SaaS dashboard displaying complex financial data visualizations. The interface features light mode aesthetics with pristine whites, subtle slate borders, and vibrant primary blue accents. Floating UI elements like popover charts, invoice cards, and user growth badges are artistically arranged to showcase depth and interactivity."
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2XBe4UDhVlSmeGZrplpWQ3GgzWT8N5LqQfCWsboG7yQa5tu02nKI-SuJEtyHUIBdsx8_cCl8Cbj6XKN4ubrDUApXxXaBUGg_npt4DahXRi1wTkAOJCe8RVvbecoKuLDfiKGBfb3hB6j2OD-tnWlQxqolh2Vbp1VeuZHtmeDWnEYe285sv6grxQO4DPT67IMOmVrh9KTq2X7sYW_tmj5QBAAeDBfaAykyQO2vNqbYuAGe8bGAXcHsG" />
+                        <!-- Floating overlap UI -->
+                        <div
+                            class="absolute -bottom-10 -right-10 hidden lg:block w-72 glass-card p-lg rounded-xxl shadow-2xl animate-bounce duration-[3000ms]">
+                            <div class="flex justify-between items-center mb-md">
+                                <span class="font-label-md font-bold">New Invoice</span>
+                                <span class="material-symbols-outlined text-primary">more_horiz</span>
+                            </div>
+                            <div class="space-y-sm">
+                                <div class="flex justify-between text-body-sm"><span>Client</span> <span
+                                        class="font-bold">Apple Inc.</span></div>
+                                <div class="flex justify-between text-body-sm"><span>Amount</span> <span
+                                        class="font-bold text-primary">$12,450.00</span></div>
+                                <button
+                                    class="w-full py-sm bg-primary text-on-primary rounded-lg text-label-md mt-sm">Send
+                                    Invoice</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- AI Assistant Section -->
+        <section class="py-xxl">
+            <div class="max-w-3xl mx-auto px-lg">
+                <div class="text-center mb-xl">
+                    <div class="inline-block p-md bg-primary-fixed text-primary rounded-full mb-md">
+                        <span class="material-symbols-outlined text-3xl"
+                            style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                    </div>
+                    <h2 class="font-headline-lg text-headline-lg text-on-surface mb-sm">Ask your business anything</h2>
+                    <p class="text-body-lg text-on-surface-variant">Stop digging through spreadsheets. BizPilot AI
+                        speaks your data fluently.</p>
+                </div>
+                <div class="glass-card rounded-xxl shadow-xl overflow-hidden border border-outline-variant/40">
+                    <div
+                        class="bg-surface-container-high px-lg py-md border-b border-outline-variant/30 flex items-center justify-between">
+                        <div class="flex items-center gap-sm">
+                            <div class="w-3 h-3 rounded-full bg-error"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        </div>
+                        <span class="text-label-sm font-bold text-on-surface-variant">BizPilot AI Copilot</span>
+                        <div class="w-8"></div>
+                    </div>
+                    <div class="p-gutter space-y-lg bg-white/50 min-h-[400px]">
+                        <div class="flex flex-col items-end gap-sm">
+                            <div
+                                class="bg-primary text-on-primary px-lg py-md rounded-xxl rounded-tr-xs max-w-[80%] font-body-md shadow-md">
                                 How much did I sell today?
                             </div>
-<span class="text-[10px] text-on-surface-variant/60 mr-xs">10:42 AM</span>
-</div>
-<div class="flex flex-col items-start gap-sm">
-<div class="flex gap-md items-start max-w-[80%]">
-<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center flex-shrink-0 shadow-sm border border-primary/20">
-<span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 1;">insights</span>
-</div>
-<div class="bg-surface-container-low text-on-surface px-lg py-md rounded-xxl rounded-tl-xs font-body-md border border-outline-variant/20 shadow-sm">
-                                    You've sold <strong class="text-primary">$4,250.20</strong> so far today. This is <span class="text-green-600 font-bold">15% higher</span> than yesterday at this same time. Your top performer is the <em class="italic">Organic Espresso Blend</em>.
+                            <span class="text-[10px] text-on-surface-variant/60 mr-xs">10:42 AM</span>
+                        </div>
+                        <div class="flex flex-col items-start gap-sm">
+                            <div class="flex gap-md items-start max-w-[80%]">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center flex-shrink-0 shadow-sm border border-primary/20">
+                                    <span class="material-symbols-outlined text-primary text-xl"
+                                        style="font-variation-settings: 'FILL' 1;">insights</span>
                                 </div>
-</div>
-<span class="text-[10px] text-on-surface-variant/60 ml-14">10:42 AM</span>
-</div>
-<!-- Typing indicator -->
-<div class="flex gap-md items-center pl-14 opacity-50">
-<div class="flex gap-xs">
-<div class="w-2 h-2 bg-on-surface-variant rounded-full animate-bounce"></div>
-<div class="w-2 h-2 bg-on-surface-variant rounded-full animate-bounce [animation-delay:0.2s]"></div>
-<div class="w-2 h-2 bg-on-surface-variant rounded-full animate-bounce [animation-delay:0.4s]"></div>
-</div>
-<span class="text-label-sm">AI is analyzing inventory...</span>
-</div>
-</div>
-<div class="p-lg bg-surface border-t border-outline-variant/30 flex gap-md">
-<input class="w-full bg-white border border-outline-variant rounded-xl px-lg py-sm focus:ring-2 focus:ring-primary focus:border-transparent transition-all" placeholder="Type a message..." type="text"/>
-<button class="bg-primary text-on-primary w-12 h-12 rounded-xl flex items-center justify-center shadow-lg hover:opacity-90 active:scale-95">
-<span class="material-symbols-outlined">send</span>
-</button>
-</div>
-</div>
-</div>
-</section>
-<!-- Analytics Deep Dive -->
-<section class="py-xxl bg-surface-container-lowest" id="solutions">
-<div class="max-w-container-max mx-auto px-lg grid lg:grid-cols-2 gap-xxl items-center">
-<div class="space-y-lg">
-<h2 class="font-headline-lg text-headline-lg text-on-surface">Data that makes sense, <br/><span class="text-primary">not just spreadsheets.</span></h2>
-<p class="text-body-lg text-on-surface-variant">We don't just show you numbers; we show you opportunities. Our analytics engine automatically identifies trends in your sales, staff performance, and inventory levels.</p>
-<ul class="space-y-md">
-<li class="flex gap-md items-start">
-<div class="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-primary mt-1">
-<span class="material-symbols-outlined text-[16px] font-bold">check</span>
-</div>
-<div>
-<h4 class="font-headline-sm text-sm font-bold">Predictive Inventory</h4>
-<p class="text-on-surface-variant text-body-sm">Know exactly when to restock before you run out.</p>
-</div>
-</li>
-<li class="flex gap-md items-start">
-<div class="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-primary mt-1">
-<span class="material-symbols-outlined text-[16px] font-bold">check</span>
-</div>
-<div>
-<h4 class="font-headline-sm text-sm font-bold">Labor Cost Optimization</h4>
-<p class="text-on-surface-variant text-body-sm">Schedule staff based on historical peak hours.</p>
-</div>
-</li>
-</ul>
-<button class="text-primary font-bold inline-flex items-center gap-sm hover:gap-md transition-all">
+                                <div
+                                    class="bg-surface-container-low text-on-surface px-lg py-md rounded-xxl rounded-tl-xs font-body-md border border-outline-variant/20 shadow-sm">
+                                    You've sold <strong class="text-primary">$4,250.20</strong> so far today. This is
+                                    <span class="text-green-600 font-bold">15% higher</span> than yesterday at this same
+                                    time. Your top performer is the <em class="italic">Organic Espresso Blend</em>.
+                                </div>
+                            </div>
+                            <span class="text-[10px] text-on-surface-variant/60 ml-14">10:42 AM</span>
+                        </div>
+                        <!-- Typing indicator -->
+                        <div class="flex gap-md items-center pl-14 opacity-50">
+                            <div class="flex gap-xs">
+                                <div class="w-2 h-2 bg-on-surface-variant rounded-full animate-bounce"></div>
+                                <div
+                                    class="w-2 h-2 bg-on-surface-variant rounded-full animate-bounce [animation-delay:0.2s]">
+                                </div>
+                                <div
+                                    class="w-2 h-2 bg-on-surface-variant rounded-full animate-bounce [animation-delay:0.4s]">
+                                </div>
+                            </div>
+                            <span class="text-label-sm">AI is analyzing inventory...</span>
+                        </div>
+                    </div>
+                    <div class="p-lg bg-surface border-t border-outline-variant/30 flex gap-md">
+                        <input
+                            class="w-full bg-white border border-outline-variant rounded-xl px-lg py-sm focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                            placeholder="Type a message..." type="text" />
+                        <button
+                            class="bg-primary text-on-primary w-12 h-12 rounded-xl flex items-center justify-center shadow-lg hover:opacity-90 active:scale-95">
+                            <span class="material-symbols-outlined">send</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Analytics Deep Dive -->
+        <section class="py-xxl bg-surface-container-lowest" id="solutions">
+            <div class="max-w-container-max mx-auto px-lg grid lg:grid-cols-2 gap-xxl items-center">
+                <div class="space-y-lg">
+                    <h2 class="font-headline-lg text-headline-lg text-on-surface">Data that makes sense, <br /><span
+                            class="text-primary">not just spreadsheets.</span></h2>
+                    <p class="text-body-lg text-on-surface-variant">We don't just show you numbers; we show you
+                        opportunities. Our analytics engine automatically identifies trends in your sales, staff
+                        performance, and inventory levels.</p>
+                    <ul class="space-y-md">
+                        <li class="flex gap-md items-start">
+                            <div
+                                class="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-primary mt-1">
+                                <span class="material-symbols-outlined text-[16px] font-bold">check</span>
+                            </div>
+                            <div>
+                                <h4 class="font-headline-sm text-sm font-bold">Predictive Inventory</h4>
+                                <p class="text-on-surface-variant text-body-sm">Know exactly when to restock before you
+                                    run out.</p>
+                            </div>
+                        </li>
+                        <li class="flex gap-md items-start">
+                            <div
+                                class="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-primary mt-1">
+                                <span class="material-symbols-outlined text-[16px] font-bold">check</span>
+                            </div>
+                            <div>
+                                <h4 class="font-headline-sm text-sm font-bold">Labor Cost Optimization</h4>
+                                <p class="text-on-surface-variant text-body-sm">Schedule staff based on historical peak
+                                    hours.</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <button class="text-primary font-bold inline-flex items-center gap-sm hover:gap-md transition-all">
                         Learn more about Analytics <span class="material-symbols-outlined">arrow_forward</span>
-</button>
-</div>
-<div class="grid grid-cols-2 gap-lg">
-<div class="glass-card p-xl rounded-xxl col-span-2">
-<div class="flex justify-between items-end mb-xl">
-<div>
-<span class="text-label-sm text-on-surface-variant">Customer Growth</span>
-<h4 class="font-headline-lg text-primary">+2,450 <span class="text-body-sm text-green-600 font-bold">↑ 12%</span></h4>
-</div>
-<div class="flex gap-xs">
-<div class="w-12 h-20 bg-primary/20 rounded-t-lg"></div>
-<div class="w-12 h-32 bg-primary/40 rounded-t-lg"></div>
-<div class="w-12 h-24 bg-primary/60 rounded-t-lg"></div>
-<div class="w-12 h-40 bg-primary rounded-t-lg"></div>
-</div>
-</div>
-<img class="w-full h-48 object-cover rounded-xl border border-outline-variant/10" data-alt="A detailed financial line chart visualization for a professional business dashboard. The chart features a smooth, flowing blue curve against a clean white background with subtle grey grid lines. Markers show peak performance points, and the overall aesthetic is minimalist, sleek, and highly legible, optimized for data-driven executive decision-making." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvsS0So7V3ldlpeKZSvdqUnu8rlJNDcHdqW8j9z0GvegO6PPAnFiT6frH5s5EPirAkchV_zKwgESgJreI0oGlcQ_jHOo4ypLEiLqIUIuHtJfwyON4vHV5sE_osH24DC3cDfKSoFou7y7kuHDuHncrhEm4PaDyfmuFgIvu1DQEH-Fscyx3xx4Qkmr_i19U6CJBP6hLUUA9-QpnFQx_8pMc5twSzFT3ZuEpqvlZ7L9OFDbjuXPOdW7Y9"/>
-</div>
-<div class="glass-card p-lg rounded-xxl">
-<span class="text-label-sm text-on-surface-variant mb-base block">Top Categories</span>
-<div class="space-y-sm">
-<div class="h-2 w-full bg-surface-container rounded-full overflow-hidden"><div class="w-[70%] h-full bg-primary"></div></div>
-<div class="h-2 w-full bg-surface-container rounded-full overflow-hidden"><div class="w-[45%] h-full bg-secondary"></div></div>
-<div class="h-2 w-full bg-surface-container rounded-full overflow-hidden"><div class="w-[30%] h-full bg-primary/40"></div></div>
-</div>
-</div>
-<div class="glass-card p-lg rounded-xxl flex flex-col items-center justify-center text-center">
-<div class="w-16 h-16 rounded-full border-4 border-primary border-t-transparent animate-spin mb-md"></div>
-<span class="text-label-sm font-bold">Syncing live data...</span>
-</div>
-</div>
-</div>
-</section>
-<!-- Pricing -->
-<section class="py-xxl max-w-container-max mx-auto px-lg" id="pricing">
-<div class="text-center mb-xxl">
-<h2 class="font-headline-lg text-headline-lg mb-md">Simple, transparent pricing</h2>
-<p class="text-body-lg text-on-surface-variant">Choose the plan that fits your business stage.</p>
-</div>
-<div class="grid md:grid-cols-3 gap-xl">
-<!-- Starter -->
-<div class="glass-card p-xl rounded-xxl flex flex-col border border-outline-variant/20">
-<div class="mb-xl">
-<h3 class="font-headline-sm mb-base">Starter</h3>
-<div class="flex items-baseline gap-xs">
-<span class="text-headline-lg font-display">$49</span>
-<span class="text-on-surface-variant">/mo</span>
-</div>
-<p class="text-body-sm text-on-surface-variant mt-sm">Perfect for small kiosks and side projects.</p>
-</div>
-<ul class="space-y-md mb-xl flex-grow">
-<li class="flex gap-sm items-center text-body-sm"><span class="material-symbols-outlined text-green-500">check</span> 1 Location</li>
-<li class="flex gap-sm items-center text-body-sm"><span class="material-symbols-outlined text-green-500">check</span> 3 Staff Members</li>
-<li class="flex gap-sm items-center text-body-sm"><span class="material-symbols-outlined text-green-500">check</span> Basic POS &amp; CRM</li>
-<li class="flex gap-sm items-center text-body-sm text-on-surface-variant/50"><span class="material-symbols-outlined">close</span> AI Insights</li>
-</ul>
-<button class="w-full py-md rounded-xl border border-primary text-primary font-bold hover:bg-primary/5 transition-all">Get Started</button>
-</div>
-<!-- Pro -->
-<div class="relative glass-card p-xl rounded-xxl flex flex-col border-2 border-primary shadow-2xl scale-105 z-10">
-<div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-on-primary px-lg py-xs rounded-full text-label-sm font-bold shadow-lg uppercase tracking-wider">Most Popular</div>
-<div class="mb-xl">
-<h3 class="font-headline-sm mb-base">Professional</h3>
-<div class="flex items-baseline gap-xs">
-<span class="text-headline-lg font-display text-primary">$129</span>
-<span class="text-on-surface-variant">/mo</span>
-</div>
-<p class="text-body-sm text-on-surface-variant mt-sm">For growing retail &amp; service brands.</p>
-</div>
-<ul class="space-y-md mb-xl flex-grow">
-<li class="flex gap-sm items-center text-body-sm"><span class="material-symbols-outlined text-green-500">check</span> Unlimited Locations</li>
-<li class="flex gap-sm items-center text-body-sm"><span class="material-symbols-outlined text-green-500">check</span> Unlimited Staff</li>
-<li class="flex gap-sm items-center text-body-sm font-bold"><span class="material-symbols-outlined text-green-500">check</span> AI Assistant Included</li>
-<li class="flex gap-sm items-center text-body-sm"><span class="material-symbols-outlined text-green-500">check</span> Priority Support</li>
-</ul>
-<button class="w-full py-md rounded-xl bg-primary text-on-primary font-bold shadow-lg hover:opacity-90 active:scale-95 transition-all">Start Free Trial</button>
-</div>
-<!-- Enterprise -->
-<div class="glass-card p-xl rounded-xxl flex flex-col border border-outline-variant/20">
-<div class="mb-xl">
-<h3 class="font-headline-sm mb-base">Enterprise</h3>
-<div class="flex items-baseline gap-xs">
-<span class="text-headline-lg font-display">Custom</span>
-</div>
-<p class="text-body-sm text-on-surface-variant mt-sm">Bespoke solutions for large-scale operations.</p>
-</div>
-<ul class="space-y-md mb-xl flex-grow">
-<li class="flex gap-sm items-center text-body-sm"><span class="material-symbols-outlined text-green-500">check</span> API &amp; Webhook Access</li>
-<li class="flex gap-sm items-center text-body-sm"><span class="material-symbols-outlined text-green-500">check</span> Custom Reporting</li>
-<li class="flex gap-sm items-center text-body-sm"><span class="material-symbols-outlined text-green-500">check</span> Dedicated Success Manager</li>
-<li class="flex gap-sm items-center text-body-sm"><span class="material-symbols-outlined text-green-500">check</span> SLA Guarantees</li>
-</ul>
-<button class="w-full py-md rounded-xl border border-outline text-on-surface font-bold hover:bg-surface transition-all">Contact Sales</button>
-</div>
-</div>
-</section>
-<!-- Testimonials -->
-<section class="py-xxl bg-surface-container-high/30">
-<div class="max-w-container-max mx-auto px-lg">
-<div class="grid md:grid-cols-3 gap-lg">
-<div class="glass-card p-xl rounded-xxl">
-<div class="flex gap-xs text-yellow-400 mb-lg">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-</div>
-<p class="italic text-on-surface mb-xl">"BizFlow transformed our multi-location cafe chain. The real-time inventory alone saved us $2k in waste in the first month."</p>
-<div class="flex items-center gap-md">
-<img class="w-12 h-12 rounded-full object-cover" data-alt="A professional headshot of a female entrepreneur in her 30s with a warm, confident smile, set against a blurred modern cafe background. The lighting is natural and bright, conveying a sense of success and approachability, perfect for a SaaS testimonial avatar." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUPbhzt2MxE74kP1EZ0EXyZilogIdzySBhaQGqp_zuJ6wjUquagsjVR3OMbNscOWDEQFM490ASHCnvwc4hMGXYW0NPTNdTKvPceaLYwazHfobXq1bxavDtE9C7X45VLHVRZMgNGB1utKO7ar7Dm-cgTIGrdScA5e0urGzt6eMX_Aek7xEd3n1TIpmIw5NL4vBcg5DwlhbCBfRMLU1jK2fS5Dt8elDv-bFOPkFT62x5CxRmV2CBTXlj"/>
-<div>
-<h4 class="font-bold text-sm">Sarah Chen</h4>
-<span class="text-label-sm text-on-surface-variant">Founder, Brew &amp; Bean</span>
-</div>
-</div>
-</div>
-<div class="glass-card p-xl rounded-xxl">
-<div class="flex gap-xs text-yellow-400 mb-lg">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-</div>
-<p class="italic text-on-surface mb-xl">"The AI assistant is like having a CFO in my pocket. I just ask about margins and it gives me instant answers."</p>
-<div class="flex items-center gap-md">
-<img class="w-12 h-12 rounded-full object-cover" data-alt="A professional headshot of a middle-aged male executive with a focused, intelligent expression. He is wearing a clean navy blazer over a white shirt, set in a bright, modern office environment. The image exudes professional rigor and high-speed business operational expertise." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNinY1btFfyMUo53JRMONI_Zk6X_QmJGgXBVFCKVamVdwIeYJ-SzwkziRMfydukQQrof-ThXMUdZ1ZBRsjKkAhhRARSD6sjeOt5cdrKxexGdS6bjKE9tFX5sjLpJvCFFNoD9emPX-HUdQN93FIAX7pAKFFVudkCStH4f0uNVtCN_NZ9qF2PEiEzquwLfg3K1br9hY7GyM1uymjp5I-Ah1vlIIeGGW0X7o_ccUIZSawXNC89wBq7Kh7"/>
-<div>
-<h4 class="font-bold text-sm">Michael Rossi</h4>
-<span class="text-label-sm text-on-surface-variant">Owner, Rossi Boutiques</span>
-</div>
-</div>
-</div>
-<div class="glass-card p-xl rounded-xxl">
-<div class="flex gap-xs text-yellow-400 mb-lg">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
-</div>
-<p class="italic text-on-surface mb-xl">"Cleaner than Clover, faster than Square. The migration was seamless and our team learned it in under 30 minutes."</p>
-<div class="flex items-center gap-md">
-<img class="w-12 h-12 rounded-full object-cover" data-alt="A professional portrait of a young female creative professional with glasses and a stylish, minimalist outfit. She is posed against a soft, neutral-toned studio background with gentle light-mode illumination. The image reflects modern minimalism and sophisticated design taste." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeS8h1c_9tRE-a8M-nROyAGEtsaNQ464gPdSY0rG6kc4kTOZCatPiPmjmNd14CIXc6QnIVj20Zk1HlTAl2_WOUH7NoZlPlfQX23LsL7K7LG5zLhdoL2y43-VObRT42o8qtYZoBOM0EOdmruyoIssLSZiSMboqZe1JXxs6IZQdzrCB9GC4bJEdi1ZOfEr2MgMQj2dwbp15cC8OlmBLcjtPjI5bu8wIhTC8kSWU4Vj3EPM5tWfiNPpGL"/>
-<div>
-<h4 class="font-bold text-sm">Emily Davis</h4>
-<span class="text-label-sm text-on-surface-variant">Ops Director, Urban Collective</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- FAQ -->
-<section class="py-xxl max-w-3xl mx-auto px-lg">
-<h2 class="font-headline-lg text-headline-lg text-center mb-xl">Common Questions</h2>
-<div class="space-y-md">
-<details class="group glass-card rounded-xl p-lg" open="">
-<summary class="flex justify-between items-center cursor-pointer list-none">
-<span class="font-bold">Can I migrate from Square or Shopify?</span>
-<span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
-</summary>
-<p class="mt-md text-on-surface-variant">Yes! We have one-click importers for both. Our migration specialist team can also help you move your inventory and customer data manually if needed, free of charge.</p>
-</details>
-<details class="group glass-card rounded-xl p-lg">
-<summary class="flex justify-between items-center cursor-pointer list-none">
-<span class="font-bold">What hardware is required?</span>
-<span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
-</summary>
-<p class="mt-md text-on-surface-variant">BizFlow runs on any iPad, Android Tablet, or desktop browser. We also sell high-performance proprietary POS hardware if you prefer a dedicated setup.</p>
-</details>
-<details class="group glass-card rounded-xl p-lg">
-<summary class="flex justify-between items-center cursor-pointer list-none">
-<span class="font-bold">How secure is my data?</span>
-<span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
-</summary>
-<p class="mt-md text-on-surface-variant">We use bank-grade AES-256 encryption. Your data is stored in ISO 27001 certified data centers with 99.99% uptime guaranteed.</p>
-</details>
-</div>
-</section>
-<!-- Final CTA -->
-<section class="py-xxl">
-<div class="max-w-container-max mx-auto px-lg">
-<div class="bg-primary rounded-xxl p-xxl text-center text-on-primary relative overflow-hidden shadow-2xl">
-<div class="absolute inset-0 bg-gradient-to-br from-primary via-primary to-blue-800 opacity-50"></div>
-<div class="relative z-10 space-y-lg">
-<h2 class="font-display text-display text-white">Ready to grow your business?</h2>
-<p class="text-body-lg text-blue-100 max-w-2xl mx-auto">Join 10,000+ businesses running on BizFlow. Start your 14-day free trial today. No credit card required.</p>
-<div class="flex flex-col sm:flex-row justify-center gap-md pt-lg">
-<button class="bg-white text-primary font-headline-sm px-xxl py-md rounded-xl shadow-lg hover:bg-surface transition-all active:scale-95">Start your free trial</button>
-<button class="bg-transparent border border-white text-white font-headline-sm px-xxl py-md rounded-xl hover:bg-white/10 transition-all active:scale-95">Schedule a demo</button>
-</div>
-</div>
-<!-- Abstract decoration -->
-<div class="absolute -top-20 -left-20 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
-<div class="absolute -bottom-20 -right-20 w-80 h-80 bg-blue-400/20 rounded-full blur-3xl"></div>
-</div>
-</div>
-</section>
-</main>
-<!-- Footer -->
-<footer class="bg-surface-container-lowest border-t border-outline-variant py-xxl">
-<div class="max-w-container-max mx-auto px-lg grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-xl">
-<div class="col-span-2 space-y-md">
-<div class="flex items-center gap-base">
-<span class="material-symbols-outlined text-primary text-2xl" style="font-variation-settings: 'FILL' 1;">insights</span>
-<span class="text-headline-sm font-headline-sm font-bold text-on-surface">BizFlow</span>
-</div>
-<p class="text-body-sm text-on-surface-variant max-w-xs">The high-performance business operating system for modern retail and service industry leaders.</p>
-</div>
-<div class="space-y-md">
-<h5 class="text-label-sm font-bold uppercase tracking-wider text-on-surface">Product</h5>
-<ul class="space-y-sm">
-<li><a class="text-body-sm text-on-surface-variant hover:text-primary hover:underline transition-all" href="#">Features</a></li>
-<li><a class="text-body-sm text-on-surface-variant hover:text-primary hover:underline transition-all" href="#">Pricing</a></li>
-<li><a class="text-body-sm text-on-surface-variant hover:text-primary hover:underline transition-all" href="#">Security</a></li>
-</ul>
-</div>
-<div class="space-y-md">
-<h5 class="text-label-sm font-bold uppercase tracking-wider text-on-surface">Company</h5>
-<ul class="space-y-sm">
-<li><a class="text-body-sm text-on-surface-variant hover:text-primary hover:underline transition-all" href="#">About</a></li>
-<li><a class="text-body-sm text-on-surface-variant hover:text-primary hover:underline transition-all" href="#">Careers</a></li>
-<li><a class="text-body-sm text-on-surface-variant hover:text-primary hover:underline transition-all" href="#">Contact</a></li>
-</ul>
-</div>
-<div class="space-y-md">
-<h5 class="text-label-sm font-bold uppercase tracking-wider text-on-surface">Legal</h5>
-<ul class="space-y-sm">
-<li><a class="text-body-sm text-on-surface-variant hover:text-primary hover:underline transition-all" href="#">Privacy</a></li>
-<li><a class="text-body-sm text-on-surface-variant hover:text-primary hover:underline transition-all" href="#">Terms</a></li>
-<li><a class="text-body-sm text-on-surface-variant hover:text-primary hover:underline transition-all" href="#">Cookie Policy</a></li>
-</ul>
-</div>
-<div class="space-y-md">
-<h5 class="text-label-sm font-bold uppercase tracking-wider text-on-surface">Newsletter</h5>
-<div class="flex gap-xs">
-<input class="w-full bg-surface-container border border-outline-variant rounded-lg text-body-sm px-sm py-xs focus:ring-1 focus:ring-primary" placeholder="Email" type="email"/>
-<button class="bg-primary text-on-primary px-sm py-xs rounded-lg"><span class="material-symbols-outlined text-[18px]">arrow_forward</span></button>
-</div>
-</div>
-</div>
-<div class="max-w-container-max mx-auto px-lg mt-xxl pt-xl border-t border-outline-variant/30 text-center">
-<p class="font-body-sm text-body-sm text-on-surface-variant">© 2024 BizFlow OS. All rights reserved.</p>
-</div>
-</footer>
-<script>
+                    </button>
+                </div>
+                <div class="grid grid-cols-2 gap-lg">
+                    <div class="glass-card p-xl rounded-xxl col-span-2">
+                        <div class="flex justify-between items-end mb-xl">
+                            <div>
+                                <span class="text-label-sm text-on-surface-variant">Customer Growth</span>
+                                <h4 class="font-headline-lg text-primary">+2,450 <span
+                                        class="text-body-sm text-green-600 font-bold">↑ 12%</span></h4>
+                            </div>
+                            <div class="flex gap-xs">
+                                <div class="w-12 h-20 bg-primary/20 rounded-t-lg"></div>
+                                <div class="w-12 h-32 bg-primary/40 rounded-t-lg"></div>
+                                <div class="w-12 h-24 bg-primary/60 rounded-t-lg"></div>
+                                <div class="w-12 h-40 bg-primary rounded-t-lg"></div>
+                            </div>
+                        </div>
+                        <img class="w-full h-48 object-cover rounded-xl border border-outline-variant/10"
+                            data-alt="A detailed financial line chart visualization for a professional business dashboard. The chart features a smooth, flowing blue curve against a clean white background with subtle grey grid lines. Markers show peak performance points, and the overall aesthetic is minimalist, sleek, and highly legible, optimized for data-driven executive decision-making."
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvsS0So7V3ldlpeKZSvdqUnu8rlJNDcHdqW8j9z0GvegO6PPAnFiT6frH5s5EPirAkchV_zKwgESgJreI0oGlcQ_jHOo4ypLEiLqIUIuHtJfwyON4vHV5sE_osH24DC3cDfKSoFou7y7kuHDuHncrhEm4PaDyfmuFgIvu1DQEH-Fscyx3xx4Qkmr_i19U6CJBP6hLUUA9-QpnFQx_8pMc5twSzFT3ZuEpqvlZ7L9OFDbjuXPOdW7Y9" />
+                    </div>
+                    <div class="glass-card p-lg rounded-xxl">
+                        <span class="text-label-sm text-on-surface-variant mb-base block">Top Categories</span>
+                        <div class="space-y-sm">
+                            <div class="h-2 w-full bg-surface-container rounded-full overflow-hidden">
+                                <div class="w-[70%] h-full bg-primary"></div>
+                            </div>
+                            <div class="h-2 w-full bg-surface-container rounded-full overflow-hidden">
+                                <div class="w-[45%] h-full bg-secondary"></div>
+                            </div>
+                            <div class="h-2 w-full bg-surface-container rounded-full overflow-hidden">
+                                <div class="w-[30%] h-full bg-primary/40"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-card p-lg rounded-xxl flex flex-col items-center justify-center text-center">
+                        <div
+                            class="w-16 h-16 rounded-full border-4 border-primary border-t-transparent animate-spin mb-md">
+                        </div>
+                        <span class="text-label-sm font-bold">Syncing live data...</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Pricing -->
+        <section class="py-xxl max-w-container-max mx-auto px-lg" id="pricing">
+            <div class="text-center mb-xxl">
+                <h2 class="font-headline-lg text-headline-lg mb-md">Simple, transparent pricing</h2>
+                <p class="text-body-lg text-on-surface-variant">Choose the plan that fits your business stage.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-xl">
+                <!-- Starter -->
+                <div class="glass-card p-xl rounded-xxl flex flex-col border border-outline-variant/20">
+                    <div class="mb-xl">
+                        <h3 class="font-headline-sm mb-base">Starter</h3>
+                        <div class="flex items-baseline gap-xs">
+                            <span class="text-headline-lg font-display">$49</span>
+                            <span class="text-on-surface-variant">/mo</span>
+                        </div>
+                        <p class="text-body-sm text-on-surface-variant mt-sm">Perfect for small kiosks and side
+                            projects.</p>
+                    </div>
+                    <ul class="space-y-md mb-xl flex-grow">
+                        <li class="flex gap-sm items-center text-body-sm"><span
+                                class="material-symbols-outlined text-green-500">check</span> 1 Location</li>
+                        <li class="flex gap-sm items-center text-body-sm"><span
+                                class="material-symbols-outlined text-green-500">check</span> 3 Staff Members</li>
+                        <li class="flex gap-sm items-center text-body-sm"><span
+                                class="material-symbols-outlined text-green-500">check</span> Basic POS &amp; CRM</li>
+                        <li class="flex gap-sm items-center text-body-sm text-on-surface-variant/50"><span
+                                class="material-symbols-outlined">close</span> AI Insights</li>
+                    </ul>
+                    <button
+                        class="w-full py-md rounded-xl border border-primary text-primary font-bold hover:bg-primary/5 transition-all">Get
+                        Started</button>
+                </div>
+                <!-- Pro -->
+                <div
+                    class="relative glass-card p-xl rounded-xxl flex flex-col border-2 border-primary shadow-2xl scale-105 z-10">
+                    <div
+                        class="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-on-primary px-lg py-xs rounded-full text-label-sm font-bold shadow-lg uppercase tracking-wider">
+                        Most Popular</div>
+                    <div class="mb-xl">
+                        <h3 class="font-headline-sm mb-base">Professional</h3>
+                        <div class="flex items-baseline gap-xs">
+                            <span class="text-headline-lg font-display text-primary">$129</span>
+                            <span class="text-on-surface-variant">/mo</span>
+                        </div>
+                        <p class="text-body-sm text-on-surface-variant mt-sm">For growing retail &amp; service brands.
+                        </p>
+                    </div>
+                    <ul class="space-y-md mb-xl flex-grow">
+                        <li class="flex gap-sm items-center text-body-sm"><span
+                                class="material-symbols-outlined text-green-500">check</span> Unlimited Locations</li>
+                        <li class="flex gap-sm items-center text-body-sm"><span
+                                class="material-symbols-outlined text-green-500">check</span> Unlimited Staff</li>
+                        <li class="flex gap-sm items-center text-body-sm font-bold"><span
+                                class="material-symbols-outlined text-green-500">check</span> AI Assistant Included</li>
+                        <li class="flex gap-sm items-center text-body-sm"><span
+                                class="material-symbols-outlined text-green-500">check</span> Priority Support</li>
+                    </ul>
+                    <button
+                        class="w-full py-md rounded-xl bg-primary text-on-primary font-bold shadow-lg hover:opacity-90 active:scale-95 transition-all">Start
+                        Free Trial</button>
+                </div>
+                <!-- Enterprise -->
+                <div class="glass-card p-xl rounded-xxl flex flex-col border border-outline-variant/20">
+                    <div class="mb-xl">
+                        <h3 class="font-headline-sm mb-base">Enterprise</h3>
+                        <div class="flex items-baseline gap-xs">
+                            <span class="text-headline-lg font-display">Custom</span>
+                        </div>
+                        <p class="text-body-sm text-on-surface-variant mt-sm">Bespoke solutions for large-scale
+                            operations.</p>
+                    </div>
+                    <ul class="space-y-md mb-xl flex-grow">
+                        <li class="flex gap-sm items-center text-body-sm"><span
+                                class="material-symbols-outlined text-green-500">check</span> API &amp; Webhook Access
+                        </li>
+                        <li class="flex gap-sm items-center text-body-sm"><span
+                                class="material-symbols-outlined text-green-500">check</span> Custom Reporting</li>
+                        <li class="flex gap-sm items-center text-body-sm"><span
+                                class="material-symbols-outlined text-green-500">check</span> Dedicated Success Manager
+                        </li>
+                        <li class="flex gap-sm items-center text-body-sm"><span
+                                class="material-symbols-outlined text-green-500">check</span> SLA Guarantees</li>
+                    </ul>
+                    <button
+                        class="w-full py-md rounded-xl border border-outline text-on-surface font-bold hover:bg-surface transition-all">Contact
+                        Sales</button>
+                </div>
+            </div>
+        </section>
+        <!-- Testimonials -->
+        <section class="py-xxl bg-surface-container-high/30">
+            <div class="max-w-container-max mx-auto px-lg">
+                <div class="grid md:grid-cols-3 gap-lg">
+                    <div class="glass-card p-xl rounded-xxl">
+                        <div class="flex gap-xs text-yellow-400 mb-lg">
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">star</span>
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">star</span>
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">star</span>
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">star</span>
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">star</span>
+                        </div>
+                        <p class="italic text-on-surface mb-xl">"BizFlow transformed our multi-location cafe chain. The
+                            real-time inventory alone saved us $2k in waste in the first month."</p>
+                        <div class="flex items-center gap-md">
+                            <img class="w-12 h-12 rounded-full object-cover"
+                                data-alt="A professional headshot of a female entrepreneur in her 30s with a warm, confident smile, set against a blurred modern cafe background. The lighting is natural and bright, conveying a sense of success and approachability, perfect for a SaaS testimonial avatar."
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUPbhzt2MxE74kP1EZ0EXyZilogIdzySBhaQGqp_zuJ6wjUquagsjVR3OMbNscOWDEQFM490ASHCnvwc4hMGXYW0NPTNdTKvPceaLYwazHfobXq1bxavDtE9C7X45VLHVRZMgNGB1utKO7ar7Dm-cgTIGrdScA5e0urGzt6eMX_Aek7xEd3n1TIpmIw5NL4vBcg5DwlhbCBfRMLU1jK2fS5Dt8elDv-bFOPkFT62x5CxRmV2CBTXlj" />
+                            <div>
+                                <h4 class="font-bold text-sm">Sarah Chen</h4>
+                                <span class="text-label-sm text-on-surface-variant">Founder, Brew &amp; Bean</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-card p-xl rounded-xxl">
+                        <div class="flex gap-xs text-yellow-400 mb-lg">
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">star</span>
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">star</span>
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">star</span>
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">star</span>
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">star</span>
+                        </div>
+                        <p class="italic text-on-surface mb-xl">"The AI assistant is like having a CFO in my pocket. I
+                            just ask about margins and it gives me instant answers."</p>
+                        <div class="flex items-center gap-md">
+                            <img class="w-12 h-12 rounded-full object-cover"
+                                data-alt="A professional headshot of a middle-aged male executive with a focused, intelligent expression. He is wearing a clean navy blazer over a white shirt, set in a bright, modern office environment. The image exudes professional rigor and high-speed business operational expertise."
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNinY1btFfyMUo53JRMONI_Zk6X_QmJGgXBVFCKVamVdwIeYJ-SzwkziRMfydukQQrof-ThXMUdZ1ZBRsjKkAhhRARSD6sjeOt5cdrKxexGdS6bjKE9tFX5sjLpJvCFFNoD9emPX-HUdQN93FIAX7pAKFFVudkCStH4f0uNVtCN_NZ9qF2PEiEzquwLfg3K1br9hY7GyM1uymjp5I-Ah1vlIIeGGW0X7o_ccUIZSawXNC89wBq7Kh7" />
+                            <div>
+                                <h4 class="font-bold text-sm">Michael Rossi</h4>
+                                <span class="text-label-sm text-on-surface-variant">Owner, Rossi Boutiques</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-card p-xl rounded-xxl">
+                        <div class="flex gap-xs text-yellow-400 mb-lg">
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">star</span>
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">star</span>
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">star</span>
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">star</span>
+                            <span class="material-symbols-outlined"
+                                style="font-variation-settings: 'FILL' 1;">star</span>
+                        </div>
+                        <p class="italic text-on-surface mb-xl">"Cleaner than Clover, faster than Square. The migration
+                            was seamless and our team learned it in under 30 minutes."</p>
+                        <div class="flex items-center gap-md">
+                            <img class="w-12 h-12 rounded-full object-cover"
+                                data-alt="A professional portrait of a young female creative professional with glasses and a stylish, minimalist outfit. She is posed against a soft, neutral-toned studio background with gentle light-mode illumination. The image reflects modern minimalism and sophisticated design taste."
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeS8h1c_9tRE-a8M-nROyAGEtsaNQ464gPdSY0rG6kc4kTOZCatPiPmjmNd14CIXc6QnIVj20Zk1HlTAl2_WOUH7NoZlPlfQX23LsL7K7LG5zLhdoL2y43-VObRT42o8qtYZoBOM0EOdmruyoIssLSZiSMboqZe1JXxs6IZQdzrCB9GC4bJEdi1ZOfEr2MgMQj2dwbp15cC8OlmBLcjtPjI5bu8wIhTC8kSWU4Vj3EPM5tWfiNPpGL" />
+                            <div>
+                                <h4 class="font-bold text-sm">Emily Davis</h4>
+                                <span class="text-label-sm text-on-surface-variant">Ops Director, Urban
+                                    Collective</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- FAQ -->
+        <section class="py-xxl max-w-3xl mx-auto px-lg">
+            <h2 class="font-headline-lg text-headline-lg text-center mb-xl">Common Questions</h2>
+            <div class="space-y-md">
+                <details class="group glass-card rounded-xl p-lg" open="">
+                    <summary class="flex justify-between items-center cursor-pointer list-none">
+                        <span class="font-bold">Can I migrate from Square or Shopify?</span>
+                        <span
+                            class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+                    </summary>
+                    <p class="mt-md text-on-surface-variant">Yes! We have one-click importers for both. Our migration
+                        specialist team can also help you move your inventory and customer data manually if needed, free
+                        of charge.</p>
+                </details>
+                <details class="group glass-card rounded-xl p-lg">
+                    <summary class="flex justify-between items-center cursor-pointer list-none">
+                        <span class="font-bold">What hardware is required?</span>
+                        <span
+                            class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+                    </summary>
+                    <p class="mt-md text-on-surface-variant">BizFlow runs on any iPad, Android Tablet, or desktop
+                        browser. We also sell high-performance proprietary POS hardware if you prefer a dedicated setup.
+                    </p>
+                </details>
+                <details class="group glass-card rounded-xl p-lg">
+                    <summary class="flex justify-between items-center cursor-pointer list-none">
+                        <span class="font-bold">How secure is my data?</span>
+                        <span
+                            class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+                    </summary>
+                    <p class="mt-md text-on-surface-variant">We use bank-grade AES-256 encryption. Your data is stored
+                        in ISO 27001 certified data centers with 99.99% uptime guaranteed.</p>
+                </details>
+            </div>
+        </section>
+        <!-- Final CTA -->
+        <section class="py-xxl">
+            <div class="max-w-container-max mx-auto px-lg">
+                <div
+                    class="bg-primary rounded-xxl p-xxl text-center text-on-primary relative overflow-hidden shadow-2xl">
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary via-primary to-blue-800 opacity-50">
+                    </div>
+                    <div class="relative z-10 space-y-lg">
+                        <h2 class="font-display text-display text-white">Ready to grow your business?</h2>
+                        <p class="text-body-lg text-blue-100 max-w-2xl mx-auto">Join 10,000+ businesses running on
+                            BizFlow. Start your 14-day free trial today. No credit card required.</p>
+                        <div class="flex flex-col sm:flex-row justify-center gap-md pt-lg">
+                            <button
+                                class="bg-white text-primary font-headline-sm px-xxl py-md rounded-xl shadow-lg hover:bg-surface transition-all active:scale-95">Start
+                                your free trial</button>
+                            <button
+                                class="bg-transparent border border-white text-white font-headline-sm px-xxl py-md rounded-xl hover:bg-white/10 transition-all active:scale-95">Schedule
+                                a demo</button>
+                        </div>
+                    </div>
+                    <!-- Abstract decoration -->
+                    <div class="absolute -top-20 -left-20 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
+                    <div class="absolute -bottom-20 -right-20 w-80 h-80 bg-blue-400/20 rounded-full blur-3xl"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer class="bg-surface-container-lowest border-t border-outline-variant py-xxl">
+        <div class="max-w-container-max mx-auto px-lg grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-xl">
+            <div class="col-span-2 space-y-md">
+                <div class="flex items-center gap-base">
+                    <span class="material-symbols-outlined text-primary text-2xl"
+                        style="font-variation-settings: 'FILL' 1;">insights</span>
+                    <span class="text-headline-sm font-headline-sm font-bold text-on-surface">BizFlow</span>
+                </div>
+                <p class="text-body-sm text-on-surface-variant max-w-xs">The high-performance business operating system
+                    for modern retail and service industry leaders.</p>
+            </div>
+            <div class="space-y-md">
+                <h5 class="text-label-sm font-bold uppercase tracking-wider text-on-surface">Product</h5>
+                <ul class="space-y-sm">
+                    <li><a class="text-body-sm text-on-surface-variant hover:text-primary hover:underline transition-all"
+                            href="#">Features</a></li>
+                    <li><a class="text-body-sm text-on-surface-variant hover:text-primary hover:underline transition-all"
+                            href="#">Pricing</a></li>
+                    <li><a class="text-body-sm text-on-surface-variant hover:text-primary hover:underline transition-all"
+                            href="#">Security</a></li>
+                </ul>
+            </div>
+            <div class="space-y-md">
+                <h5 class="text-label-sm font-bold uppercase tracking-wider text-on-surface">Company</h5>
+                <ul class="space-y-sm">
+                    <li><a class="text-body-sm text-on-surface-variant hover:text-primary hover:underline transition-all"
+                            href="#">About</a></li>
+                    <li><a class="text-body-sm text-on-surface-variant hover:text-primary hover:underline transition-all"
+                            href="#">Careers</a></li>
+                    <li><a class="text-body-sm text-on-surface-variant hover:text-primary hover:underline transition-all"
+                            href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="space-y-md">
+                <h5 class="text-label-sm font-bold uppercase tracking-wider text-on-surface">Legal</h5>
+                <ul class="space-y-sm">
+                    <li><a class="text-body-sm text-on-surface-variant hover:text-primary hover:underline transition-all"
+                            href="#">Privacy</a></li>
+                    <li><a class="text-body-sm text-on-surface-variant hover:text-primary hover:underline transition-all"
+                            href="#">Terms</a></li>
+                    <li><a class="text-body-sm text-on-surface-variant hover:text-primary hover:underline transition-all"
+                            href="#">Cookie Policy</a></li>
+                </ul>
+            </div>
+            <div class="space-y-md">
+                <h5 class="text-label-sm font-bold uppercase tracking-wider text-on-surface">Newsletter</h5>
+                <div class="flex gap-xs">
+                    <input
+                        class="w-full bg-surface-container border border-outline-variant rounded-lg text-body-sm px-sm py-xs focus:ring-1 focus:ring-primary"
+                        placeholder="Email" type="email" />
+                    <button class="bg-primary text-on-primary px-sm py-xs rounded-lg"><span
+                            class="material-symbols-outlined text-[18px]">arrow_forward</span></button>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-container-max mx-auto px-lg mt-xxl pt-xl border-t border-outline-variant/30 text-center">
+            <p class="font-body-sm text-body-sm text-on-surface-variant">© 2024 BizFlow OS. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
         // Simple scroll interaction for navbar
         window.addEventListener('scroll', () => {
             const nav = document.querySelector('nav');
@@ -687,4 +882,6 @@
             }
         });
     </script>
-</body></html>
+</body>
+
+</html>
