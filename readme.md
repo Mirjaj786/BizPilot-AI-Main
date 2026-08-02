@@ -4,6 +4,9 @@
 
 BizPilot AI helps shop owners manage customers, sales transactions, digital invoices, daily tasks, and store analytics from one unified workspace. It features a Multilingual AI Business Partner (English, Hindi, Bengali) that analyzes live merchant data and delivers strategic executive advice via text and voice.
 
+### 🏷️ Repository Topics
+`react` `nodejs` `express` `mongodb` `tailwind-css` `vite` `ai` `groq` `llama3` `crm` `pos` `billing-system` `invoice-generator` `voice-assistant` `speech-recognition` `multilingual` `bengali` `hindi` `jwt-authentication` `nodemailer`
+
 ---
 
 ## ✨ Features
