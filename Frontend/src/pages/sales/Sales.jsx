@@ -16,6 +16,7 @@ import {
   IoSearchOutline,
   IoReceiptOutline,
   IoCloudUploadOutline,
+  IoCheckmarkCircleOutline,
 } from "react-icons/io5";
 import { toast } from "react-toastify";
 
@@ -27,7 +28,14 @@ const TABS = [
 const PAYMENT_METHODS = ["UPI", "Cash", "Card", "Due"];
 
 export default function Sales() {
-  const { customers, sales, saveSales, settings } = useContext(StoreContext);
+  const { customers, sales, saveSales, settings, updatePaymentStatus } = useContext(StoreContext);
+  const [updatingStatusId, setUpdatingStatusId] = useState(null);
+
+  const handleStatusChange = async (saleId, newStatus) => {
+    setUpdatingStatusId(saleId);
+    await updatePaymentStatus(saleId, newStatus);
+    setUpdatingStatusId(null);
+  };
   const [activeTab, setActiveTab] = useState("billing");
   const [customerId, setCustomerId] = useState(customers[0]?.id || "");
   const [cart, setCart] = useState([]);
@@ -339,6 +347,26 @@ export default function Sales() {
                       <td className="font-bold text-slate-900 dark:text-white">{currency}{(s.total || s.amount || 0).toLocaleString()}</td>
                       <td><Badge variant={s.status === "Paid" ? "success" : s.status === "Pending" || s.status === "Unpaid" ? "warning" : "danger"}>{s.status}</Badge></td>
                       <td className="text-right">
+                        {s.status !== "Paid" && (
+                          <button
+                            onClick={() => handleStatusChange(s._id || s.id, "Paid")}
+                            disabled={updatingStatusId === (s._id || s.id)}
+                            className="px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition-colors inline-flex items-center gap-1 shadow-2xs cursor-pointer mr-2 disabled:opacity-50"
+                            title="Mark due transaction as Paid"
+                          >
+                            {updatingStatusId === (s._id || s.id) ? (
+                              <svg className="animate-spin h-3.5 w-3.5 text-white" viewBox="0 0 24 24" fill="none">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                              </svg>
+                            ) : (
+                              <>
+                                <IoCheckmarkCircleOutline size={14} />
+                                <span>Mark Paid</span>
+                              </>
+                            )}
+                          </button>
+                        )}
                         <button
                           onClick={() => setSelectedInvoice(s)}
                           className="inline-flex items-center gap-1 rounded-lg p-2 text-slate-400 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 transition-colors cursor-pointer"

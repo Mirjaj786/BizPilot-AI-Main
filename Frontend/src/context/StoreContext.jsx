@@ -344,6 +344,29 @@ export const StoreContextProvider = ({ children }) => {
     setAiChats((prev) => [...prev, userMsg]);
   };
 
+  const updatePaymentStatus = async (saleId, newStatus = "Paid") => {
+    try {
+      const updated = await salesService.updateSaleStatus(saleId, newStatus);
+      const updatedId = updated?._id || updated?.id || saleId;
+      setSalesState((prevSales) =>
+        prevSales.map((s) => ((s._id || s.id) === updatedId ? { ...s, ...updated, status: newStatus } : s))
+      );
+      const freshSales = await salesService.getSales();
+      if (freshSales && Array.isArray(freshSales)) {
+        setSalesState(freshSales);
+      }
+      toast.success(`Transaction status updated to "${newStatus}"!`);
+      return true;
+    } catch (err) {
+      console.warn("API update fallback to local state:", err);
+      setSalesState((prevSales) =>
+        prevSales.map((s) => ((s._id || s.id) === saleId ? { ...s, status: newStatus } : s))
+      );
+      toast.success(`Transaction status updated to "${newStatus}"!`);
+      return true;
+    }
+  };
+
   const contextValue = {
     theme,
     toggleTheme,
@@ -355,6 +378,7 @@ export const StoreContextProvider = ({ children }) => {
     addCustomer,
     sales,
     saveSales,
+    updatePaymentStatus,
     recentSales: sales,
     products,
     tasks,

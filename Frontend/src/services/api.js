@@ -1,7 +1,14 @@
-// Production Vercel Backend API base URL fallback
-const envUrl = import.meta.env.VITE_API_BASE_URL || "https://biz-pilot-ai-main.vercel.app/api";
-const cleanUrl = envUrl.replace(/\/+$/, "");
-export const API_BASE_URL = cleanUrl.endsWith("/api") ? cleanUrl : `${cleanUrl}/api`;
+// Clean API Base URL resolution
+const getApiBaseUrl = () => {
+  const envUrl = import.meta.env.VITE_API_BASE_URL;
+  if (envUrl) {
+    const clean = envUrl.replace(/\/+$/, "");
+    return clean.endsWith("/api") ? clean : `${clean}/api`;
+  }
+  return "http://localhost:8080/api";
+};
+
+export const API_BASE_URL = getApiBaseUrl();
 
 export const apiFetch = async (endpoint, options = {}) => {
   const token = localStorage.getItem("bf_token");
@@ -12,7 +19,9 @@ export const apiFetch = async (endpoint, options = {}) => {
     ...options.headers,
   };
 
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+  const formattedEndpoint = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
+
+  const response = await fetch(`${API_BASE_URL}${formattedEndpoint}`, {
     ...options,
     headers,
   });

@@ -44,5 +44,17 @@ export const salesService = {
       throw err;
     }
   },
+
+  updateSaleStatus: async (saleId, status, paymentMethod) => {
+    try {
+      const res = await apiFetch(`/sales/${saleId}/status`, {
+        method: "PATCH",
+        body: JSON.stringify({ status, paymentMethod }),
+      });
+      return res?.data;
+    } catch (err) {
+      throw err;
+    }
+  },
 };
 

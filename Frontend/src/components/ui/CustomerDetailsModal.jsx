@@ -17,9 +17,16 @@ import {
 } from "react-icons/io5";
 
 export default function CustomerDetailsModal({ customer, onClose }) {
-  const { sales, settings } = useContext(StoreContext);
+  const { sales, settings, updatePaymentStatus } = useContext(StoreContext);
   const [activeTab, setActiveTab] = useState("overview"); // "overview" | "sales"
   const [selectedInvoice, setSelectedInvoice] = useState(null);
+  const [updatingStatusId, setUpdatingStatusId] = useState(null);
+
+  const handleStatusChange = async (saleId, newStatus) => {
+    setUpdatingStatusId(saleId);
+    await updatePaymentStatus(saleId, newStatus);
+    setUpdatingStatusId(null);
+  };
 
   if (!customer) return null;
 
@@ -249,10 +256,27 @@ export default function CustomerDetailsModal({ customer, onClose }) {
                         </p>
                       </div>
 
-                      <div className="flex items-center gap-3 shrink-0">
-                        <span className="font-black text-sm text-slate-900 dark:text-white">
+                      <div className="flex items-center gap-2 shrink-0">
+                        <span className="font-black text-sm text-slate-900 dark:text-white mr-1">
                           {currency}{(s.total || s.amount || 0).toLocaleString()}
                         </span>
+                        {s.status !== "Paid" && (
+                          <button
+                            onClick={() => handleStatusChange(s._id || s.id, "Paid")}
+                            disabled={updatingStatusId === (s._id || s.id)}
+                            className="px-2 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] transition-colors inline-flex items-center gap-1 shadow-2xs cursor-pointer disabled:opacity-50"
+                            title="Mark payment as Paid"
+                          >
+                            {updatingStatusId === (s._id || s.id) ? (
+                              <svg className="animate-spin h-3 w-3 text-white" viewBox="0 0 24 24" fill="none">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                              </svg>
+                            ) : (
+                              "Mark Paid"
+                            )}
+                          </button>
+                        )}
                         <button
                           onClick={() => setSelectedInvoice(s)}
                           className="p-2 rounded-lg bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white transition-colors cursor-pointer"

@@ -28,9 +28,16 @@ const PRIORITY_BADGE = { High: "danger", Medium: "warning", Low: "neutral" };
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const { user, customers, sales, tasks, settings, saveTasks } = useContext(StoreContext);
+  const { user, customers, sales, tasks, settings, saveTasks, updatePaymentStatus } = useContext(StoreContext);
   const [selectedInvoice, setSelectedInvoice] = useState(null);
   const [showHealthModal, setShowHealthModal] = useState(false);
+  const [updatingStatusId, setUpdatingStatusId] = useState(null);
+
+  const handleStatusChange = async (saleId, newStatus) => {
+    setUpdatingStatusId(saleId);
+    await updatePaymentStatus(saleId, newStatus);
+    setUpdatingStatusId(null);
+  };
 
   const totalRevenue = sales.reduce((a, s) => a + (s.status === "Paid" ? Number(s.total || s.amount || 0) : 0), 0);
   const totalDues = sales.filter((s) => s.status === "Unpaid" || s.status === "Pending").reduce((a, s) => a + Number(s.total || s.amount || 0), 0);
@@ -38,6 +45,20 @@ export default function Dashboard() {
   const recentSalesList = [...sales].slice(0, 5);
   const activeTasks = tasks.filter((t) => t.status === "Pending" || t.status === "todo").slice(0, 4);
   const currency = settings?.currency || "₹";
+
+  // Dynamic AI Health Score Formula (0 - 100)
+  const paidSalesCount = sales.filter((s) => s.status === "Paid").length;
+  const totalSalesCount = sales.length;
+  const cashRatio = totalSalesCount > 0 ? (paidSalesCount / totalSalesCount) * 100 : 100;
+  const creditRiskRatio = totalRevenue > 0 ? Math.min(100, (totalDues / (totalRevenue + totalDues)) * 100) : 0;
+  const completedTasksCount = tasks.filter((t) => t.status === "Completed" || t.status === "completed").length;
+  const totalTasksCount = tasks.length;
+  const taskCompletionRatio = totalTasksCount > 0 ? (completedTasksCount / totalTasksCount) * 100 : 100;
+
+  const cashScorePart = (cashRatio / 100) * 40;
+  const creditScorePart = Math.max(0, 40 - (creditRiskRatio / 100) * 40);
+  const taskScorePart = (taskCompletionRatio / 100) * 20;
+  const healthScore = sales.length === 0 && tasks.length === 0 ? 100 : Math.min(100, Math.max(30, Math.round(cashScorePart + creditScorePart + taskScorePart)));
 
   const handleToggleTask = (taskId) => {
     saveTasks(tasks.map((t) => (t.id === taskId ? { ...t, status: t.status === "Completed" || t.status === "completed" ? "Pending" : "Completed" } : t)));
@@ -248,6 +269,26 @@ export default function Dashboard() {
                     <td className="font-bold text-slate-900 dark:text-white">{currency}{(s.total || s.amount || 0).toLocaleString()}</td>
                     <td><Badge variant={s.status === "Paid" ? "success" : s.status === "Pending" || s.status === "Unpaid" ? "warning" : "danger"}>{s.status}</Badge></td>
                     <td className="text-right">
+                      {s.status !== "Paid" && (
+                        <button
+                          onClick={() => handleStatusChange(s._id || s.id, "Paid")}
+                          disabled={updatingStatusId === (s._id || s.id)}
+                          className="px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition-colors inline-flex items-center gap-1 shadow-2xs cursor-pointer mr-2 disabled:opacity-50"
+                          title="Mark due transaction as Paid"
+                        >
+                          {updatingStatusId === (s._id || s.id) ? (
+                            <svg className="animate-spin h-3.5 w-3.5 text-white" viewBox="0 0 24 24" fill="none">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                            </svg>
+                          ) : (
+                            <>
+                              <IoCheckmarkCircleOutline size={14} />
+                              <span>Mark Paid</span>
+                            </>
+                          )}
+                        </button>
+                      )}
                       <button
                         onClick={() => setSelectedInvoice(s)}
                         className="inline-flex items-center gap-1 rounded-lg p-2 text-slate-400 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 transition-colors cursor-pointer"
@@ -289,11 +330,15 @@ export default function Dashboard() {
               <div>
                 <p className="text-xs font-bold uppercase tracking-wider text-blue-200">Overall Business Health Score</p>
                 <div className="flex items-baseline gap-2 mt-1">
-                  <span className="text-4xl font-black">{totalDues === 0 ? "96" : totalDues < 2000 ? "91" : "82"}</span>
+                  <span className="text-4xl font-black">{healthScore}</span>
                   <span className="text-sm font-bold text-blue-200">/ 100</span>
                 </div>
                 <p className="text-xs text-blue-100 mt-1 font-medium">
-                  {totalDues === 0 ? "Optimal Store Health • Low Financial Exposure" : "Strong Revenue • Moderate Pending Credit Exposure"}
+                  {healthScore >= 90
+                    ? "Optimal Store Health • Minimal Financial Exposure"
+                    : healthScore >= 75
+                    ? "Strong Revenue • Moderate Pending Credit Dues"
+                    : "Attention Needed • High Unpaid Credit Exposure"}
                 </p>
               </div>
               <div className="h-16 w-16 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center font-bold text-2xl shrink-0">
