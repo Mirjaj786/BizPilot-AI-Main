@@ -6,7 +6,7 @@ export const createBusinessPrompt = (data, message) => {
   const duesVal = data.statistics.unpaidRevenue || 0;
   const totalRevVal = data.statistics.revenue || 0;
   const creditRiskRatio = totalRevVal > 0 ? Math.round((duesVal / (totalRevVal + duesVal)) * 100) : 0;
-  
+
   const healthScore = totalRevVal === 0 && duesVal === 0 ? 100 : Math.min(100, Math.max(30, Math.round(cashRatio * 0.4 + (100 - creditRiskRatio) * 0.4 + 20)));
 
   return `You are BizPilot AI — a highly intelligent, senior Executive AI Business Partner & Retail CRM Strategist. You act as an active co-pilot to shop owners, enterprise managers, and store operators.
@@ -34,6 +34,7 @@ ${data.insights.pendingTasksStr}
 
 MERCHANT QUERY:
 "${message}"
+
 
 CORE DIRECTIVES FOR A REAL ADVANCED AI AGENT PERSONA:
 1. NO GENERIC OR BOT-LIKE INTROS: Never say "As an AI...", "Here is your response", or "Based on the data provided". Jump straight into sharp, highly specific, data-backed executive analysis.
