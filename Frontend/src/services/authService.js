@@ -134,6 +134,22 @@ export const authService = {
     }
   },
 
+  // Forgot Password Handler
+  forgotPassword: async (email) => {
+    return await apiFetch("/forgot-password", {
+      method: "POST",
+      body: JSON.stringify({ email }),
+    });
+  },
+
+  // Reset Password Handler
+  resetPassword: async (token, newPassword) => {
+    return await apiFetch(`/reset-password/${token}`, {
+      method: "POST",
+      body: JSON.stringify({ newPassword }),
+    });
+  },
+
   // Logout Handler
   logout: () => {
     localStorage.removeItem("bf_token");

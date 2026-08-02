@@ -85,6 +85,9 @@ export default function Login() {
           <label className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
             Password
           </label>
+          <Link to="/forgot-password" className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline">
+            Forgot password?
+          </Link>
         </div>
         <div className="relative">
           <IoLockClosedOutline className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-base" />

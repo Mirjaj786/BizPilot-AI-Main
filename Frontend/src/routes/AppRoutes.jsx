@@ -2,6 +2,8 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "../pages/home/Home.jsx";
 import Login from "../pages/login/Login.jsx";
 import Register from "../pages/register/Register.jsx";
+import ForgotPassword from "../pages/forgotPassword/ForgotPassword.jsx";
+import ResetPassword from "../pages/resetPassword/ResetPassword.jsx";
 import DashboardLayout from "../layouts/DashboardLayout/DashboardLayout.jsx";
 import Dashboard from "../pages/dashboard/Dashboard.jsx";
 import Customers from "../pages/customers/Customers.jsx";
@@ -37,6 +39,26 @@ export default function AppRoutes() {
           <PublicAuthRoute>
             <AuthLayout title="Start your free merchant account" subtitle="Setup your business hub in 2 minutes.">
               <Register />
+            </AuthLayout>
+          </PublicAuthRoute>
+        }
+      />
+      <Route
+        path="/forgot-password"
+        element={
+          <PublicAuthRoute>
+            <AuthLayout title="Reset your password" subtitle="Enter your email to receive a secure reset link.">
+              <ForgotPassword />
+            </AuthLayout>
+          </PublicAuthRoute>
+        }
+      />
+      <Route
+        path="/reset-password/:token"
+        element={
+          <PublicAuthRoute>
+            <AuthLayout title="Create a new password" subtitle="Set up a strong password to secure your workspace.">
+              <ResetPassword />
             </AuthLayout>
           </PublicAuthRoute>
         }
