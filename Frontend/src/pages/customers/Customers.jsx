@@ -512,10 +512,9 @@ export default function Customers() {
                 />
               </div>
               <div className="sm:col-span-1">
-                <label className="bf-label !text-xs font-bold">Email Address *</label>
+                <label className="bf-label !text-xs font-bold">Email Address (Optional)</label>
                 <input
                   type="email"
-                  required
                   value={form.email}
                   onChange={handleFormChange("email")}
                   placeholder="rahul@example.com"

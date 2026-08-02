@@ -34,7 +34,7 @@ const customerSchema = new mongoose.Schema(
       type: String,
       trim: true,
       lowercase: true,
-      required: true,
+      default: "",
       validate: {
         validator: (value) => value === "" || validator.isEmail(value),
         message: "Invalid email address",

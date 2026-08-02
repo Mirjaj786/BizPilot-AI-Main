@@ -32,6 +32,7 @@ export const createCustomer = AsyncHandler(async (req, res) => {
 
   const existingCustomer = await Customer.findOne({
     owner: userId,
+    isActive: true,
     $or: [
       { phone: normalizedPhone },
       ...(normalizedEmail ? [{ email: normalizedEmail }] : []),
@@ -39,7 +40,7 @@ export const createCustomer = AsyncHandler(async (req, res) => {
   });
 
   if (existingCustomer) {
-    throw new ApiError(httpStatus.CONFLICT, "Customer already exists.");
+    throw new ApiError(httpStatus.CONFLICT, "An active customer with this phone number or email already exists.");
   }
 
   const customer = await Customer.create({
@@ -185,15 +186,17 @@ export const updateCustomer = AsyncHandler(async (req, res) => {
       throw new ApiError(httpStatus.BAD_REQUEST, "Invalid email address.");
     }
 
-    const emailExist = await Customer.findOne({
-      email: normalizedEmail,
-      owner: req.user._id,
-      _id: { $ne: id },
-      isActive: true,
-    });
+    if (normalizedEmail) {
+      const emailExist = await Customer.findOne({
+        email: normalizedEmail,
+        owner: req.user._id,
+        _id: { $ne: id },
+        isActive: true,
+      });
 
-    if (emailExist) {
-      throw new ApiError(httpStatus.CONFLICT, "Email already exists.");
+      if (emailExist) {
+        throw new ApiError(httpStatus.CONFLICT, "Email already exists.");
+      }
     }
 
     customer.email = normalizedEmail;

@@ -41,7 +41,15 @@ app.get("/", (req, res) => {
   res.json({ message: "BizPilot AI Backend API is running live on Vercel! 🚀" });
 });
 
-database();
+// Ensure Database is Connected for Serverless Function Invocations
+app.use(async (req, res, next) => {
+  try {
+    await database();
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
 
 app.use("/api", userRoute);
 app.use("/api/customers", customerRoute);
