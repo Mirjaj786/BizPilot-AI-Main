@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { HiCheckCircle } from "react-icons/hi2";
 import logo from "../../assets/BizPilot_AI_Logo.png";
+import Mirjaj from "../../assets/Mirjaj.jpg"
 
 export default function AuthLayout({ children, title = "Welcome to BizPilot AI", subtitle = "Manage your sales, CRM & inventory in one place." }) {
   return (
@@ -77,7 +78,7 @@ export default function AuthLayout({ children, title = "Welcome to BizPilot AI",
           <div className="relative z-10 pt-8 border-t border-slate-800">
             <div className="flex items-center gap-3">
               <img
-                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80"
+                src={Mirjaj}
                 alt="Testimonial"
                 className="h-10 w-10 rounded-full object-cover ring-2 ring-blue-500/40"
               />
@@ -86,7 +87,7 @@ export default function AuthLayout({ children, title = "Welcome to BizPilot AI",
                   "BizPilot AI cut our daily inventory & checkout time by 60%."
                 </p>
                 <p className="text-[11px] text-slate-400">
-                  Sophia Chen — Founder, Artisan Cafe
+                  Mirjaj Ajij Milon — Founder, BizPilot AI
                 </p>
               </div>
             </div>
