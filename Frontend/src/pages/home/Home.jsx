@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
-import bizflowVisual from "../../assets/bizflow_visual.png";
+import bizpilotVisual from "../../assets/bizpilot_visual.png";
 import Button from "../../components/Button/Button.jsx";
 import {
   IoSparklesOutline,
@@ -32,7 +32,7 @@ export default function Home() {
           <div className="lg:col-span-7 space-y-8 text-center lg:text-left animate-slide-up">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200/80 dark:border-blue-800 text-blue-700 dark:text-blue-300 text-xs sm:text-sm font-bold shadow-2xs">
               <IoSparklesOutline className="text-blue-600 dark:text-blue-400 text-base" />
-              <span>Smart Business Operating System & AI Copilot</span>
+              <span>Your AI Business Partner for Retail Merchants</span>
             </div>
 
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] text-slate-900 dark:text-white">
@@ -72,7 +72,7 @@ export default function Home() {
           <div className="lg:col-span-5 relative flex items-center justify-center animate-fade-in">
             <div className="relative rounded-3xl border border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 p-4 shadow-2xl backdrop-blur-md overflow-hidden floating">
               <img
-                src={bizflowVisual}
+                src={bizpilotVisual}
                 alt="BizPilot AI Visual Dashboard"
                 className="w-full h-auto rounded-2xl object-cover"
               />

@@ -52,7 +52,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link to="/dashboard/ai" className="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                  BizFlow AI Intelligence
+                  BizPilot AI Intelligence
                 </Link>
               </li>
             </ul>
@@ -90,7 +90,7 @@ export default function Footer() {
             <ul className="space-y-3 text-xs sm:text-sm font-medium">
               <li className="flex items-center gap-2.5 text-slate-500 dark:text-slate-400">
                 <IoMailOutline className="text-blue-600 flex-shrink-0" size={16} />
-                <span>help@bizflow.com</span>
+                <span>support@bizpilotai.com</span>
               </li>
               <li className="flex items-center gap-2.5 text-slate-500 dark:text-slate-400">
                 <IoCallOutline className="text-blue-600 flex-shrink-0" size={16} />
@@ -106,7 +106,7 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="border-t border-slate-100 dark:border-slate-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium text-slate-400">
-          <p>&copy; {new Date().getFullYear()} BizFlow Inc. All rights reserved. &hearts; By Mirjaj</p>
+          <p>&copy; {new Date().getFullYear()} BizPilot AI. All rights reserved. Built with &hearts; by Mirjaj</p>
           <div className="flex items-center gap-6">
             <a href="#" className="hover:text-slate-600 dark:hover:text-slate-200 transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-slate-600 dark:hover:text-slate-200 transition-colors">Terms of Service</a>

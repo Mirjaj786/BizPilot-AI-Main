@@ -189,9 +189,9 @@ export default function Navbar() {
         <div className="flex h-20 items-center justify-between border-b border-slate-100 dark:border-slate-800 px-6">
           <div className="flex items-center gap-2">
             <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-600 font-extrabold text-white text-xs shadow-xs">
-              BF
+              <img src={logo} alt="logo" className="h-full w-full object-cover" />
             </span>
-            <span className="text-lg font-extrabold text-slate-900 dark:text-white">BizFlow</span>
+            <span className="text-lg font-extrabold text-slate-900 dark:text-white">BizPilot AI</span>
           </div>
           <button
             onClick={() => setOpen(false)}

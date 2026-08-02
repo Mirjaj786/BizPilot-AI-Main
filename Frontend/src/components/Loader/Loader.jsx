@@ -1,4 +1,4 @@
-export default function Loader({ fullScreen = false, text = "Loading BizFlow..." }) {
+export default function Loader({ fullScreen = false, text = "Loading BizPilot AI..." }) {
   if (fullScreen) {
     return (
       <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-900/10 backdrop-blur-xs">
