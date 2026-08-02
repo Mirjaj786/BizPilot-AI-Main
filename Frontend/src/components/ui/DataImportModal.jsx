@@ -258,11 +258,10 @@ export default function DataImportModal({ isOpen, onClose, onImportSuccess }) {
                 setActiveTab("customers");
                 resetState();
               }}
-              className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                activeTab === "customers"
+              className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${activeTab === "customers"
                   ? "bg-blue-600 text-white shadow-2xs"
                   : "text-slate-500 hover:text-slate-800 dark:hover:text-white"
-              }`}
+                }`}
             >
               Import Customers CRM
             </button>
@@ -271,11 +270,10 @@ export default function DataImportModal({ isOpen, onClose, onImportSuccess }) {
                 setActiveTab("sales");
                 resetState();
               }}
-              className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                activeTab === "sales"
+              className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${activeTab === "sales"
                   ? "bg-blue-600 text-white shadow-2xs"
                   : "text-slate-500 hover:text-slate-800 dark:hover:text-white"
-              }`}
+                }`}
             >
               Import Past Sales History
             </button>
@@ -340,11 +338,10 @@ export default function DataImportModal({ isOpen, onClose, onImportSuccess }) {
                       key={strat.id}
                       type="button"
                       onClick={() => setDuplicateStrategy(strat.id)}
-                      className={`p-2 rounded-lg border text-left transition-all cursor-pointer ${
-                        duplicateStrategy === strat.id
+                      className={`p-2 rounded-lg border text-left transition-all cursor-pointer ${duplicateStrategy === strat.id
                           ? "bg-blue-50 dark:bg-blue-950/60 border-blue-600 text-blue-700 dark:text-blue-300 shadow-2xs"
                           : "border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50"
-                      }`}
+                        }`}
                     >
                       <p className="font-extrabold">{strat.label}</p>
                       <p className="text-[10px] font-normal opacity-80">{strat.desc}</p>
@@ -412,7 +409,6 @@ export default function DataImportModal({ isOpen, onClose, onImportSuccess }) {
           </div>
         )}
 
-        {/* Final Import Summary Report */}
         {importSummary && (
           <div className="text-center p-6 space-y-4 bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/50 rounded-2xl">
             <IoCheckmarkCircle className="mx-auto text-5xl text-emerald-500" />

@@ -83,7 +83,7 @@ export default function AuthLayout({ children, title = "Welcome to BizPilot AI",
               />
               <div>
                 <p className="text-xs font-semibold text-white">
-                  "BizFlow cut our daily inventory & checkout time by 60%."
+                  "BizPilot AI cut our daily inventory & checkout time by 60%."
                 </p>
                 <p className="text-[11px] text-slate-400">
                   Sophia Chen — Founder, Artisan Cafe

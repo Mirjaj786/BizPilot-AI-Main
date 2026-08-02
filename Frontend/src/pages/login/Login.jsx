@@ -149,7 +149,7 @@ export default function Login() {
 
       <div className="pt-4 text-center">
         <p className="text-xs text-slate-500 dark:text-slate-400">
-          Don't have a BizFlow account yet?{" "}
+          Don't have a BizPilot AI account yet?{" "}
           <Link to="/register" className="text-blue-600 font-bold hover:underline">
             Create an account
           </Link>

@@ -176,7 +176,7 @@ export default function Register() {
 
       <div className="pt-4 text-center">
         <p className="text-xs text-slate-500 dark:text-slate-400">
-          Already using BizFlow?{" "}
+          Already using BizPilot AI ?{" "}
           <Link to="/login" className="text-blue-600 font-bold hover:underline">
             Sign In
           </Link>
