@@ -11,13 +11,13 @@ export const chatWithAI = AsyncHandler(async (req, res) => {
     throw new ApiError(httpStatus.UNAUTHORIZED, "Unauthorized access. Please login.");
   }
 
-  const { message } = req.body;
+  const { message, language = "en" } = req.body;
 
   if (!message || !message.trim()) {
     throw new ApiError(httpStatus.BAD_REQUEST, "Message is required.");
   }
 
-  const response = await chatWithBusinessAI(userId, message.trim());
+  const response = await chatWithBusinessAI(userId, message.trim(), language);
 
   return res.status(httpStatus.OK).json(
     new ApiResponse({
