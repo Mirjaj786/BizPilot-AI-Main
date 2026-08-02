@@ -1,47 +1,43 @@
 # 🚀 BizPilot AI
 
-> An AI-powered CRM and Point of Sale (POS) system built for small retail businesses.
+> An AI-powered CRM, POS, and Business Intelligence System built for modern retail merchants and enterprise stores.
 
-BizPilot AI helps shop owners manage customers, sales, invoices, daily tasks, and business analytics from one place. It also includes an AI Business Consultant that analyzes business data and provides smart recommendations through both text and voice.
+BizPilot AI helps shop owners manage customers, sales transactions, digital invoices, daily tasks, and store analytics from one unified workspace. It features a Multilingual AI Business Partner (English, Hindi, Bengali) that analyzes live merchant data and delivers strategic executive advice via text and voice.
 
 ---
 
 ## ✨ Features
 
-- 🔐 Secure JWT & Google OAuth 2.0 Single Sign-On
-- 📥 1-Click Excel (.xlsx) & CSV (.csv) Data Migration Engine
-- 🔄 Smart Duplicate Resolution Selector (Update, Skip, or Create Side-by-Side)
-- 👥 Customer CRM with 10-Digit Phone Validation
-- 💰 Point of Sale (POS) Billing Terminal
-- 🧾 Thermal & Digital Invoice Generation
-- 📤 WhatsApp Invoice Sharing
-- 💬 WhatsApp Payment Reminders
-- 🤖 AI Business Consultant (Groq LLM)
-- 🎙️ Voice Input Speech-to-Text Copilot
-- 🔊 Voice Response Text-to-Speech Assistant
-- 📊 AI Store Health Scanner
-- 🛡️ AI Rate Limiting API Protection (10 req/min)
-- 📈 Real-time Business Analytics Dashboard
-- 📄 Executive PDF Financial Report Export
-- ✅ Task Management Board
-- 🌙 Seamless Dark / Light Mode Support
-- 📱 Fully Responsive Cross-Platform Design
+- 🔐 **Authentication & Security**: Secure JWT Authentication, Google OAuth 2.0 Single Sign-On, and Email Password Reset link flow.
+- 📧 **Automated Password Reset**: 15-minute expiring JWT password reset links with HTML email delivery via Nodemailer SMTP.
+- 🌐 **Native Multilingual AI**: AI Copilot & Voice synthesis in **English 🇬🇧**, **Hindi 🇮🇳 (हिंदी)**, and **Bengali 🇧🇩 (বাংলা)**.
+- 📥 **1-Click Bulk Data Migration**: Import Excel (.xlsx) & CSV (.csv) customer ledgers and sales records.
+- 🔄 **Smart Duplicate Resolution**: Merge duplicate profiles, skip matching phone/email, or create side-by-side records.
+- 👥 **Customer CRM**: Active/Inactive account tracking with normalized 10-digit phone validation and dues breakdown.
+- 💰 **Point of Sale (POS) Billing**: Fast checkout terminal with live cart feedback and double-click prevention.
+- 🧾 **Digital & Thermal Invoices**: Official printable invoice receipts with custom business headers.
+- 💬 **WhatsApp Commerce**: 1-Click WhatsApp invoice sharing and payment reminder statements.
+- 🤖 **Executive AI Consultant**: Deep business diagnostics (revenue velocity, peak sales days, slow-moving items, VIP clients).
+- 🎙️ **Voice Speech-to-Text Copilot**: Hands-free voice command recognition via Web Speech API.
+- 🔊 **Voice Text-to-Speech Assistant**: Complete sentence reading with punctuation chunking for Hindi & Bengali.
+- 💀 **Animated Skeleton Loaders**: Shimmer table, card, and metric loaders for smooth data fetching.
+- 🪟 **React Portal Modals**: Fully viewport-centered modals with sticky action footers for phone and desktop screens.
+- 📈 **Real-Time Analytics**: Visual revenue charts, average order value (AOV), and financial metrics.
+- 📄 **Executive PDF Reports**: 1-click corporate financial summary PDF exports.
+- ✅ **Task Management**: Prioritized operational task board with due dates and status tracking.
+- 🌙 **Modern Design System**: Glassmorphism aesthetic, dark/light mode toggle, and micro-animations.
 
 ---
 
-## 🤖 AI Features
+## 🤖 Multilingual AI Copilot
 
-BizPilot AI includes an AI assistant that can:
+BizPilot AI acts as a Senior Executive AI Business Partner capable of:
 
-- Analyze business performance
-- Review sales and revenue
-- Identify top customers
-- Suggest ways to increase sales
-- Explain business workflow
-- Analyze weekly sales
-- Generate business insights
-- Answer business-related questions
-- Respond using voice
+- 📊 **Revenue Diagnostics**: Analyzing daily/weekly sales velocity and peak transaction days.
+- 👥 **CRM Exposure Analysis**: Identifying top-grossing clients and unpaid credit balances.
+- 📦 **Inventory Velocity**: Highlight star-performing items vs. slow-moving stock.
+- 🌐 **Multilingual Voice Communication**: Interactive voice Q&A in English, Hindi (हिंदी), and Bengali (বাংলা).
+- ⚡ **Offline Intelligent Fallback**: Smart rules engine for instant local data insights when offline.
 
 ---
 
@@ -49,30 +45,27 @@ BizPilot AI includes an AI assistant that can:
 
 ### Frontend
 
-- React 19
-- Vite
-- Tailwind CSS v4
-- React Router
-- Axios
-- Recharts
-- Framer Motion
-- GSAP
-- React Toastify
+- **Core**: React 19, Vite
+- **Styling**: Tailwind CSS v4, Vanilla CSS Design Tokens
+- **Routing**: React Router v7
+- **UI & Portals**: React DOM Portals (`createPortal`), React Icons, React Toastify
+- **Charts & Motion**: Recharts, Framer Motion, GSAP
+- **Authentication**: `@react-oauth/google`
 
 ### Backend
 
-- Node.js
-- Express.js
-- MongoDB
-- Mongoose
-- JWT Authentication
-- bcrypt
-- Validator.js
+- **Runtime**: Node.js, Express.js 5
+- **Database**: MongoDB, Mongoose ODM
+- **Authentication**: JWT (`jsonwebtoken`), bcrypt password hashing
+- **Email Delivery**: Nodemailer (Gmail SMTP)
+- **Validation**: Validator.js, HTTP Status codes
+- **Security**: CORS, Helmet, Sliding Window Rate Limiter
 
-### AI
+### AI & Speech
 
-- Groq API (Llama 3.3 70B)
-- Web Speech API
+- **LLM Engine**: Groq API (Llama 3.3 70B Versatile)
+- **Speech Recognition**: Web Speech API (`SpeechRecognition`)
+- **Speech Synthesis**: Web Speech API (`SpeechSynthesisUtterance` with Devanagari & Bengali chunking)
 
 ---
 
@@ -81,8 +74,30 @@ BizPilot AI includes an AI assistant that can:
 ```text
 BizPilot-AI/
 │
-├── Backend/          # Express REST API
-├── Frontend/         # React Application
+├── Backend/
+│   ├── config/           # Database & Groq configuration
+│   ├── controllers/      # Auth, Customer, Sale, Task, AI controllers
+│   ├── middlewares/      # Auth token & global error handlers
+│   ├── models/           # Mongoose data schemas
+│   ├── routes/           # REST API endpoint routes
+│   ├── services/         # AI prompts & business analytics services
+│   ├── utils/            # Email sender, HTML email builders, JWT helpers
+│   ├── .env
+│   ├── index.js          # Express app entry point
+│   └── package.json
+│
+├── Frontend/
+│   ├── src/
+│   │   ├── components/   # UI Modal, Buttons, Skeleton Loader, Cards
+│   │   ├── context/      # Auth & Store React Context
+│   │   ├── layouts/      # Dashboard & Auth Layouts
+│   │   ├── pages/        # Login, Register, Forgot/Reset Password, POS, CRM, Tasks, AI
+│   │   ├── routes/       # Protected & Public Auth Routes
+│   │   └── services/     # API fetch wrapper & Auth service
+│   ├── index.html
+│   ├── vite.config.js
+│   └── package.json
+│
 ├── README.md
 └── LICENSE
 ```
@@ -91,31 +106,24 @@ BizPilot-AI/
 
 ## 🚀 Getting Started
 
-### 1. Clone the repository
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/Mirjaj786/BizPilot-AI-Main.git
-
 cd BizPilot-AI-Main
 ```
 
----
-
-### 2. Install Backend
+### 2. Install Backend Dependencies
 
 ```bash
 cd Backend
-
 npm install
 ```
 
----
-
-### 3. Install Frontend
+### 3. Install Frontend Dependencies
 
 ```bash
 cd ../Frontend
-
 npm install
 ```
 
@@ -127,95 +135,72 @@ npm install
 
 ```env
 PORT=8080
-
-MONGODB_URI=your_mongodb_uri
-
-JWT_SECRET=your_jwt_secret
-
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret_key
 GROQ_API_KEY=your_groq_api_key
+
+# Email SMTP Credentials (for Password Reset)
+SMTP_USER=your_email@gmail.com
+SMTP_PASS=your_gmail_app_password
+FRONTEND_URL=https://bizpilotcrm.netlify.app
 ```
 
 ### Frontend (`Frontend/.env`)
 
 ```env
 VITE_API_BASE_URL=http://localhost:8080/api
+VITE_GOOGLE_CLIENT_ID=your_google_oauth_client_id
 ```
 
 ---
 
-## ▶️ Run the Project
+## ▶️ Running Locally
 
-### Start Backend
+### Start Backend Server
 
 ```bash
 cd Backend
-
-npm start
-```
-
-Development
-
-```bash
 npx nodemon index.js
 ```
+*Backend runs on `http://localhost:8080`*
 
-Backend runs on
-
-```
-http://localhost:8080
-```
-
----
-
-### Start Frontend
+### Start Frontend App
 
 ```bash
 cd Frontend
-
 npm run dev
 ```
+*Frontend runs on `http://localhost:5173`*
 
-Frontend runs on
+---
 
-```
-http://localhost:5173
-```
+## 📡 Key API Endpoints
+
+| Category | Method | Endpoint | Description |
+|---|---|---|---|
+| **Auth** | POST | `/api/register` | Register new merchant account |
+| **Auth** | POST | `/api/login` | Authenticate user & receive JWT |
+| **Auth** | POST | `/api/google-login` | Google OAuth 2.0 Single Sign-On |
+| **Auth** | POST | `/api/forgot-password` | Send 15-min reset link via SMTP email |
+| **Auth** | POST | `/api/reset-password/:token` | Reset user password with token |
+| **Auth** | GET | `/api/auth/me` | Fetch logged-in user profile |
+| **CRM** | GET/POST | `/api/customers` | Fetch & create CRM customer records |
+| **CRM** | POST | `/api/customers/bulk-import` | 1-Click bulk Excel/CSV import |
+| **POS** | GET/POST | `/api/sales` | Fetch sales history & checkout orders |
+| **Tasks** | GET/POST | `/api/tasks` | Fetch & create operational store tasks |
+| **AI** | POST | `/api/ai/chat` | AI Copilot business diagnostics |
 
 ---
 
 ## 📸 Screenshots
 
-> Replace these images with your own project screenshots.
-
-| Page | Preview |
-|------|---------|
-| Dashboard | `assets/dashboard.png` |
-| Sales | `assets/sales.png` |
-| Customers | `assets/customers.png` |
-| AI Assistant | `assets/ai.png` |
-| Analytics | `assets/analytics.png` |
-
----
-
-## 📁 Documentation
-
-For more details, check the project documentation:
-
-- 📘 **Backend Documentation:** `Backend/README.md`
-- 📗 **Frontend Documentation:** `Frontend/README.md`
-
----
-
-## 🚀 Future Improvements
-
-- Inventory Management
-- Low Stock Alerts
-- Customer Due Notifications
-- AI Sales Forecasting
-- Barcode Scanner
-- Multi-user Roles
-- Mobile Application
-- WhatsApp Business API Integration
+| View | Description |
+|---|---|
+| **Dashboard Overview** | Real-time sales metrics, store health score & quick action cards |
+| **POS Billing Terminal** | Fast checkout terminal with live cart & instant toast notifications |
+| **Customer CRM** | Client accounts, address ledgers & soft delete/restore controls |
+| **AI Copilot** | Multilingual text & voice business consultant in EN, HI, BN |
+| **Password Reset** | Automated email delivery with responsive reset password UI |
 
 ---
 
@@ -228,17 +213,8 @@ This project is licensed under the **ISC License**.
 ## 👨‍💻 Author
 
 **Mirjaj**
-
-GitHub: https://github.com/Mirjaj786
-
----
-
-## ⭐ Support
-
-If you found this project helpful, consider giving it a ⭐ on GitHub.
-
-It helps others discover the project and motivates future improvements.
+- GitHub: [https://github.com/Mirjaj786](https://github.com/Mirjaj786)
 
 ---
 
-**Built with ❤️ using React, Node.js, MongoDB, and Groq AI.**
+**Built with ❤️ using React, Node.js, MongoDB, Nodemailer, and Groq AI.**
