@@ -1,320 +1,222 @@
-# ⚡ BizPilot AI – Backend
+# ⚡ BizPilot AI – Backend API
 
-The **BizPilot AI Backend** is a RESTful API built with **Node.js**, **Express.js**, and **MongoDB**. It powers the core functionality of the BizPilot AI CRM, including authentication, customer management, sales, task management, and AI-powered business analysis using the Groq API.
+The **BizPilot AI Backend** is a high-performance RESTful API built with **Node.js**, **Express.js**, and **MongoDB**. It powers the core operations of the BizPilot AI business management OS, including authentication, password recovery via SMTP email, customer CRM management, POS sales transactions, operational tasks, and AI-driven business intelligence using the Groq AI API.
 
-The backend follows a clean MVC architecture with reusable services, middleware, and utility functions to keep the code modular, maintainable, and easy to extend.
-
----
-
-# ✨ Features
-
-- 🔐 JWT & Google OAuth 2.0 Single Sign-On (`/api/user/google-login`)
-- 📥 High-Performance Bulk Customer Import API (`POST /api/customers/bulk-import` with Mongoose `bulkWrite`)
-- 🔄 3-Strategy Duplicate Resolution Engine (Update, Skip, or Create Side-by-Side)
-- 👥 Customer Management with Normalized 10-Digit Phone Validation
-- 💰 Sales & Invoice Management
-- ✅ Task Management
-- 🤖 AI Business Consultant (Groq AI LLM)
-- 🛡️ Sliding Window Token Rate Limiter (`rateLimiter.js` capped at 10 req/min for AI endpoints)
-- 📊 Business Analytics & Diagnostic Aggregation
-- 📄 Automatic Invoice Number Generation
-- 🛡️ Auth Protected API Routes
-- ⚠️ Global Error Handling
-- 📦 Production-ready MongoDB Owner Scoping
+The backend follows a clean **MVC architecture** with reusable services, middlewares, and utilities to ensure code modularity, security, and scalability.
 
 ---
 
-# 🛠️ Tech Stack
+## ✨ Key Features
+
+- 🔐 **JWT & Google OAuth 2.0 Single Sign-On**: Secure token-based authentication (`/api/login`, `/api/google-login`).
+- 📧 **Automated Password Reset Flow**: 15-minute expiring JWT tokens delivered via Nodemailer HTML emails (`/api/forgot-password`, `/api/reset-password/:token`).
+- 🌐 **Dynamic Frontend Link Generation**: Auto-detects client origin headers to generate matching reset links for local and production deployments.
+- 📥 **Bulk Customer Data Import API**: High-speed batch processing via Mongoose `bulkWrite` (`POST /api/customers/bulk-import`).
+- 🔄 **3-Strategy Duplicate Engine**: Choose to Update profiles, Skip duplicates, or Create side-by-side records.
+- 👥 **Customer CRM**: Phone number validation, status toggle (Soft Delete / Restore / Permanent Delete), and dues breakdown.
+- 💰 **POS & Sales Management**: Transaction processing, automatic invoice number generation, and sales statistics.
+- ✅ **Operational Task Board**: Store task creation, priority assignment, and completion tracking.
+- 🤖 **Executive AI Consultant**: Groq LLM integration (Llama 3.3 70B) for instant business performance analysis.
+- 🌐 **Multilingual AI Prompt Service**: System prompt engine providing localized insights in **English**, **Hindi (हिंदी)**, and **Bengali (বাংলা)**.
+- 🛡️ **Sliding Window Token Rate Limiter**: Rate-limiting middleware (`rateLimiter.js`) protecting AI endpoints (10 req/min).
+- ⚠️ **Centralized Error Handling**: Standardized `ApiError` and `ApiResponse` wrappers with Express error handling middleware.
+
+---
+
+## 🛠️ Tech Stack
 
 | Category | Technology |
-|----------|------------|
-| Runtime | Node.js |
-| Framework | Express.js 5 |
-| Database | MongoDB + Mongoose |
-| Authentication | JWT (jsonwebtoken) |
-| Password Hashing | bcrypt |
-| AI Integration | Groq API (OpenAI SDK) |
-| Security | Helmet, CORS |
-| Validation | Validator.js |
-| Environment | dotenv |
+|---|---|
+| **Runtime** | Node.js (v18+) |
+| **Framework** | Express.js 5 |
+| **Database** | MongoDB + Mongoose ODM |
+| **Authentication** | JWT (`jsonwebtoken`), bcrypt password hashing |
+| **Google Auth** | `google-auth-library` (OAuth 2.0) |
+| **Email Delivery** | Nodemailer (Gmail / Custom SMTP) |
+| **AI Integration** | Groq API (`groq-sdk`, Llama 3.3 70B) |
+| **Security** | Helmet, CORS |
+| **Validation** | Validator.js |
+| **Environment** | dotenv |
 
 ---
 
-# 📂 Project Structure
+## 📂 Backend Architecture
 
 ```text
 Backend/
 │
 ├── config/
-│   ├── database.js
-│   └── groq.js
+│   ├── database.js       # MongoDB Mongoose connection
+│   └── groq.js           # Groq AI client configuration
 │
 ├── controllers/
-│   ├── aiController.js
-│   ├── customerController.js
-│   ├── saleController.js
-│   ├── taskController.js
-│   └── userController.js
+│   ├── aiController.js        # AI chat & diagnostic handlers
+│   ├── customerController.js  # CRM CRUD & bulk import handlers
+│   ├── saleController.js      # POS checkout & sales handlers
+│   ├── taskController.js      # Store task management handlers
+│   └── userController.js      # Auth, Google SSO & Password reset handlers
 │
 ├── middlewares/
-│   ├── authMiddleware.js
-│   └── errorHandler.js
+│   ├── authMiddleware.js # JWT verification middleware
+│   ├── errorHandler.js   # Centralized Express error handler
+│   └── rateLimiter.js    # Sliding window API rate limiter
 │
 ├── models/
-│   ├── customerModel.js
-│   ├── saleModel.js
-│   ├── taskModel.js
-│   └── userModel.js
+│   ├── customerModel.js  # Customer CRM schema
+│   ├── saleModel.js      # Sales transaction schema
+│   ├── taskModel.js      # Operational task schema
+│   └── userModel.js      # Merchant user schema
 │
 ├── routes/
-│   ├── aiRoute.js
-│   ├── customerRoute.js
-│   ├── saleRoute.js
-│   ├── taskRoute.js
-│   └── userRoute.js
+│   ├── aiRoute.js        # /api/ai endpoints
+│   ├── customerRoute.js  # /api/customers endpoints
+│   ├── saleRoute.js      # /api/sales endpoints
+│   ├── taskRoute.js      # /api/tasks endpoints
+│   └── userRoute.js      # /api auth & user endpoints
 │
 ├── services/
-│   ├── aiServices.js
-│   ├── businessContextService.js
-│   └── promptService.js
+│   ├── aiServices.js               # Groq LLM API caller & offline fallbacks
+│   ├── businessContextService.js   # Live DB metrics aggregator
+│   └── promptService.js            # Executive AI prompt builder
 │
 ├── utils/
-│   ├── apiError.js
-│   ├── apiResponse.js
-│   ├── asyncHandler.js
-│   ├── createToken.js
-│   └── invoiceGenerate.js
+│   ├── apiError.js         # Custom error class wrapper
+│   ├── apiResponse.js      # Standardized JSON response formatter
+│   ├── asyncHandler.js     # Async controller wrapper
+│   ├── buildResetEmail.js  # Responsive HTML password reset email builder
+│   ├── createToken.js      # JWT token signer helper
+│   ├── invoiceGenerate.js  # Auto invoice number generator
+│   └── sendEmail.js        # Nodemailer SMTP email transporter
 │
 ├── .env
-├── index.js
-└── package.json
+├── index.js              # Express application server entry point
+├── package.json
+└── vercel.json           # Vercel serverless deployment config
 ```
 
 ---
 
-# 🏗️ Architecture
+## ⚙️ Installation & Setup
 
-The backend follows a simple layered **MVC architecture**.
-
-### Routes
-
-Defines API endpoints and applies middleware before forwarding requests to controllers.
-
-### Controllers
-
-Handle incoming requests, validate input, and return API responses.
-
-### Models
-
-Define MongoDB collections using Mongoose schemas with built-in validation.
-
-### Services
-
-Contain reusable business logic such as AI communication and business data analysis.
-
-### Middlewares
-
-Handle authentication, authorization, and centralized error handling.
-
-### Utils
-
-Reusable helper functions including JWT generation, invoice generation, API response formatting, and async wrappers.
-
----
-
-# ⚙️ Installation
-
-### 1. Clone the repository
+### 1. Install Dependencies
 
 ```bash
-git clone <repository-url>
 cd Backend
-```
-
-### 2. Install dependencies
-
-```bash
 npm install
 ```
 
-### 3. Configure environment variables
+### 2. Configure Environment Variables
 
-Create a `.env` file inside the Backend folder.
+Create a `.env` file in the `Backend` directory:
 
 ```env
 PORT=8080
+MONGODB_URI=mongodb+srv://user:password@cluster.mongodb.net/BizPilot_AI
+JWT_SECRET=your_super_secret_jwt_key
+GROQ_API_KEY=gsk_your_groq_api_key
 
-MONGODB_URI=mongodb://127.0.0.1:27017/bizflow
+# Google OAuth 2.0 Credentials
+GOOGLE_CLIENT_ID=your_google_client_id
 
-JWT_SECRET=your_jwt_secret
-
-GROQ_API_KEY=your_groq_api_key
+# SMTP Email Configuration (Password Reset)
+SMTP_USER=your_email@gmail.com
+SMTP_PASS=your_gmail_app_password
+FRONTEND_URL=https://bizpilotcrm.netlify.app
 ```
 
-### 4. Start the server
+### 3. Run the Server
 
-Development
-
+**Development Mode (Nodemon):**
 ```bash
 npx nodemon index.js
 ```
 
-Production
-
+**Production Mode:**
 ```bash
 npm start
 ```
 
-The backend will run on
-
-```
-http://localhost:8080
-```
+*Server listens on `http://localhost:8080`*
 
 ---
 
-# 🔐 Authentication Flow
+## 📡 REST API Reference
 
-```text
-Register
-      │
-      ▼
-Login
-      │
-      ▼
-Receive JWT Token
-      │
-      ▼
-Access Protected Routes
-```
+### Authentication & Account
 
-Include the JWT token in the Authorization header.
-
-```http
-Authorization: Bearer <your_token>
-```
+| Method | Endpoint | Access | Description |
+|---|---|---|---|
+| **POST** | `/api/register` | Public | Register new merchant account |
+| **POST** | `/api/login` | Public | Login with email & password |
+| **POST** | `/api/google-login` | Public | Google OAuth 2.0 Single Sign-On |
+| **POST** | `/api/forgot-password` | Public | Send password reset link to user's email |
+| **POST** | `/api/reset-password/:token` | Public | Reset password using 15-min token |
+| **GET** | `/api/auth/me` | Protected | Get authenticated merchant profile |
+| **POST** | `/api/logout` | Protected | Logout user session |
 
 ---
 
-# 📡 API Endpoints
+### Customers (CRM)
 
-## Authentication
-
-| Method | Endpoint | Description |
-|---------|----------|-------------|
-| POST | `/api/register` | Register a new user |
-| POST | `/api/login` | Login user |
-| GET | `/api/getme` | Get logged-in user |
-| POST | `/api/logout` | Logout user |
-
----
-
-## Customers
-
-| Method | Endpoint |
-|---------|----------|
-| GET | `/api/customers` |
-| POST | `/api/customers` |
-| GET | `/api/customers/search?q=` |
-| PUT | `/api/customers/:id` |
-| DELETE | `/api/customers/:id` |
-| PATCH | `/api/customers/:id/restore` |
-| DELETE | `/api/customers/:id/permanent` |
+| Method | Endpoint | Access | Description |
+|---|---|---|---|
+| **GET** | `/api/customers` | Protected | Fetch all merchant customer records |
+| **POST** | `/api/customers` | Protected | Create new customer account |
+| **POST** | `/api/customers/bulk-import` | Protected | 1-Click bulk Excel/CSV import |
+| **GET** | `/api/customers/search?q=` | Protected | Search customer profiles |
+| **PUT** | `/api/customers/:id` | Protected | Update customer details |
+| **DELETE** | `/api/customers/:id` | Protected | Soft-delete (deactivate) customer account |
+| **PATCH** | `/api/customers/:id/restore` | Protected | Restore soft-deleted customer account |
+| **DELETE** | `/api/customers/:id/permanent` | Protected | Permanently delete customer account |
 
 ---
 
-## Sales
+### Sales & Invoices
 
-| Method | Endpoint |
-|---------|----------|
-| GET | `/api/sales` |
-| POST | `/api/sales` |
-| GET | `/api/sales/stats` |
-| GET | `/api/sales/:id` |
-
----
-
-## Tasks
-
-| Method | Endpoint |
-|---------|----------|
-| GET | `/api/tasks` |
-| POST | `/api/tasks` |
-| PUT | `/api/tasks/:id` |
-| DELETE | `/api/tasks/:id` |
+| Method | Endpoint | Access | Description |
+|---|---|---|---|
+| **GET** | `/api/sales` | Protected | Fetch all sales transactions |
+| **POST** | `/api/sales` | Protected | Create POS sale transaction & receipt |
+| **GET** | `/api/sales/stats` | Protected | Fetch sales metrics & revenue summaries |
+| **GET** | `/api/sales/:id` | Protected | Fetch single transaction details |
 
 ---
 
-## AI
+### Store Tasks
 
-| Method | Endpoint |
-|---------|----------|
-| POST | `/api/ai/chat` |
-
-The AI endpoint analyzes your business data and provides intelligent insights, recommendations, and business guidance using Groq AI.
-
----
-
-# 🤖 AI Features
-
-The AI module can analyze business data and provide insights such as:
-
-- Sales analysis
-- Business performance summary
-- Customer insights
-- Weekly sales review
-- Product performance
-- Revenue analysis
-- Business recommendations
-- Workflow explanation
+| Method | Endpoint | Access | Description |
+|---|---|---|---|
+| **GET** | `/api/tasks` | Protected | Fetch operational tasks |
+| **POST** | `/api/tasks` | Protected | Create new store task |
+| **PUT** | `/api/tasks/:id` | Protected | Update task status or details |
+| **DELETE** | `/api/tasks/:id` | Protected | Delete task item |
 
 ---
 
-# 🔒 Security
+### AI Business Consultant
 
-The backend includes several security measures:
-
-- JWT Authentication
-- Password hashing using bcrypt
-- Protected routes
-- Helmet security headers
-- CORS protection
-- Input validation using Validator.js
+| Method | Endpoint | Access | Description |
+|---|---|---|---|
+| **POST** | `/api/ai/chat` | Protected | AI Copilot business chat query (EN, HI, BN) |
 
 ---
 
-# 📌 Environment Variables
+## 🔒 Security Practices
 
-| Variable | Description |
-|----------|-------------|
-| PORT | Server port |
-| MONGODB_URI | MongoDB connection string |
-| JWT_SECRET | Secret key for JWT |
-| GROQ_API_KEY | Groq AI API key |
-
----
-
-# 🚀 Future Improvements
-
-Possible future enhancements include:
-
-- Product Management Module
-- Inventory Notifications
-- Email Notifications
-- WhatsApp Payment Reminders
-- AI Sales Forecasting
-- Store Health Score
-- Dashboard Caching
-- Role-Based Access Control (RBAC)
+- **JWT Token Verification**: Protected endpoints verify JWT signature via `authMiddleware.js`.
+- **Password Security**: Passwords are hashed using bcrypt with salt rounds = 10.
+- **Email Reset Expiration**: Password reset tokens expire in 15 minutes and require valid JWT signature.
+- **CORS Protection**: Restricted origin list allowing Netlify production and local dev origins.
+- **Rate Limiting**: AI routes restricted to 10 requests per minute per IP.
 
 ---
 
-# 📄 License
+## 📄 License
 
-This project is licensed under the **MIT License**.
+This project is licensed under the **ISC License**.
 
 ---
 
-# 👨‍💻 Author
+## 👨‍💻 Author
 
-Developed as part of the **BizPilot AI** CRM project.
+**Mirjaj** – Part of the **BizPilot AI** Project.

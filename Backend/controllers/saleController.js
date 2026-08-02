@@ -203,3 +203,42 @@ export const getSalesStats = AsyncHandler(async (req, res) => {
   );
 });
 
+export const updateSaleStatus = AsyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { status, paymentMethod } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "Invalid Sale ID!");
+  }
+
+  const validStatuses = ["Paid", "Pending", "Cancelled"];
+  if (!status || !validStatuses.includes(status)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "Invalid status. Must be Paid, Pending, or Cancelled.");
+  }
+
+  const sale = await Sale.findOne({
+    _id: id,
+    owner: req.user._id,
+  });
+
+  if (!sale) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Transaction record not found!");
+  }
+
+  sale.status = status;
+  if (paymentMethod) {
+    sale.paymentMethod = paymentMethod;
+  }
+  await sale.save();
+
+  const updatedSale = await Sale.findById(sale._id).populate("customer", "name phone email business");
+
+  return res.status(httpStatus.OK).json(
+    new ApiResponse({
+      success: true,
+      message: `Transaction status updated to "${status}" successfully.`,
+      data: updatedSale,
+    }),
+  );
+});
+
