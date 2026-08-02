@@ -214,8 +214,18 @@ export const forgotPassword = AsyncHandler(async (req, res) => {
   }
 
   const passResetToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "15m" });
-  const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
-  const passResetLink = `${frontendUrl}/reset-password/${passResetToken}`;
+  
+  // Dynamically derive frontend domain from request header or fallback to env
+  let clientOrigin = req.headers.origin;
+  if (!clientOrigin && req.get("referer")) {
+    try {
+      clientOrigin = new URL(req.get("referer")).origin;
+    } catch {
+      clientOrigin = null;
+    }
+  }
+  const frontendUrl = process.env.FRONTEND_URL || clientOrigin || "http://localhost:5173";
+  const passResetLink = `${frontendUrl.replace(/\/+$/, "")}/reset-password/${passResetToken}`;
 
   const htmlContent = buildResetEmail(user.fullName, passResetLink);
 
