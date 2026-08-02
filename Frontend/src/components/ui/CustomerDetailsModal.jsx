@@ -71,9 +71,17 @@ export default function CustomerDetailsModal({ customer, onClose }) {
     return parts.length > 0 ? parts.join(", ") : "No address provided";
   };
 
+  const footerActions = (
+    <div className="flex justify-end w-full">
+      <Button onClick={onClose} variant="secondary" size="md" className="font-bold px-6">
+        Close
+      </Button>
+    </div>
+  );
+
   return (
     <>
-      <Modal title="Customer Account Details" onClose={onClose}>
+      <Modal title="Customer Account Details" onClose={onClose} footer={footerActions}>
         <div className="space-y-5 font-sans max-w-2xl">
           {/* Header Profile Card */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-gradient-to-r from-slate-50 to-blue-50/40 dark:from-slate-900 dark:to-slate-800/80 border border-slate-200/80 dark:border-slate-800">
@@ -260,12 +268,6 @@ export default function CustomerDetailsModal({ customer, onClose }) {
             </div>
           )}
 
-          {/* Footer Actions */}
-          <div className="pt-2 flex justify-end">
-            <Button onClick={onClose} variant="secondary" size="md">
-              Close
-            </Button>
-          </div>
         </div>
       </Modal>
 

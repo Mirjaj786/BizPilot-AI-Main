@@ -1,11 +1,11 @@
 import { apiFetch } from "./api.js";
 
 export const aiService = {
-  askAI: async (query) => {
+  askAI: async (query, language = "en") => {
     try {
       const res = await apiFetch("/ai/chat", {
         method: "POST",
-        body: JSON.stringify({ message: query }),
+        body: JSON.stringify({ message: query, language }),
       });
 
       if (res?.data?.response) {

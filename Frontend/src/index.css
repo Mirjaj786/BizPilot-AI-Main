@@ -426,27 +426,30 @@ html.dark .bf-table tbody tr:hover {
   background-color: rgba(30, 41, 59, 0.5);
 }
 
-/* Modal Backdrop & 42px Top-Aligned Container */
+/* Modal Backdrop & Centered Container via React Portal */
 .bf-backdrop {
   position: fixed;
   inset: 0;
   z-index: 9999;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  padding-top: 42px;
-  padding-bottom: 24px;
-  padding-left: 16px;
-  padding-right: 16px;
+  align-items: center;
+  padding: 1rem;
   background: rgba(15, 23, 42, 0.65);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   overflow-y: auto;
 }
 
+@media (max-width: 640px) {
+  .bf-backdrop {
+    padding: 0.75rem;
+  }
+}
+
 .bf-modal {
   width: 100%;
-  max-height: calc(100vh - 74px);
+  max-height: calc(100vh - 2rem);
   display: flex;
   flex-direction: column;
   background: #FFFFFF;
@@ -454,8 +457,14 @@ html.dark .bf-table tbody tr:hover {
   border-radius: 20px;
   box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.4);
   position: relative;
-  margin: 0 auto;
+  margin: auto;
   animation: fadeInScale 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@media (max-width: 640px) {
+  .bf-modal {
+    max-height: calc(100vh - 1.5rem);
+  }
 }
 
 html.dark .bf-modal {

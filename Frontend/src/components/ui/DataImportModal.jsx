@@ -216,8 +216,39 @@ export default function DataImportModal({ isOpen, onClose, onImportSuccess }) {
     }
   };
 
+  const renderFooter = () => {
+    if (mappedRows.length > 0 && !importSummary) {
+      return (
+        <div className="flex items-center justify-end gap-3 w-full">
+          <Button variant="ghost" size="sm" onClick={resetState}>
+            Upload Different File
+          </Button>
+          <Button variant="primary" size="md" loading={loading} onClick={handleProcessImport}>
+            Import {mappedRows.length} Items Now
+          </Button>
+        </div>
+      );
+    }
+    if (importSummary) {
+      return (
+        <div className="flex justify-end w-full">
+          <Button variant="primary" size="md" onClick={() => { resetState(); onClose(); }}>
+            Close & View Dashboard
+          </Button>
+        </div>
+      );
+    }
+    return (
+      <div className="flex justify-end w-full">
+        <Button variant="secondary" size="md" onClick={onClose}>
+          Cancel
+        </Button>
+      </div>
+    );
+  };
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="1-Click Excel / CSV Data Importer" maxWidth="max-w-2xl">
+    <Modal isOpen={isOpen} onClose={onClose} title="1-Click Excel / CSV Data Importer" maxWidth="max-w-2xl" footer={renderFooter()}>
       <div className="space-y-6">
         {/* Type Selector Tabs */}
         <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
@@ -378,14 +409,6 @@ export default function DataImportModal({ isOpen, onClose, onImportSuccess }) {
               </table>
             </div>
 
-            <div className="flex items-center justify-end gap-3 pt-2">
-              <Button variant="ghost" size="sm" onClick={resetState}>
-                Upload Different File
-              </Button>
-              <Button variant="primary" size="md" loading={loading} onClick={handleProcessImport}>
-                Import {mappedRows.length} Items Now
-              </Button>
-            </div>
           </div>
         )}
 
@@ -414,10 +437,6 @@ export default function DataImportModal({ isOpen, onClose, onImportSuccess }) {
                 <p className="text-lg font-extrabold text-amber-500">{importSummary.skipped}</p>
               </div>
             </div>
-
-            <Button variant="primary" size="md" onClick={() => { resetState(); onClose(); }}>
-              Close & View Updated Dashboard
-            </Button>
           </div>
         )}
       </div>

@@ -239,8 +239,23 @@ export default function Tasks() {
 
       {/* Add Task Modal */}
       {addModalOpen && (
-        <Modal isOpen={addModalOpen} onClose={() => setAddModalOpen(false)} title="Create New Operational Task" maxWidth="max-w-xl">
-          <form onSubmit={handleSubmit} className="space-y-4">
+        <Modal
+          isOpen={addModalOpen}
+          onClose={() => setAddModalOpen(false)}
+          title="Create New Operational Task"
+          maxWidth="max-w-xl"
+          footer={
+            <div className="flex gap-3 w-full">
+              <Button type="submit" form="task-form" loading={loading} className="flex-1 font-bold">
+                Save Task
+              </Button>
+              <Button type="button" onClick={() => setAddModalOpen(false)} variant="secondary" className="flex-1 font-bold">
+                Cancel
+              </Button>
+            </div>
+          }
+        >
+          <form id="task-form" onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="bf-label">Task Title *</label>
               <input
@@ -286,15 +301,6 @@ export default function Tasks() {
                 rows={3}
                 className="bf-textarea"
               />
-            </div>
-
-            <div className="flex gap-3 pt-2">
-              <Button type="submit" loading={loading} className="flex-1 font-bold">
-                Save Task
-              </Button>
-              <Button type="button" onClick={() => setAddModalOpen(false)} variant="secondary" className="flex-1 font-bold">
-                Cancel
-              </Button>
             </div>
           </form>
         </Modal>

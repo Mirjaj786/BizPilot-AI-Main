@@ -26,6 +26,7 @@ import {
   IoCloudUploadOutline,
 } from "react-icons/io5";
 import { toast } from "react-toastify";
+import SkeletonLoader from "../../components/Loader/SkeletonLoader.jsx";
 
 const INITIAL_FORM = {
   name: "",
@@ -109,39 +110,53 @@ export default function Customers() {
     setAddModalOpen(true);
   };
 
+  const [actionLoadingId, setActionLoadingId] = useState(null);
+
   const handleSoftDelete = async (cust) => {
     const custId = cust._id || cust.id;
+    if (actionLoadingId) return;
     if (confirm(`Deactivate customer ${cust.name}?`)) {
+      setActionLoadingId(custId);
       try {
         await customerService.deleteCustomer(custId);
         toast.success(`Customer ${cust.name} set to inactive.`);
-        loadBackendCustomers();
+        await loadBackendCustomers();
       } catch (error) {
         toast.error(error?.message || "Failed to deactivate customer.");
+      } finally {
+        setActionLoadingId(null);
       }
     }
   };
 
   const handleRestore = async (cust) => {
     const custId = cust._id || cust.id;
+    if (actionLoadingId) return;
+    setActionLoadingId(custId);
     try {
       await customerService.restoreCustomer(custId);
       toast.success(`Customer ${cust.name} restored to active!`);
-      loadBackendCustomers();
+      await loadBackendCustomers();
     } catch (error) {
       toast.error(error?.message || "Failed to restore customer.");
+    } finally {
+      setActionLoadingId(null);
     }
   };
 
   const handlePermanentDelete = async (cust) => {
     const custId = cust._id || cust.id;
+    if (actionLoadingId) return;
     if (confirm(`PERMANENT DELETE: Are you sure you want to permanently remove ${cust.name}? This action cannot be undone.`)) {
+      setActionLoadingId(custId);
       try {
         await customerService.permanentDeleteCustomer(custId);
         toast.success(`Customer ${cust.name} permanently deleted.`);
-        loadBackendCustomers();
+        await loadBackendCustomers();
       } catch (error) {
         toast.error(error?.message || "Failed to permanently delete customer.");
+      } finally {
+        setActionLoadingId(null);
       }
     }
   };
@@ -281,7 +296,7 @@ export default function Customers() {
 
         {/* Table View */}
         {fetching && customers.length === 0 ? (
-          <div className="py-12 text-center text-xs text-slate-400">Loading customers from backend...</div>
+          <SkeletonLoader type="table" rows={6} columns={6} />
         ) : filteredCustomers.length === 0 ? (
           <EmptyState
             icon={IoPeopleOutline}
@@ -384,47 +399,59 @@ export default function Customers() {
                             <IoEyeOutline size={17} />
                           </button>
 
-                          {/* Edit Button */}
-                          {isActive && (
-                            <button
-                              onClick={() => handleOpenEdit(cust)}
-                              className="p-2 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 transition-colors cursor-pointer"
-                              title="Edit Customer"
-                            >
-                              <IoCreateOutline size={17} />
-                            </button>
-                          )}
+                          {actionLoadingId === (cust._id || cust.id) ? (
+                            <div className="p-2 flex items-center gap-1 text-blue-600 dark:text-blue-400">
+                              <svg className="animate-spin h-4 w-4 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                              </svg>
+                              <span className="text-[11px] font-bold">Processing...</span>
+                            </div>
+                          ) : (
+                            <>
+                              {/* Edit Button */}
+                              {isActive && (
+                                <button
+                                  onClick={() => handleOpenEdit(cust)}
+                                  className="p-2 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 transition-colors cursor-pointer"
+                                  title="Edit Customer"
+                                >
+                                  <IoCreateOutline size={17} />
+                                </button>
+                              )}
 
-                          {/* Soft Delete (Deactivate) Button */}
-                          {isActive && (
-                            <button
-                              onClick={() => handleSoftDelete(cust)}
-                              className="p-2 rounded-lg text-slate-400 hover:bg-amber-50 dark:hover:bg-amber-950/40 hover:text-amber-600 transition-colors cursor-pointer"
-                              title="Soft Delete (Deactivate)"
-                            >
-                              <IoTrashOutline size={17} />
-                            </button>
-                          )}
+                              {/* Soft Delete (Deactivate) Button */}
+                              {isActive && (
+                                <button
+                                  onClick={() => handleSoftDelete(cust)}
+                                  className="p-2 rounded-lg text-slate-400 hover:bg-amber-50 dark:hover:bg-amber-950/40 hover:text-amber-600 transition-colors cursor-pointer"
+                                  title="Soft Delete (Deactivate)"
+                                >
+                                  <IoTrashOutline size={17} />
+                                </button>
+                              )}
 
-                          {/* Restore Button (for Inactive) */}
-                          {!isActive && (
-                            <button
-                              onClick={() => handleRestore(cust)}
-                              className="p-2 rounded-lg text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 hover:text-emerald-600 transition-colors cursor-pointer"
-                              title="Restore Customer"
-                            >
-                              <IoRefreshOutline size={17} />
-                            </button>
-                          )}
+                              {/* Restore Button (for Inactive) */}
+                              {!isActive && (
+                                <button
+                                  onClick={() => handleRestore(cust)}
+                                  className="p-2 rounded-lg text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 hover:text-emerald-600 transition-colors cursor-pointer"
+                                  title="Restore Customer"
+                                >
+                                  <IoRefreshOutline size={17} />
+                                </button>
+                              )}
 
-                          {/* Permanent Delete Button */}
-                          <button
-                            onClick={() => handlePermanentDelete(cust)}
-                            className="p-2 rounded-lg text-slate-400 hover:bg-red-50 dark:hover:bg-red-950/40 hover:text-red-600 transition-colors cursor-pointer"
-                            title="Permanent Delete"
-                          >
-                            <IoTrashBinOutline size={17} />
-                          </button>
+                              {/* Permanent Delete Button */}
+                              <button
+                                onClick={() => handlePermanentDelete(cust)}
+                                className="p-2 rounded-lg text-slate-400 hover:bg-red-50 dark:hover:bg-red-950/40 hover:text-red-600 transition-colors cursor-pointer"
+                                title="Permanent Delete"
+                              >
+                                <IoTrashBinOutline size={17} />
+                              </button>
+                            </>
+                          )}
                         </div>
                       </td>
                     </tr>
@@ -443,8 +470,23 @@ export default function Customers() {
           onClose={() => setAddModalOpen(false)}
           title={editingCust ? "Edit Customer Profile" : "Create New Customer"}
           maxWidth="max-w-2xl"
+          footer={
+            <div className="flex items-center gap-3 w-full">
+              <Button type="submit" form="customer-form" loading={loading} className="flex-1 font-bold">
+                {editingCust ? "Update Customer" : "Save Customer"}
+              </Button>
+              <Button
+                type="button"
+                onClick={() => setAddModalOpen(false)}
+                variant="secondary"
+                className="flex-1 font-bold"
+              >
+                Cancel
+              </Button>
+            </div>
+          }
         >
-          <form onSubmit={handleSubmit} className="space-y-4 max-h-[75vh] overflow-y-auto pr-1">
+          <form id="customer-form" onSubmit={handleSubmit} className="space-y-4">
             {/* Primary Details: Name, Phone, Email */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="sm:col-span-1">
@@ -565,21 +607,6 @@ export default function Customers() {
                   className="bf-input"
                 />
               </div>
-            </div>
-
-            {/* Form Footer Buttons */}
-            <div className="flex items-center gap-3 pt-3 border-t border-slate-100 dark:border-slate-800">
-              <Button type="submit" loading={loading} className="flex-1 font-bold">
-                {editingCust ? "Update Customer" : "Save Customer"}
-              </Button>
-              <Button
-                type="button"
-                onClick={() => setAddModalOpen(false)}
-                variant="secondary"
-                className="flex-1 font-bold"
-              >
-                Cancel
-              </Button>
             </div>
           </form>
         </Modal>

@@ -15,20 +15,47 @@ import {
   IoVolumeMuteOutline,
 } from "react-icons/io5";
 
-const SUGGESTIONS = [
-  { icon: IoStatsChartOutline, text: "How much did I sell this week?" },
-  { icon: IoAlertCircleOutline, text: "Which customer accounts have overdue payments?" },
-  { icon: IoCartOutline, text: "Who is my best customer?" },
-  { icon: IoBulbOutline, text: "Give me tips to grow my business" },
+const LANGUAGES = [
+  { id: "en", label: "English", flag: "🇬🇧", langCode: "en-US" },
+  { id: "hi", label: "हिंदी", flag: "🇮🇳", langCode: "hi-IN" },
+  { id: "bn", label: "বাংলা", flag: "🇧🇩", langCode: "bn-IN" },
 ];
+
+const SUGGESTIONS_MAP = {
+  en: [
+    { icon: IoStatsChartOutline, text: "How much did I sell this week?" },
+    { icon: IoAlertCircleOutline, text: "Which customer accounts have overdue payments?" },
+    { icon: IoCartOutline, text: "Who is my best customer?" },
+    { icon: IoBulbOutline, text: "Give me tips to grow my business" },
+  ],
+  hi: [
+    { icon: IoStatsChartOutline, text: "इस सप्ताह कितनी बिक्री हुई?" },
+    { icon: IoAlertCircleOutline, text: "किन ग्राहकों का भुगतान बकाया है?" },
+    { icon: IoCartOutline, text: "मेरा सबसे अच्छा ग्राहक कौन है?" },
+    { icon: IoBulbOutline, text: "व्यवसाय बढ़ाने के टिप्स दें" },
+  ],
+  bn: [
+    { icon: IoStatsChartOutline, text: "এই সপ্তাহে কত বিক্রি হয়েছে?" },
+    { icon: IoAlertCircleOutline, text: "কোন কোন কাস্টমারের টাকা বাকি আছে?" },
+    { icon: IoCartOutline, text: "আমার সেরা কাস্টমার কে?" },
+    { icon: IoBulbOutline, text: "ব্যবসা বাড়ানোর টিপস দিন" },
+  ],
+};
+
+const WELCOME_MESSAGES = {
+  en: `### 👋 Hello! I am **BizPilot AI**, your business copilot.\n\nI analyze your CRM accounts, POS tickets, and action items in real-time to give you actionable insights.\n\n**Try asking me:**\n- *"How much did I sell?"*\n- *"Who is my top customer?"*\n- *"Show my pending tasks"*\n- *"Give me tips to grow my business"*`,
+  hi: `### 👋 नमस्ते! मैं **BizPilot AI**, आपका बिज़नेस कोपायलट हूँ।\n\nमैं आपकी दुकान के सभी खातों, बिक्री और कार्यों का विश्लेषण करके सटीक सलाह देता हूँ।\n\n**मुझसे पूछें:**\n- *"इस सप्ताह कितनी बिक्री हुई?"*\n- *"किसका भुगतान बकाया है?"*\n- *"मेरा सबसे अच्छा ग्राहक कौन है?"*\n- *"व्यापार बढ़ाने के उपाय बताएं"*`,
+  bn: `### 👋 নমস্কার! আমি **BizPilot AI**, আপনার ব্যবসায়িক ক পাইলট।\n\nআমি আপনার খাতা, বিক্রি এবং কাস্টমার ডাটা বিশ্লেষণ করে সঠিক পরামর্শ তৈরি করি।\n\n**জিজ্ঞাসা করুন:**\n- *"এই সপ্তাহে কত বিক্রি হয়েছে?"*\n- *"কার কার টাকা বাকি আছে?"*\n- *"আমার সেরা কাস্টমার কে?"*\n- *"ব্যবসা বাড়ানোর টিপস দিন"*`,
+};
 
 export default function AI() {
   const { settings, sales, customers } = useContext(StoreContext);
+  const [aiLanguage, setAiLanguage] = useState(() => localStorage.getItem("bf_ai_lang") || "en");
   const [messages, setMessages] = useState([
     {
       id: "m_welcome",
       sender: "ai",
-      text: `### 👋 Hello! I am **BizPilot AI**, your business copilot.\n\nI analyze your CRM accounts, POS tickets, and action items in real-time to give you actionable insights.\n\n**Try asking me:**\n- *"How much did I sell?"*\n- *"Who is my top customer?"*\n- *"Show my pending tasks"*\n- *"Give me tips to grow my business"*`,
+      text: WELCOME_MESSAGES[localStorage.getItem("bf_ai_lang") || "en"],
     },
   ]);
   const [input, setInput] = useState("");
@@ -37,6 +64,19 @@ export default function AI() {
   const [voiceSpeechEnabled, setVoiceSpeechEnabled] = useState(false);
   const scrollRef = useRef(null);
   const recognitionRef = useRef(null);
+
+  const handleLanguageChange = (langId) => {
+    setAiLanguage(langId);
+    localStorage.setItem("bf_ai_lang", langId);
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: `lang_change_${Date.now()}`,
+        sender: "ai",
+        text: WELCOME_MESSAGES[langId],
+      },
+    ]);
+  };
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -51,38 +91,78 @@ export default function AI() {
     const cleanText = text.replace(/[*#`_\-]/g, " ").replace(/\s+/g, " ").trim();
     if (!cleanText) return;
 
-    // Split text by sentence punctuation (. ! ?)
-    const sentences = cleanText.match(/[^.!?]+[.!?]+/g) || [cleanText];
-    let sentenceIndex = 0;
+    const currentLangObj = LANGUAGES.find((l) => l.id === aiLanguage) || LANGUAGES[0];
 
-    const speakNextSentence = () => {
-      if (sentenceIndex >= sentences.length) return;
+    // Split text by punctuation including English (.!?) and Bengali/Hindi Danda (।)
+    const rawSentences = cleanText.split(/(?<=[.!?।\n])/g).map((s) => s.trim()).filter(Boolean);
 
-      const chunk = sentences[sentenceIndex].trim();
+    // Ensure chunks are short (<120 chars) so Web Speech API never times out
+    const chunks = [];
+    for (const raw of rawSentences) {
+      if (raw.length <= 120) {
+        chunks.push(raw);
+      } else {
+        const subParts = raw.split(/(?<=[,:,;])\s*/g);
+        for (const sub of subParts) {
+          if (sub.length <= 120) {
+            chunks.push(sub);
+          } else {
+            const words = sub.split(" ");
+            let current = "";
+            for (const w of words) {
+              if ((current + " " + w).length > 100) {
+                if (current) chunks.push(current);
+                current = w;
+              } else {
+                current = current ? current + " " + w : w;
+              }
+            }
+            if (current) chunks.push(current);
+          }
+        }
+      }
+    }
+
+    if (chunks.length === 0) return;
+
+    let chunkIndex = 0;
+    const voices = window.speechSynthesis.getVoices();
+    const matchedVoice = voices.find(
+      (v) => v.lang === currentLangObj.langCode || v.lang.startsWith(currentLangObj.id)
+    );
+
+    const speakNextChunk = () => {
+      if (chunkIndex >= chunks.length) return;
+
+      const chunk = chunks[chunkIndex].trim();
       if (!chunk) {
-        sentenceIndex++;
-        speakNextSentence();
+        chunkIndex++;
+        speakNextChunk();
         return;
       }
 
       const utterance = new SpeechSynthesisUtterance(chunk);
-      utterance.rate = 1.0;
+      utterance.lang = currentLangObj.langCode;
+      if (matchedVoice) {
+        utterance.voice = matchedVoice;
+      }
+      utterance.rate = 0.95;
       utterance.pitch = 1.0;
 
       utterance.onend = () => {
-        sentenceIndex++;
-        speakNextSentence();
+        chunkIndex++;
+        setTimeout(speakNextChunk, 40);
       };
 
       utterance.onerror = () => {
-        sentenceIndex++;
-        speakNextSentence();
+        chunkIndex++;
+        setTimeout(speakNextChunk, 40);
       };
 
       window.speechSynthesis.speak(utterance);
     };
 
-    speakNextSentence();
+    speakNextChunk();
   };
 
   const toggleListening = () => {
@@ -100,9 +180,10 @@ export default function AI() {
 
     try {
       const recognition = new SpeechRecognition();
+      const currentLangObj = LANGUAGES.find((l) => l.id === aiLanguage) || LANGUAGES[0];
       recognition.continuous = false;
       recognition.interimResults = false;
-      recognition.lang = "en-US";
+      recognition.lang = currentLangObj.langCode;
 
       recognition.onstart = () => {
         setIsListening(true);
@@ -167,13 +248,18 @@ export default function AI() {
     setLoading(true);
 
     try {
-      const aiReplyText = await aiService.askAI(text);
+      const aiReplyText = await aiService.askAI(text, aiLanguage);
       setLoading(false);
       setMessages((prev) => [...prev, { id: aiMsgId, sender: "ai", text: "", isTyping: true }]);
       simulateTypingEffect(aiMsgId, aiReplyText);
     } catch {
       setLoading(false);
-      const errText = "Sorry, I encountered an error retrieving data. Please try again.";
+      const errText =
+        aiLanguage === "hi"
+          ? "क्षमा करें, डेटा प्राप्त करने में त्रुटि हुई। कृपया पुनः प्रयास करें।"
+          : aiLanguage === "bn"
+          ? "দুঃখিত, তথ্য আনতে ত্রুটি হয়েছে। অনুগ্রহ করে আবার চেষ্টা করুন।"
+          : "Sorry, I encountered an error retrieving data. Please try again.";
       setMessages((prev) => [...prev, { id: `err_${Date.now()}`, sender: "ai", text: errText }]);
     }
   };
@@ -234,25 +320,48 @@ export default function AI() {
           </div>
         </div>
 
-        {/* Voice Readout Toggle */}
-        <button
-          type="button"
-          onClick={() => setVoiceSpeechEnabled(!voiceSpeechEnabled)}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
-            voiceSpeechEnabled
-              ? "bg-purple-600 text-white border-purple-600 ring-2 ring-purple-600/30"
-              : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700"
-          }`}
-          title="Toggle AI Voice Audio Answers"
-        >
-          {voiceSpeechEnabled ? <IoVolumeHighOutline size={16} /> : <IoVolumeMuteOutline size={16} />}
-          <span className="hidden sm:inline">{voiceSpeechEnabled ? "Voice On" : "Voice Off"}</span>
-        </button>
+        {/* Right side controls: Language Selector & Voice Toggle */}
+        <div className="flex items-center gap-2">
+          {/* Language Switcher */}
+          <div className="flex items-center gap-1 p-1 bg-slate-100 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+            {LANGUAGES.map((lang) => (
+              <button
+                key={lang.id}
+                type="button"
+                onClick={() => handleLanguageChange(lang.id)}
+                className={`flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                  aiLanguage === lang.id
+                    ? "bg-purple-600 text-white shadow-2xs"
+                    : "text-slate-600 dark:text-slate-300 hover:text-purple-600 dark:hover:text-purple-400"
+                }`}
+                title={`Switch AI language to ${lang.label}`}
+              >
+                <span>{lang.flag}</span>
+                <span className="hidden sm:inline">{lang.label}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Voice Readout Toggle */}
+          <button
+            type="button"
+            onClick={() => setVoiceSpeechEnabled(!voiceSpeechEnabled)}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
+              voiceSpeechEnabled
+                ? "bg-purple-600 text-white border-purple-600 ring-2 ring-purple-600/30"
+                : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700"
+            }`}
+            title="Toggle AI Voice Audio Answers"
+          >
+            {voiceSpeechEnabled ? <IoVolumeHighOutline size={16} /> : <IoVolumeMuteOutline size={16} />}
+            <span className="hidden sm:inline">{voiceSpeechEnabled ? "Voice On" : "Voice Off"}</span>
+          </button>
+        </div>
       </div>
 
-      {/* Suggestion Chips */}
+      {/* Localized Suggestion Chips */}
       <div className="flex gap-2 p-3 bg-slate-50 dark:bg-slate-900/60 border-x border-slate-200/80 dark:border-slate-800 overflow-x-auto">
-        {SUGGESTIONS.map((item, idx) => {
+        {(SUGGESTIONS_MAP[aiLanguage] || SUGGESTIONS_MAP.en).map((item, idx) => {
           const Icon = item.icon;
           return (
             <button

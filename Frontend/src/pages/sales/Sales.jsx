@@ -45,16 +45,26 @@ export default function Sales() {
   const subtotal = cart.reduce((a, i) => a + i.price * i.quantity, 0);
   const total = Math.max(0, subtotal - (Number(discount) || 0));
 
+  const [addItemLoading, setAddItemLoading] = useState(false);
+  const [completingSale, setCompletingSale] = useState(false);
+
   const handleAddItem = (e) => {
     e.preventDefault();
     if (!itemName || !itemPrice || Number(itemPrice) <= 0 || Number(itemQty) <= 0) {
       toast.error("Enter a valid item name, price and quantity.");
       return;
     }
+    if (addItemLoading) return;
+    setAddItemLoading(true);
+    const addedItemName = itemName;
     setCart([...cart, { name: itemName, price: Number(itemPrice), quantity: Number(itemQty) }]);
+    toast.success(`Item "${addedItemName}" added to cart!`);
     setItemName("");
     setItemPrice("");
     setItemQty(1);
+    setTimeout(() => {
+      setAddItemLoading(false);
+    }, 250);
   };
 
   const handleRemoveCartItem = (idx) => {
@@ -66,6 +76,8 @@ export default function Sales() {
       toast.error("Cart is empty.");
       return;
     }
+    if (completingSale) return;
+    setCompletingSale(true);
     try {
       const result = await salesService.createSale({
         customer: customerId || null,
@@ -77,7 +89,7 @@ export default function Sales() {
       if (result) {
         const freshSales = await salesService.getSales();
         saveSales(freshSales.length > 0 ? freshSales : [result, ...sales]);
-        toast.success(`Invoice ${result.invoiceNo} generated!`);
+        toast.success(`Invoice ${result.invoiceNo || "Receipt"} generated!`);
         setSelectedInvoice(result);
         setCart([]);
         setDiscount(0);
@@ -85,6 +97,8 @@ export default function Sales() {
       }
     } catch (err) {
       toast.error(err?.message || "Failed to complete sale.");
+    } finally {
+      setCompletingSale(false);
     }
   };
 
@@ -189,7 +203,7 @@ export default function Sales() {
                     />
                   </div>
                 </div>
-                <Button type="submit" size="md" className="w-full font-bold">
+                <Button type="submit" size="md" loading={addItemLoading} className="w-full font-bold">
                   Add Item to Cart
                 </Button>
               </form>
@@ -274,7 +288,7 @@ export default function Sales() {
                     </div>
                   </div>
 
-                  <Button onClick={handleCompleteSale} size="lg" className="w-full font-bold py-3">
+                  <Button onClick={handleCompleteSale} size="lg" loading={completingSale} className="w-full font-bold py-3">
                     <IoReceiptOutline size={18} /> Complete Sale & Print Ticket
                   </Button>
                 </div>

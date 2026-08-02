@@ -271,7 +271,18 @@ export default function Dashboard() {
 
       {/* ── AI STORE HEALTH & RISK DIAGNOSTIC MODAL ── */}
       {showHealthModal && (
-        <Modal title="AI Store Health & Risk Diagnostics" maxWidth="max-w-lg" top="top-10" onClose={() => setShowHealthModal(false)}>
+        <Modal
+          title="AI Store Health & Risk Diagnostics"
+          maxWidth="max-w-lg"
+          onClose={() => setShowHealthModal(false)}
+          footer={
+            <div className="flex justify-end w-full">
+              <Button onClick={() => setShowHealthModal(false)} className="w-full font-bold py-2.5">
+                Close Health Diagnostics
+              </Button>
+            </div>
+          }
+        >
           <div className="space-y-6 font-sans">
             {/* Health Score Header Card */}
             <div className="p-5 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white shadow-md flex items-center justify-between">
@@ -352,13 +363,6 @@ export default function Dashboard() {
                   <p className="text-slate-600 dark:text-slate-400 mt-0.5">Export corporate financial report summaries from the Analytics page for accounting and GST review.</p>
                 </div>
               </div>
-            </div>
-
-            {/* Sticky Bottom Modal Actions */}
-            <div className="sticky -bottom-1 bg-white dark:bg-slate-900 pt-3 pb-1 border-t border-slate-100 dark:border-slate-800 flex justify-end">
-              <Button onClick={() => setShowHealthModal(false)} className="w-full font-bold py-2.5">
-                Close Health Diagnostics
-              </Button>
             </div>
           </div>
         </Modal>

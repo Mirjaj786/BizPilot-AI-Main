@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Modal from "./Modal.jsx";
 import Button from "../Button/Button.jsx";
 import { IoPrintOutline } from "react-icons/io5";
@@ -23,8 +24,14 @@ export default function InvoiceModal({ invoice, settings, onClose }) {
   const status = invoice.status || "Paid";
   const totalAmount = Number(invoice.total || invoice.amount || 0);
 
+  const [printing, setPrinting] = useState(false);
+
   const handlePrint = () => {
-    window.print();
+    setPrinting(true);
+    setTimeout(() => {
+      window.print();
+      setPrinting(false);
+    }, 200);
   };
 
   const handleShareWhatsApp = () => {
@@ -33,8 +40,24 @@ export default function InvoiceModal({ invoice, settings, onClose }) {
     window.open(url, "_blank");
   };
 
+  const footerActions = (
+    <div className="flex flex-col sm:flex-row gap-2.5 w-full print:hidden">
+      <Button onClick={handlePrint} loading={printing} className="flex-1 font-bold">
+        <IoPrintOutline size={16} /> Print Receipt
+      </Button>
+
+      <Button onClick={handleShareWhatsApp} className="flex-1 font-bold bg-emerald-600 hover:bg-emerald-700 text-white">
+        <span>💬</span> Share via WhatsApp
+      </Button>
+
+      <Button onClick={onClose} variant="secondary" className="sm:w-auto font-bold px-5">
+        Close
+      </Button>
+    </div>
+  );
+
   return (
-    <Modal title="Official Invoice Receipt" onClose={onClose}>
+    <Modal title="Official Invoice Receipt" onClose={onClose} footer={footerActions}>
       <div className="space-y-5 font-sans print:space-y-4">
         {/* Printable Area Wrapper */}
         <div id="printable-receipt" className="space-y-5">
@@ -114,21 +137,6 @@ export default function InvoiceModal({ invoice, settings, onClose }) {
             <p>Thank you for your business!</p>
             <p className="mt-0.5">Powered by BizPilot AI OS</p>
           </div>
-        </div>
-
-        {/* Actions (Hidden in Print) */}
-        <div className="flex flex-col sm:flex-row gap-2.5 pt-2 print:hidden">
-          <Button onClick={handlePrint} className="flex-1 font-bold">
-            <IoPrintOutline size={16} /> Print Receipt
-          </Button>
-
-          <Button onClick={handleShareWhatsApp} className="flex-1 font-bold bg-emerald-600 hover:bg-emerald-700 text-white">
-            <span>💬</span> Share via WhatsApp
-          </Button>
-
-          <Button onClick={onClose} variant="secondary" className="sm:w-auto font-bold px-5">
-            Close
-          </Button>
         </div>
       </div>
     </Modal>
