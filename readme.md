@@ -1,5 +1,11 @@
 # 🚀 BizPilot AI
-
+![React](https://img.shields.io/badge/React-19-blue)
+![Node](https://img.shields.io/badge/Node.js-22-green)
+![Express](https://img.shields.io/badge/Express-5-black)
+![MongoDB](https://img.shields.io/badge/MongoDB-Database-green)
+![Tailwind](https://img.shields.io/badge/TailwindCSS-v4-blue)
+![Groq](https://img.shields.io/badge/Groq-AI-orange)
+![License](https://img.shields.io/badge/License-ISC-yellow)
 > An AI-powered CRM, POS, and Business Intelligence System built for modern retail merchants and enterprise stores.
 
 BizPilot AI helps shop owners manage customers, sales transactions, digital invoices, daily tasks, and store analytics from one unified workspace. It features a Multilingual AI Business Partner (English, Hindi, Bengali) that analyzes live merchant data and delivers strategic executive advice via text and voice.
